@@ -1,0 +1,2609 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brent Demulder — Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+
+<style>
+  :root {
+    --bg: #080c14;
+    --bg-2: #0d1220;
+    --bg-3: #12182e;
+    --ink: #f0e8d8;
+    --ink-dim: #b8b8c8;
+    --ink-faint: #4a5878;
+    --rule: #1e2640;
+    --rule-soft: #12182e;
+    --accent: #c0182a;
+    --accent-soft: rgba(192, 24, 42, 0.18);
+    --hero-base: #080c14;
+    --hero-top:  #0d1220;
+     --hero-hue-a: 18;
+     --hero-hue-b: 8;
+     --hero-hue-c: 28;
+    --serif: "Instrument Serif", "Cormorant Garamond", serif;
+    --sans: "Space Grotesk", "DM Sans", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --grain-opacity: 0.07;
+    --color-wash: 1;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); min-height: 100%; }
+  body {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(70% 50% at 10% 10%, oklch(0.55 0.14 var(--hero-hue-a) / calc(0.30 * var(--color-wash))), transparent 60%),
+      radial-gradient(60% 70% at 90% 30%, oklch(0.42 0.12 var(--hero-hue-c) / calc(0.28 * var(--color-wash))), transparent 60%),
+      radial-gradient(80% 60% at 50% 100%, oklch(0.50 0.10 var(--hero-hue-b) / calc(0.22 * var(--color-wash))), transparent 65%);
+    transition: background 700ms ease;
+  }
+
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  h1, h2, h3, h4 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
+  a { color: inherit; }
+
+  .grain {
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9000;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 240px 240px;
+    animation: grain 1.2s steps(6) infinite;
+  }
+  @keyframes nameShimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes splineFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes grain {
+    0%   { transform: translate(0,0); }
+    16%  { transform: translate(-2%, 1%); }
+    33%  { transform: translate(1%, -2%); }
+    50%  { transform: translate(-1%, 2%); }
+    66%  { transform: translate(2%, 1%); }
+    83%  { transform: translate(-2%, -1%); }
+    100% { transform: translate(0,0); }
+  }
+
+  .vignette::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 80% at 50% 40%, transparent 40%, rgba(0,0,0,0.40) 80%, rgba(0,0,0,0.7) 100%);
+  }
+
+  .hairline { height: 1px; background: var(--rule); }
+  .accent-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); display: inline-block; }
+  .ag { color: var(--accent); }
+  .ag-bg { background: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--ink-dim);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 220ms ease, color 220ms ease, background 220ms ease;
+    text-decoration: none;
+    border-radius: 0;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-primary { background: var(--accent); color: var(--bg); border-color: transparent; }
+  .btn-primary:hover { background: transparent; color: var(--accent); }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
+  @media (max-width: 720px) {
+    .container { padding: 0 24px; }
+  }
+
+  .page {
+    min-height: 100vh;
+    padding-top: 120px;
+  }
+
+  .hero-stage {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--hero-top) 0%, var(--hero-base) 100%);
+    transition: background 700ms ease;
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(80px);
+    opacity: 0;
+    will-change: transform;
+    transition: background 700ms ease;
+  }
+  .hero-orb.a { width: 50vw; height: 50vw; left: 45%; top: 5%; background: oklch(0.62 0.20 var(--hero-hue-a)); animation: drift1 22s ease-in-out infinite alternate; }
+  .hero-orb.b { width: 40vw; height: 40vw; left: -10%; top: 40%; background: oklch(0.42 0.16 var(--hero-hue-b)); animation: drift2 28s ease-in-out infinite alternate; }
+  .hero-orb.c { width: 30vw; height: 30vw; left: 30%; top: 60%; background: oklch(0.55 0.14 var(--hero-hue-c)); animation: drift3 32s ease-in-out infinite alternate; }
+  @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(-8%, 6%) scale(1.1); } }
+  @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(6%, -4%) scale(1.15); } }
+  @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(4%, -8%) scale(0.9); } }
+  @keyframes filterIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .stripes {
+    background-color: var(--bg-3);
+    background-image: repeating-linear-gradient(
+      135deg,
+      transparent 0,
+      transparent 14px,
+      rgba(244, 236, 216, 0.05) 14px,
+      rgba(244, 236, 216, 0.05) 28px
+    );
+  }
+
+  @keyframes scrollCue {
+    0%   { transform: translateY(0); opacity: 0.4; }
+    50%  { transform: translateY(8px); opacity: 1; }
+    100% { transform: translateY(16px); opacity: 0; }
+  }
+  .scroll-cue-line { animation: scrollCue 2.4s ease-in-out infinite; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  * { cursor: none !important; }
+  .cursor-dot {
+    position: fixed; width: 6px; height: 6px;
+    background: var(--ink); border-radius: 50%;
+    pointer-events: none; z-index: 99999;
+    left: 0; top: 0;
+    transform: translate(-50%, -50%);
+    transition: background 200ms ease, transform 150ms ease;
+    will-change: left, top;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1.5px solid rgba(240, 232, 216, 0.5);
+    border-radius: 50%; pointer-events: none; z-index: 99998;
+    left: 0; top: 0;
+    transform: translate(-50%, -50%);
+    transition: border-color 250ms ease, width 300ms ease, height 300ms ease, opacity 250ms ease;
+    will-change: left, top;
+  }
+  .cursor-dot.hovered { background: var(--accent); transform: translate(-50%, -50%) scale(1.8); }
+  .cursor-ring.hovered { width: 54px; height: 54px; border-color: var(--accent); opacity: 1; }
+
+  .ed-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .ed-card .ed-thumb {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: var(--bg-2);
+  }
+  .ed-card .ed-thumb-inner {
+    position: absolute; inset: 0;
+    transition: transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1), filter 500ms ease;
+    will-change: transform;
+  }
+  .ed-card:hover .ed-thumb-inner { transform: scale(1.04); }
+  .ed-card .ed-thumb img {
+    transition: transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
+  }
+  .ed-card:hover .ed-thumb img { transform: scale(1.04); }
+  .ed-card .ed-hover {
+    position: absolute; inset: 0;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 18px;
+    opacity: 0;
+    transition: opacity 350ms ease;
+    pointer-events: none;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.75) 100%);
+  }
+  .ed-card:hover .ed-hover { opacity: 1; }
+
+  .ed-meta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 24px;
+    margin-top: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    background: #080c14;
+    backdrop-filter: blur(4px);
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .chip:hover {
+    border: 1px solid transparent;
+    background: linear-gradient(#080c14, #080c14) padding-box, linear-gradient(90deg, #c0182a, #8a1040) border-box;
+    white-space: nowrap;
+  }
+
+  .filter-tab {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 8px 0;
+    cursor: pointer;
+    position: relative;
+    transition: color 200ms ease;
+  }
+  .filter-tab:hover { color: var(--ink); }
+  .filter-tab.active { color: var(--ink); }
+  .filter-tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: var(--accent);
+  }
+  .filter-tab .count {
+    font-size: 9px;
+    color: var(--ink-faint);
+    margin-left: 6px;
+    vertical-align: super;
+  }
+
+  .nav-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 200ms ease;
+    position: relative;
+    padding: 6px 0;
+  }
+  .nav-link:hover { color: var(--ink); }
+  .nav-link.active { color: var(--ink); }
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .nav-link .num {
+    color: var(--ink-faint);
+    margin-right: 8px;
+  }
+
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 800ms ease, transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    line-height: 0.92;
+  }
+
+  .ph-label {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(244, 236, 216, 0.55);
+    pointer-events: none;
+  }
+
+  .contact-email {
+    font-family: var(--serif);
+    font-size: clamp(48px, 9vw, 144px);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-block;
+    transition: color 300ms ease, letter-spacing 600ms ease;
+    letter-spacing: -0.03em;
+  }
+  .contact-email:hover { color: var(--accent); letter-spacing: -0.01em; }
+
+  .coming-soon-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .coming-soon-tag::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- image-slot web component -->
+  <script>
+(() => {
+  const STATE_FILE = '.image-slots.state.json';
+  const MAX_DIM = 1200;
+  const ACCEPT = ['image/png', 'image/jpeg', 'image/webp', 'image/avif'];
+
+  const subs = new Set();
+  let slots = {};
+  const tombstones = new Set();
+  let loaded = false;
+  let loadP = null;
+
+  function load() {
+    if (loadP) return loadP;
+    loadP = fetch(STATE_FILE)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        if (j && typeof j === 'object') {
+          const merged = Object.assign({}, j, slots);
+          for (const k in slots) {
+            if (merged[k] && !merged[k].u && j[k]) {
+              merged[k].u = typeof j[k] === 'string' ? j[k] : j[k].u;
+            }
+          }
+          for (const id of tombstones) delete merged[id];
+          slots = merged;
+        }
+        tombstones.clear();
+      })
+      .catch(() => {})
+      .then(() => { loaded = true; subs.forEach((fn) => fn()); });
+    return loadP;
+  }
+
+  let saving = false;
+  let saveDirty = false;
+  function save() {
+    if (saving) { saveDirty = true; return; }
+    const w = window.omelette && window.omelette.writeFile;
+    if (!w) return;
+    saving = true;
+    Promise.resolve(w(STATE_FILE, JSON.stringify(slots)))
+      .catch(() => {})
+      .then(() => { saving = false; if (saveDirty) { saveDirty = false; save(); } });
+  }
+
+  const S_MAX = 5;
+  const clampS = (s) => Math.max(1, Math.min(S_MAX, s));
+
+  function getSlot(id) {
+    const v = slots[id];
+    if (!v) return null;
+    return typeof v === 'string' ? { u: v, s: 1, x: 0, y: 0 } : v;
+  }
+
+  function setSlot(id, val) {
+    if (!id) return;
+    if (val) { slots[id] = val; tombstones.delete(id); }
+    else { delete slots[id]; if (!loaded) tombstones.add(id); }
+    subs.forEach((fn) => fn());
+    if (loaded) save(); else load().then(save);
+  }
+
+  async function toDataUrl(file, targetW) {
+    const bitmap = await createImageBitmap(file);
+    try {
+      const cap = Math.min(MAX_DIM, Math.max(1, Math.round(targetW * 2)) || MAX_DIM);
+      const scale = Math.min(1, cap / Math.max(bitmap.width, bitmap.height));
+      const w = Math.max(1, Math.round(bitmap.width * scale));
+      const h = Math.max(1, Math.round(bitmap.height * scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(bitmap, 0, 0, w, h);
+      return canvas.toDataURL('image/webp', 0.85);
+    } finally {
+      bitmap.close && bitmap.close();
+    }
+  }
+
+  const stylesheet =
+    ':host{display:inline-block;position:relative;vertical-align:top;' +
+    '  font:13px/1.3 system-ui,-apple-system,sans-serif;color:rgba(0,0,0,.55);width:240px;height:160px}' +
+    '.frame{position:absolute;inset:0;overflow:hidden;background:rgba(0,0,0,.04)}' +
+    '.frame img{position:absolute;max-width:none;transform:translate(-50%,-50%);' +
+    '  -webkit-user-drag:none;user-select:none;touch-action:none}' +
+    '.spill{position:absolute;transform:translate(-50%,-50%);display:none;z-index:1;' +
+    '  cursor:grab;touch-action:none}' +
+    ':host([data-panning]) .spill{cursor:grabbing}' +
+    '.spill .ghost{position:absolute;inset:0;width:100%;height:100%;opacity:.35;' +
+    '  pointer-events:none;-webkit-user-drag:none;user-select:none;' +
+    '  box-shadow:0 0 0 1px rgba(0,0,0,.2),0 12px 32px rgba(0,0,0,.2)}' +
+    '.spill .handle{position:absolute;width:12px;height:12px;border-radius:50%;' +
+    '  background:#fff;box-shadow:0 0 0 1.5px #c96442,0 1px 3px rgba(0,0,0,.3);' +
+    '  transform:translate(-50%,-50%)}' +
+    '.spill .handle[data-c=nw]{left:0;top:0;cursor:nwse-resize}' +
+    '.spill .handle[data-c=ne]{left:100%;top:0;cursor:nesw-resize}' +
+    '.spill .handle[data-c=sw]{left:0;top:100%;cursor:nesw-resize}' +
+    '.spill .handle[data-c=se]{left:100%;top:100%;cursor:nwse-resize}' +
+    ':host([data-reframe]){z-index:10}' +
+    ':host([data-reframe]) .spill{display:block}' +
+    ':host([data-reframe]) .frame{box-shadow:0 0 0 2px #c96442}' +
+    '.empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;' +
+    '  justify-content:center;gap:6px;text-align:center;padding:12px;box-sizing:border-box;' +
+    '  cursor:pointer;user-select:none}' +
+    '.empty svg{opacity:.45}' +
+    '.empty .cap{max-width:90%;font-weight:500;letter-spacing:.01em}' +
+    '.empty .sub{font-size:11px}' +
+    '.empty .sub u{text-underline-offset:2px;text-decoration-color:rgba(0,0,0,.25)}' +
+    '.empty:hover .sub u{color:rgba(0,0,0,.75);text-decoration-color:currentColor}' +
+    ':host([data-over]) .frame{outline:2px solid #c96442;outline-offset:-2px;' +
+    '  background:rgba(201,100,66,.10)}' +
+    '.ring{position:absolute;inset:0;pointer-events:none;border:1.5px dashed rgba(0,0,0,.25);' +
+    '  transition:border-color .12s}' +
+    ':host([data-over]) .ring{border-color:#c96442}' +
+    ':host([data-filled]) .ring{display:none}' +
+    '.ctl{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;' +
+    '  display:flex;gap:6px;opacity:0;pointer-events:none;transition:opacity .12s;z-index:2;' +
+    '  white-space:nowrap}' +
+    ':host([data-filled][data-editable]:hover) .ctl,:host([data-reframe]) .ctl' +
+    '  {opacity:1;pointer-events:auto}' +
+    '.ctl button{appearance:none;border:0;border-radius:6px;padding:5px 10px;cursor:pointer;' +
+    '  background:rgba(0,0,0,.65);color:#fff;font:11px/1 system-ui,-apple-system,sans-serif;' +
+    '  backdrop-filter:blur(6px)}' +
+    '.ctl button:hover{background:rgba(0,0,0,.8)}' +
+    '.err{position:absolute;left:8px;bottom:8px;right:8px;color:#b3261e;font-size:11px;' +
+    '  background:rgba(255,255,255,.85);padding:4px 6px;border-radius:5px;pointer-events:none}';
+
+  const icon =
+    '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>' +
+    '<path d="m21 15-5-5L5 21"/><' + '/svg>';
+
+  class ImageSlot extends HTMLElement {
+    static get observedAttributes() {
+      return ['shape', 'radius', 'mask', 'fit', 'position', 'placeholder', 'src', 'id'];
+    }
+    constructor() {
+      super();
+      const root = this.attachShadow({ mode: 'open' });
+      root.innerHTML =
+        '<style>' + stylesheet + '<' + '/style>' +
+        '<div class="frame" part="frame">' +
+        '  <img part="image" alt="" draggable="false" style="display:none">' +
+        '  <div class="empty" part="empty">' + icon +
+        '    <div class="cap"></div>' +
+        '    <div class="sub">or <u>browse files</u></div></div>' +
+        '  <div class="ring" part="ring"></div>' +
+        '</div>' +
+        '<div class="spill">' +
+        '  <img class="ghost" alt="" draggable="false">' +
+        '  <div class="handle" data-c="nw"></div><div class="handle" data-c="ne"></div>' +
+        '  <div class="handle" data-c="sw"></div><div class="handle" data-c="se"></div>' +
+        '</div>' +
+        '<div class="ctl"><button data-act="replace">Replace</button>' +
+        '  <button data-act="clear">Remove</button></div>' +
+        '<input type="file" accept="' + ACCEPT.join(',') + '" hidden>';
+      this._frame = root.querySelector('.frame');
+      this._ring = root.querySelector('.ring');
+      this._img = root.querySelector('.frame img');
+      this._empty = root.querySelector('.empty');
+      this._cap = root.querySelector('.cap');
+      this._sub = root.querySelector('.sub');
+      this._spill = root.querySelector('.spill');
+      this._ghost = root.querySelector('.ghost');
+      this._err = null;
+      this._input = root.querySelector('input');
+      this._depth = 0;
+      this._gen = 0;
+      this._view = { s: 1, x: 0, y: 0 };
+      this._subFn = () => this._render();
+      this._empty.addEventListener('click', () => this._input.click());
+      root.addEventListener('click', (e) => {
+        const act = e.target && e.target.getAttribute && e.target.getAttribute('data-act');
+        if (act === 'replace') { this._exitReframe(true); this._input.click(); }
+        if (act === 'clear') {
+          this._exitReframe(false);
+          this._gen++;
+          this._local = null;
+          if (this.id) setSlot(this.id, null); else this._render();
+        }
+      });
+      this._input.addEventListener('change', () => {
+        const f = this._input.files && this._input.files[0];
+        if (f) this._ingest(f);
+        this._input.value = '';
+      });
+      this._img.addEventListener('load', () => this._applyView());
+      this.addEventListener('dblclick', (e) => {
+        if (!this.hasAttribute('data-editable') || !this._reframes()) return;
+        e.preventDefault();
+        if (this.hasAttribute('data-reframe')) this._exitReframe(true);
+        else this._enterReframe();
+      });
+      this._spill.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 || !this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        this._spill.setPointerCapture(e.pointerId);
+        const rect = this.getBoundingClientRect();
+        const fw = rect.width || 1, fh = rect.height || 1;
+        const corner = e.target.getAttribute && e.target.getAttribute('data-c');
+        let move;
+        if (corner) {
+          const iw = this._img.naturalWidth || 1, ih = this._img.naturalHeight || 1;
+          const base = Math.max(fw / iw, fh / ih);
+          const sx = corner.includes('e') ? 1 : -1;
+          const sy = corner.includes('s') ? 1 : -1;
+          const s0 = this._view.s;
+          const w0 = iw * base * s0, h0 = ih * base * s0;
+          const cx0 = (50 + this._view.x) / 100 * fw;
+          const cy0 = (50 + this._view.y) / 100 * fh;
+          const ox = cx0 - sx * w0 / 2, oy = cy0 - sy * h0 / 2;
+          const diag0 = Math.hypot(w0, h0);
+          const ux = sx * w0 / diag0, uy = sy * h0 / diag0;
+          move = (ev) => {
+            const proj = (ev.clientX - rect.left - ox) * ux + (ev.clientY - rect.top - oy) * uy;
+            const s = clampS(s0 * proj / diag0);
+            const d = diag0 * s / s0;
+            this._view.s = s;
+            this._view.x = (ox + ux * d / 2) / fw * 100 - 50;
+            this._view.y = (oy + uy * d / 2) / fh * 100 - 50;
+            this._clampView();
+            this._applyView();
+          };
+        } else {
+          this.setAttribute('data-panning', '');
+          const start = { px: e.clientX, py: e.clientY, x: this._view.x, y: this._view.y };
+          move = (ev) => {
+            this._view.x = start.x + (ev.clientX - start.px) / fw * 100;
+            this._view.y = start.y + (ev.clientY - start.py) / fh * 100;
+            this._clampView();
+            this._applyView();
+          };
+        }
+        const up = () => {
+          try { this._spill.releasePointerCapture(e.pointerId); } catch {}
+          this._spill.removeEventListener('pointermove', move);
+          this._spill.removeEventListener('pointerup', up);
+          this._spill.removeEventListener('pointercancel', up);
+          this.removeAttribute('data-panning');
+          this._dragUp = null;
+        };
+        this._dragUp = up;
+        this._spill.addEventListener('pointermove', move);
+        this._spill.addEventListener('pointerup', up);
+        this._spill.addEventListener('pointercancel', up);
+      });
+      this.addEventListener('wheel', (e) => {
+        if (!this.hasAttribute('data-reframe')) return;
+        e.preventDefault();
+        const r = this.getBoundingClientRect();
+        const cx = (e.clientX - r.left) / r.width * 100 - 50;
+        const cy = (e.clientY - r.top) / r.height * 100 - 50;
+        const prev = this._view.s;
+        const next = clampS(prev * Math.pow(1.0015, -e.deltaY));
+        if (next === prev) return;
+        const k = next / prev;
+        this._view.s = next;
+        this._view.x = cx * (1 - k) + this._view.x * k;
+        this._view.y = cy * (1 - k) + this._view.y * k;
+        this._clampView();
+        this._applyView();
+      }, { passive: false });
+    }
+    connectedCallback() {
+      this.addEventListener('dragenter', this);
+      this.addEventListener('dragover', this);
+      this.addEventListener('dragleave', this);
+      this.addEventListener('drop', this);
+      subs.add(this._subFn);
+      this._ro = new ResizeObserver(() => this._render());
+      this._ro.observe(this);
+      load();
+      this._render();
+    }
+    disconnectedCallback() {
+      subs.delete(this._subFn);
+      this.removeEventListener('dragenter', this);
+      this.removeEventListener('dragover', this);
+      this.removeEventListener('dragleave', this);
+      this.removeEventListener('drop', this);
+      if (this._ro) { this._ro.disconnect(); this._ro = null; }
+      this._exitReframe(false);
+    }
+    _enterReframe() {
+      if (this.hasAttribute('data-reframe')) return;
+      this.setAttribute('data-reframe', '');
+      this._applyView();
+      this._outside = (e) => {
+        if (e.composedPath && e.composedPath().includes(this)) return;
+        this._exitReframe(true);
+      };
+      this._esc = (e) => { if (e.key === 'Escape') this._exitReframe(true); };
+      document.addEventListener('pointerdown', this._outside, true);
+      document.addEventListener('keydown', this._esc, true);
+    }
+    _exitReframe(commit) {
+      if (!this.hasAttribute('data-reframe')) return;
+      if (this._dragUp) this._dragUp();
+      this.removeAttribute('data-reframe');
+      this.removeAttribute('data-panning');
+      if (this._outside) document.removeEventListener('pointerdown', this._outside, true);
+      if (this._esc) document.removeEventListener('keydown', this._esc, true);
+      this._outside = this._esc = null;
+      if (commit) this._commitView();
+    }
+    attributeChangedCallback() { if (this.shadowRoot) this._render(); }
+    handleEvent(e) {
+      if (e.type === 'dragenter' || e.type === 'dragover') {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy';
+        if (e.type === 'dragenter') this._depth++;
+        this.setAttribute('data-over', '');
+      } else if (e.type === 'dragleave') {
+        if (--this._depth <= 0) { this._depth = 0; this.removeAttribute('data-over'); }
+      } else if (e.type === 'drop') {
+        e.preventDefault();
+        e.stopPropagation();
+        this._depth = 0;
+        this.removeAttribute('data-over');
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (f) this._ingest(f);
+      }
+    }
+    async _ingest(file) {
+      this._setError(null);
+      if (!file || ACCEPT.indexOf(file.type) < 0) {
+        this._setError('Drop a PNG, JPEG, WebP, or AVIF image.');
+        return;
+      }
+      const gen = ++this._gen;
+      try {
+        const w = this.clientWidth || this.offsetWidth || MAX_DIM;
+        const url = await toDataUrl(file, w);
+        if (gen !== this._gen) return;
+        this._exitReframe(false);
+        const val = { u: url, s: 1, x: 0, y: 0 };
+        setSlot(this.id || '', val);
+        if (!this.id) { this._local = val; this._render(); }
+      } catch (err) {
+        if (gen !== this._gen) return;
+        this._setError('Could not read that image.');
+      }
+    }
+    _setError(msg) {
+      if (this._err) { this._err.remove(); this._err = null; }
+      if (!msg) return;
+      const d = document.createElement('div');
+      d.className = 'err'; d.textContent = msg;
+      this.shadowRoot.appendChild(d);
+      this._err = d;
+      setTimeout(() => { if (this._err === d) { d.remove(); this._err = null; } }, 3000);
+    }
+    _reframes() {
+      return this.hasAttribute('data-filled') && (this.getAttribute('fit') || 'cover') === 'cover';
+    }
+    _geom() {
+      const iw = this._img.naturalWidth, ih = this._img.naturalHeight;
+      const fw = this.clientWidth, fh = this.clientHeight;
+      if (!iw || !ih || !fw || !fh) return null;
+      return { iw, ih, fw, fh, base: Math.max(fw / iw, fh / ih) };
+    }
+    _clampView() {
+      const g = this._geom();
+      if (!g) return;
+      const mx = Math.max(0, (g.iw * g.base * this._view.s / g.fw - 1) * 50);
+      const my = Math.max(0, (g.ih * g.base * this._view.s / g.fh - 1) * 50);
+      this._view.x = Math.max(-mx, Math.min(mx, this._view.x));
+      this._view.y = Math.max(-my, Math.min(my, this._view.y));
+    }
+    _applyView() {
+      const g = this._geom();
+      const fit = this.getAttribute('fit') || 'cover';
+      if (fit !== 'cover' || !g) {
+        this._img.style.width = '100%';
+        this._img.style.height = '100%';
+        this._img.style.left = '50%';
+        this._img.style.top = '50%';
+        this._img.style.objectFit = fit;
+        this._img.style.objectPosition = this.getAttribute('position') || '50% 50%';
+        return;
+      }
+      const k = g.base * this._view.s;
+      const w = (g.iw * k / g.fw * 100) + '%';
+      const h = (g.ih * k / g.fh * 100) + '%';
+      const l = (50 + this._view.x) + '%';
+      const t = (50 + this._view.y) + '%';
+      this._img.style.width = w; this._img.style.height = h;
+      this._img.style.left = l; this._img.style.top = t;
+      this._img.style.objectFit = '';
+      this._spill.style.width = w; this._spill.style.height = h;
+      this._spill.style.left = l; this._spill.style.top = t;
+    }
+    _commitView() {
+      const v = { s: this._view.s, x: this._view.x, y: this._view.y };
+      if (this._userUrl) v.u = this._userUrl;
+      if (this.id) setSlot(this.id, v);
+      else { this._local = v; }
+    }
+    _render() {
+      const mask = this.getAttribute('mask');
+      const shape = (this.getAttribute('shape') || 'rounded').toLowerCase();
+      let radius = '';
+      if (shape === 'circle') radius = '50%';
+      else if (shape === 'pill') radius = '9999px';
+      else if (shape === 'rounded') {
+        const n = parseFloat(this.getAttribute('radius'));
+        radius = (Number.isFinite(n) ? n : 12) + 'px';
+      }
+      this._frame.style.borderRadius = mask ? '' : radius;
+      this._frame.style.clipPath = mask || '';
+      this._ring.style.borderRadius = mask ? '' : radius;
+      this._ring.style.display = mask ? 'none' : '';
+      const editable = !!(window.omelette && window.omelette.writeFile);
+      this.toggleAttribute('data-editable', editable);
+      this._sub.style.display = editable ? '' : 'none';
+      let stored = this.id ? getSlot(this.id) : this._local;
+      if (stored && stored.u && !/^data:image\//i.test(stored.u)) stored = null;
+      const srcAttr = this.getAttribute('src') || '';
+      this._userUrl = (stored && stored.u) || null;
+      const url = this._userUrl || srcAttr;
+      if (!this.hasAttribute('data-reframe')) {
+        this._view = {
+          s: stored && Number.isFinite(stored.s) ? clampS(stored.s) : 1,
+          x: stored && Number.isFinite(stored.x) ? stored.x : 0,
+          y: stored && Number.isFinite(stored.y) ? stored.y : 0,
+        };
+      }
+      this._cap.textContent = this.getAttribute('placeholder') || 'Drop an image';
+      if (url) {
+        if (this._img.getAttribute('src') !== url) {
+          this._img.src = url;
+          this._ghost.src = url;
+        }
+        this._img.style.display = 'block';
+        this._empty.style.display = 'none';
+        this.setAttribute('data-filled', '');
+        this._clampView();
+        this._applyView();
+      } else {
+        this._img.style.display = 'none';
+        this._img.removeAttribute('src');
+        this._ghost.removeAttribute('src');
+        this._empty.style.display = 'flex';
+        this.removeAttribute('data-filled');
+      }
+    }
+  }
+
+  if (!customElements.get('image-slot')) {
+    customElements.define('image-slot', ImageSlot);
+  }
+})();
+  </script>
+
+  <!-- tweaks-panel -->
+  <script type="text/babel">
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;background-repeat:no-repeat;background-position:right 8px center}
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+  const dismiss = () => { setOpen(false); window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); };
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = { x: startRight - (ev.clientX - sx), y: startBottom - (ev.clientY - sy) };
+      clampToViewport();
+    };
+    const up = () => { window.removeEventListener('mousemove', move); window.removeEventListener('mouseup', up); };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" onMouseDown={(e) => e.stopPropagation()} onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ label, children }) {
+  return (<><div className="twk-sect">{label}</div>{children}</>);
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value} onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    const resolve = (s) => {
+      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return <TweakSelect label={label} value={value} options={options} onChange={(s) => onChange(resolve(s))} />;
+  }
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => { if (!trackRef.current) return; const v = segAt(ev.clientX); if (v !== valueRef.current) onChange(v); };
+    const up = () => { setDragging(false); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown} className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb" style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`, width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (<button key={o.value} type="button" role="radio" aria-checked={o.value === value}>{o.label}</button>))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" value={value} onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    style={{ background: hero }} onClick={() => onChange(o)}>
+              {sup.length > 0 && (<span>{sup.map((c, j) => <i key={j} style={{ background: c }} />)}</span>)}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakColor,
+});
+  </script>
+
+  <!-- components -->
+  <script type="text/babel">
+const { useState, useEffect, useRef, useMemo } = React;
+
+function useReveal(opts = { threshold: 0.15 }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let revealed = false;
+    const reveal = () => { if (revealed) return; revealed = true; el.classList.add("in"); };
+    let io;
+    try {
+      io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { reveal(); io.unobserve(el); } });
+      }, opts);
+      io.observe(el);
+    } catch (_) {}
+    const t = setTimeout(reveal, 350);
+    return () => { clearTimeout(t); io?.disconnect?.(); };
+  }, []);
+  return ref;
+}
+
+function ThumbPlaceholder({ label, tone = "warm", variant = "bokeh" }) {
+  const palettes = {
+    warm:    ["#1e1612", "#3a2418", "#8a4622"],
+    cool:    ["#060c18", "#0d1a38", "#1a3570"],
+    moss:    ["#141a14", "#22301f", "#446e3a"],
+    rose:    ["#1e1014", "#3d1820", "#8a2e3a"],
+    plum:    ["#16101e", "#2a1840", "#5a2e7a"],
+    sand:    ["#1c1814", "#352a1e", "#6e553a"],
+    ochre:   ["#1e1810", "#3a2e16", "#8a6a28"],
+    crimson: ["#130608", "#3a0e14", "#c0182a"],
+    purple:  ["#060810", "#0e1440", "#1c2e78"],
+  };
+  const p = palettes[tone] || palettes.warm;
+  if (variant === "stripes") return (
+    <div className="ed-thumb-inner" style={{ background: `radial-gradient(70% 60% at 50% 35%, ${p[2]} 0%, ${p[1]} 50%, ${p[0]} 100%)` }}>
+      <div className="ed-thumb-inner" style={{ position: "absolute", inset: 0, backgroundImage: `repeating-linear-gradient(135deg, transparent 0, transparent 18px, rgba(244,236,216,0.05) 18px, rgba(244,236,216,0.05) 36px)`, transition: "none" }} />
+      <div className="ph-label">{label}</div>
+    </div>
+  );
+  return (
+    <div className="ed-thumb-inner" style={{ background: `radial-gradient(70% 60% at 50% 35%, ${p[2]} 0%, ${p[1]} 50%, ${p[0]} 100%)`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <span style={{ fontFamily: "var(--serif)", fontSize: "clamp(48px, 8vw, 96px)", fontWeight: 700, fontStyle: "italic", color: "rgba(255,255,255,0.08)", letterSpacing: "-0.02em", textAlign: "center", lineHeight: 1, padding: "0 12px", userSelect: "none", transition: "none" }}>{label.replace(" — drop artwork", "")}</span>
+    </div>
+  );
+}
+
+const PROJECTS = [
+  // 2026 — featured first
+  { id: "eindproject",       title: "Eindproject",          tagline: "A showcase of everything learned during my internship.",         category: "Web",             role: "Concept, Design, Dev",  year: "2026", status: "Live",         featured: true, tone: "sand",  href: "https://brentdemulder-eindproject.netlify.app", hero: "assets/projects/NEW/Web/Heroes/Eindproject.png", thumb: "assets/projects/NEW/Web/Thumbnails/Eindproject.png" },
+  { id: "uptx",              title: "UPTX",                 tagline: "Studio website for design and development services.",            category: "Web",             role: "Identity, Site, Dev",   year: "2026", status: "Live",         featured: true, tone: "warm",  href: "https://uptx-website.netlify.app",              hero: "assets/projects/NEW/Web/Heroes/UPTX.png", thumb: "assets/projects/NEW/Web/Thumbnails/UPTX.png" },
+  { id: "lumeo",             title: "Lumeo",                tagline: "Letterboxd, Netflix and Disney — combined into one.",           category: "Web",             role: "Concept, UX/UI Design", year: "2026",                           featured: true, status: "Coming Soon", tone: "plum",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/Lumeo.png" },
+  // 2026 — non-featured, colours mixed
+  { id: "feline",            title: "Poezenhotel Feline",   tagline: "A small hotel for cats, designed warmly.",                      category: "Web",             role: "Site, Identity",        year: "2026", status: "Live",                         tone: "rose",  href: "https://poezenhotel-feline.netlify.app",                  hero: "assets/projects/NEW/Web/Heroes/poezenhotel feline.png", thumb: "assets/projects/NEW/Web/Thumbnails/Poezenhotel Feline.png" },
+  { id: "wuustwezel",        title: "Gemeente Wuustwezel",  tagline: "Marketing project for the municipality of Wuustwezel.",        category: "Brand",           role: "Marketing, Design",     year: "2026",                                           tone: "moss",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Gemeente Wuustwezel.png" },
+  { id: "stromer",           title: "Stromer",              tagline: "Static and motion Meta ads for a premium cycling brand.",      category: "Social & Motion", role: "Motion, Social",        year: "2026",                                           tone: "cool",                                                                 featured: true, thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/Stromer.png",          objectPos: "20% center" },
+  { id: "francais-web",      title: "Français at Work",     tagline: "Website for a self-employed French teacher for professionals.", category: "Web",             role: "Design, Dev",           year: "2026", status: "Live",                         tone: "warm",  href: "https://francaisatwork.eu",                     hero: "assets/projects/NEW/Web/Heroes/Francais at Work.png", thumb: "assets/projects/NEW/Web/Thumbnails/Francais at Work.png" },
+  { id: "thomas-more",       title: "Thomas More",          tagline: "Social media campaign posts — motion and static.",             category: "Social & Motion", role: "Social Design",         year: "2026",                                           tone: "plum",                                                                 thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/Thomas More.png",      objectPos: "20% center" },
+  { id: "studio-linea",      title: "Studio Linea",         tagline: "Team school project combining branding and web design.",        category: "Web",             role: "Design, Dev",           year: "2026", status: "Live",                         tone: "moss",  href: "https://wpnet.apstudent.be/09/site008/",        hero: "assets/projects/NEW/Web/Heroes/Studio Linea.png", thumb: "assets/projects/NEW/Web/Thumbnails/Studio Linea.png" },
+  { id: "francais-brand",    title: "Français at Work",     tagline: "Brand concept exploration for F@W.",                           category: "Brand",           role: "Brand Identity",        year: "2026",                                           tone: "warm",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Francais at Work.png" },
+  { id: "gedeon-richter",    title: "Gedeon Richter Pro",   tagline: "Pages and content blocks for a pharmaceutical brand.",         category: "Web",             role: "UI Design",             year: "2026",                                           tone: "sand",                                                                 href: "https://gedeonrichterpro.com/nl-be/", hero: "assets/projects/NEW/Web/Heroes/Gedeon Richter pro.png", thumb: "assets/projects/NEW/Web/Thumbnails/Gedeon Richter Pro.png" },
+  { id: "oscare",            title: "Oscare",               tagline: "Concept campaign designs for Oscare.",                         category: "Brand",           role: "Campaign Design",       year: "2026",                                           tone: "ochre",                                                                thumb: "assets/projects/NEW/Brand/Thumbnails/Oscare.png" },
+  // 2026 — coming soon
+  { id: "curendis",          title: "Curendis",             tagline: "Concept pages for a new website redesign.",                     category: "Web",             role: "UI Design",             year: "2026", status: "Coming Soon",                  tone: "cool",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/Curendis.png" },
+  { id: "june20-social",     title: "JUNE20 Social",        tagline: "Motion design for a job vacancy post.",                        category: "Social & Motion", role: "Motion Design",         year: "2026", status: "Coming Soon",                  tone: "moss",                                                                 thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/June20.png",           objectPos: "20% center" },
+  { id: "june20-web",        title: "JUNE20 Web",           tagline: "Design concepts for footers, headers and pages.",              category: "Web",             role: "UI Design",             year: "2026", status: "Coming Soon",                  tone: "moss",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/June20.png" },
+  // 2025
+  { id: "flipper",           title: "Flipper",              tagline: "Rebranding of swimming club Flipper from Mortsel.",             category: "Brand",           role: "Branding, Design",      year: "2025",                                           tone: "cool",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Flipper.png" },
+  { id: "cattractive",       title: "Cattractive",          tagline: "Website for Nicky, a home-based cat groomer.",                  category: "Web",             role: "Design, Dev",           year: "2025",                                           tone: "rose",                                                                 hero: "assets/projects/NEW/Web/Heroes/Cattractive.png", status: "Coming Soon", thumb: "assets/projects/NEW/Web/Thumbnails/Cattractive.png" },
+  { id: "parijs-foto",       title: "Paris",                tagline: "Street and travel photography from Paris.",                   category: "Photography",     role: "Photography",           year: "2025",                                           tone: "sand",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Paris.png",   images: ["assets/projects/NEW/Photography/Parijs/Parijs (1).png","assets/projects/NEW/Photography/Parijs/Parijs (2).png","assets/projects/NEW/Photography/Parijs/Parijs (3).png","assets/projects/NEW/Photography/Parijs/Parijs (4).png","assets/projects/NEW/Photography/Parijs/Parijs (5).png","assets/projects/NEW/Photography/Parijs/Parijs (6).png","assets/projects/NEW/Photography/Parijs/Parijs (7).png","assets/projects/NEW/Photography/Parijs/Parijs (8).png","assets/projects/NEW/Photography/Parijs/Parijs (9).png","assets/projects/NEW/Photography/Parijs/Parijs (10).png","assets/projects/NEW/Photography/Parijs/Parijs (11).png","assets/projects/NEW/Photography/Parijs/Parijs (12).png","assets/projects/NEW/Photography/Parijs/Parijs (13).png","assets/projects/NEW/Photography/Parijs/Parijs (14).png"] },
+  { id: "de-schakel",        title: "De Schakel",           tagline: "Rebranding of VZW De Schakel in Puurs.",                       category: "Brand",           role: "Rebranding, Design",    year: "2025",                                           tone: "warm",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/De Schakel.png" },
+  { id: "dinant",            title: "Dinant",               tagline: "Photography from Dinant.",                                     category: "Photography",     role: "Photography",           year: "2025",                                           tone: "cool",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Dinant.png",  images: ["assets/projects/NEW/Photography/Dinant/Dinant (1).png","assets/projects/NEW/Photography/Dinant/Dinant (2).png","assets/projects/NEW/Photography/Dinant/Dinant (3).png","assets/projects/NEW/Photography/Dinant/Dinant (4).png","assets/projects/NEW/Photography/Dinant/Dinant (5).png"] },
+  { id: "hingene",           title: "Hingene",              tagline: "Photography from Hingene.",                                    category: "Photography",     role: "Photography",           year: "2025",                                           tone: "moss",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Hingene.png", images: ["assets/projects/NEW/Photography/Hingene/Hingene (1).png","assets/projects/NEW/Photography/Hingene/Hingene (2).png","assets/projects/NEW/Photography/Hingene/Hingene (3).png","assets/projects/NEW/Photography/Hingene/Hingene (4).png","assets/projects/NEW/Photography/Hingene/Hingene (5).png","assets/projects/NEW/Photography/Hingene/Hingene (6).png","assets/projects/NEW/Photography/Hingene/Hingene (7).png","assets/projects/NEW/Photography/Hingene/Hingene (8).png"] },
+  { id: "budapest",          title: "Budapest",             tagline: "Architecture and street photography from Budapest.",          category: "Photography",     role: "Photography",           year: "2025",                                           tone: "warm",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Budapest.png",images: ["assets/projects/NEW/Photography/Boedapest/Boedapest (1).png","assets/projects/NEW/Photography/Boedapest/Boedapest (2).png","assets/projects/NEW/Photography/Boedapest/Boedapest (3).png","assets/projects/NEW/Photography/Boedapest/Boedapest (4).png","assets/projects/NEW/Photography/Boedapest/Boedapest (5).png","assets/projects/NEW/Photography/Boedapest/Boedapest (6).png","assets/projects/NEW/Photography/Boedapest/Boedapest (7).png","assets/projects/NEW/Photography/Boedapest/Boedapest (8).png"] },
+  { id: "croatia",           title: "Croatia",              tagline: "Travel photography from Croatia.",                            category: "Photography",     role: "Photography",           year: "2025",                                           tone: "cool",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Croatia.png", images: ["assets/projects/NEW/Photography/Kroatië/Kroatië (1).png","assets/projects/NEW/Photography/Kroatië/Kroatië (2).png","assets/projects/NEW/Photography/Kroatië/Kroatië (3).png","assets/projects/NEW/Photography/Kroatië/Kroatië (5).png","assets/projects/NEW/Photography/Kroatië/Kroatië (6).png","assets/projects/NEW/Photography/Kroatië/Kroatië (7).png","assets/projects/NEW/Photography/Kroatië/Kroatië (8).png","assets/projects/NEW/Photography/Kroatië/Kroatië (9).png","assets/projects/NEW/Photography/Kroatië/Kroatië (10).png","assets/projects/NEW/Photography/Kroatië/Kroatië (11).png","assets/projects/NEW/Photography/Kroatië/Kroatië (12).png","assets/projects/NEW/Photography/Kroatië/Kroatië.png"] },
+  // 2024 — 2025
+  { id: "concept-websites",  title: "Concept Websites",     tagline: "Self-coded websites built during my studies.",                  category: "Web",             role: "Design, Dev",           year: "2024 — 2025",                                    tone: "cool",                                                                 status: "Coming Soon", thumb: "assets/projects/NEW/Web/Thumbnails/Concept Website.png" },
+  { id: "school-motion",     title: "School Projecten",     tagline: "Motion and concept work made during my studies.",              category: "Social & Motion", role: "Concept, Design",       year: "2024 — 2025",                                    tone: "warm",                                                                 thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/School Projecten.png", objectPos: "20% center" },
+];
+
+const FILTERS = ["All", "Web", "Brand", "Social & Motion", "Photography"];
+
+
+const CAT_TONE = { "Web": "crimson", "Brand": "purple", "Social & Motion": "cool", "Photography": "sand" };
+const TONE_OVERLAY = { crimson: "rgba(192,24,42,0.38)", purple: "rgba(122,58,168,0.38)", cool: "rgba(20,60,140,0.38)", sand: "rgba(212,96,26,0.38)" };
+const TONE_COLOR = { crimson: "#c0182a", purple: "#7a3aa8", cool: "#1e50a0", sand: "#d4601a" };
+
+function EdCard({ p, large = false, ratio }) {
+  const { t } = useLang();
+  const ref = useReveal({ threshold: 0.1 });
+  const aspectRatio = ratio || "16/9";
+  const tone = CAT_TONE[p.category] || "crimson";
+  const overlay = TONE_OVERLAY[tone];
+  return (
+    <article ref={ref} className="fade-up">
+      <a href={p.status === "Coming Soon" ? "#" : `#/project/${p.id}`}
+         className="ed-card"
+         onClick={(e) => { if (p.status === "Coming Soon") e.preventDefault(); }}>
+
+        <div className="ed-thumb" style={{ aspectRatio, borderTop: `2px solid ${TONE_COLOR[tone]}` }}>
+          {p.thumb
+            ? <>
+                <img src={p.thumb} alt={p.title} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: p.objectPos || "center center" }} />
+              </>
+            : <ThumbPlaceholder label={`${p.title} — drop artwork`} tone={tone} variant={p.status === "Coming Soon" || p.id === "lumeo" ? "stripes" : "bokeh"} />
+          }
+          <div style={{ position: "absolute", top: 14, right: 14, display: "flex", gap: 8, zIndex: 3 }}>
+            {p.featured && <span className="chip ag" style={{ borderColor: "#c84050", background: "rgba(8,12,20,0.82)", backdropFilter: "blur(10px)" }}>{t.card.featured}</span>}
+            {p.status === "Coming Soon" && <span className="chip ag" style={{ borderColor: "#c84050", background: "rgba(8,12,20,0.82)", backdropFilter: "blur(10px)" }}>{t.card.soon}</span>}
+          </div>
+          <div className="ed-hover">
+            <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "#fff", padding: "8px 14px", border: "1px solid rgba(255,255,255,0.7)", background: "rgba(0,0,0,0.5)", backdropFilter: "blur(8px)" }}>
+              {p.status === "Coming Soon" ? t.card.previewSoon : t.card.viewProject}
+            </span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)" }}>{p.role}</span>
+          </div>
+        </div>
+        <div className="ed-meta">
+          <div>
+            <h3 style={{ margin: 0, fontSize: large ? "clamp(28px, 3vw, 40px)" : "clamp(22px, 2vw, 30px)", lineHeight: 1.05 }}>{p.title}</h3>
+            <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--ink-dim)" }}>{p.tagline}</p>
+          </div>
+          <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 6 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: TONE_COLOR[tone], flexShrink: 0 }} />
+              {p.category}
+            </div>
+            <div style={{ marginTop: 4 }}>{p.year}</div>
+          </div>
+        </div>
+      </a>
+    </article>
+  );
+}
+
+const COPY = {
+  en: {
+    nav:   { home: "Home", about: "About", portfolio: "Portfolio", contact: "Contact" },
+    footer: { tagline: "Graphic designer working at the seams of film, music, and machines that think.", pages: "Pages", elsewhere: "Elsewhere", reach: "Reach", composed: "Composed in Bornem · ◇" },
+    hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Your friendly neighborhood designer.", tagline2: "Obsessed with film, music, and the craft", tagline3: "that lives somewhere between both.", scroll: "Scroll" },
+    featured: { eyebrow: "Featured Work · 03", heading: "Some", headingItalic: "recent", heading2: "pieces.", viewAll: "View all work" },
+    aboutTeaser: { eyebrow: "About · 02", body: "I'm a graphic and web designer based in Belgium, currently finishing my studies. I spend most of my time building websites and brands, but the stuff that really gets me going is film, music, and the kind of design that feels like it belongs in both. As a graphic and UX/UI designer, I try to translate that mix into work you feel, not just see.", readMore: "Read more", downloadCV: "Download CV" },
+    contactTeaser: { eyebrow: "Let's talk · 04", heading: "Have a project in mind?", body: "Open for collaborations, commissions, and curious conversations.", getInTouch: "Get in touch", seeWork: "See the work" },
+    about: {
+      eyebrow: "About · 02", headingWord: "designer", heading2: "behind the work.",
+      quote: "I’m a graphic designer who can’t pick just one obsession —", quoteItalic: "so I picked all of them.",
+      bio1: "From as far back as I can remember, I’ve been drawn to every form of creativity that exists — film, music, animation, art. Not as separate hobbies, but as one relentless urge to make things. I stopped watching from the sidelines early on and decided to do it myself, both professionally and for the love of it.",
+      bio2: "The ideas never stop coming, and I’m genuinely willing to put in the hours on big, ambitious projects. I’m currently writing my own book, and I’ve lost count of the songs I’ve written on piano and guitar. Three years as a youth leader — which, it turns out, is excellent training for managing creative chaos.",
+      bio3: "When I’m not chasing a deadline or a melody, you’ll find me on a football pitch, a basketball court, or in the gym. Sport is how I switch my brain off. Even designers need to touch grass.",
+      downloadCV: "Download CV", getInTouch: "Get in touch",
+      factsheet: "Factsheet · 03",
+      facts: [["Currently","UX/UI Designer Internship @ JUNE20"],["Studying","Graduaat Digitale Vormgeving"],["Based In","Bornem · Antwerp · BE — available remote"],["Languages","EN · NL"],["Open To","Freelance, collaborations"]],
+      stack: "Stack · 04", stackHeading: "What’s in", stackItalic: "the bag.",
+      stackGroups: [
+        { title: "Design",      items: ["Figma","Photoshop","Illustrator","InDesign"] },
+        { title: "Motion",      items: ["After Effects","Premiere","Spline","Blender"] },
+        { title: "Code",        items: ["HTML","CSS","VSCode"] },
+        { title: "AI",          items: ["Claude Code","Claude Design","Gemini","ChatGPT","NotebookLM","Google AI Studio"] },
+        { title: "Off-screen",  items: ["Piano","Guitar","Football","Basketball","Letterboxd","Books"] },
+        { title: "In rotation", items: ["Rock","Jazz","Hip-Hop","Singer-Songwriter","Animated films","Drama series"] },
+      ],
+    },
+    portfolio: { eyebrow: "Portfolio · 03", heading: "Selected work.", projects: "projects", showing: "Showing", archive: "More archived work available on request.", archiveBtn: "Request the archive", filters: ["All","Web","Brand","Social & Motion","Photography"] },
+    contact: { eyebrow: "Contact · 04", heading: "Let’s make something worth watching.", formEyebrow: "Tell me about your project.", nameLabel: "Your name", emailLabel: "Email", projectLabel: "Project type", messageLabel: "Tell me about it", messagePlaceholder: "Project, timeline, budget, references — anything that helps.", replyTime: "Typical reply · within 48h", channels: "Other channels", studioHours: "Studio Hours", studioTime: "Mon — Fri · 10:00 — 17:00 CET", studioLocation: "Bornem · Antwerp · Belgium. Weekends reserved for films and field recordings.", shortestRoute: "The shortest route ↓", copied: "Copied to clipboard ✓", clickCopy: "Click to copy", sent: "Sent ✓ Thanks.", sending: "Sending…", submit: "Let’s talk →", errGeneral: "Something went wrong. Please try again.", errNetwork: "Network error. Please check your connection and try again." },
+    card: { viewProject: "View Project ↗", previewSoon: "Preview Soon", featured: "★ Featured", soon: "Soon" },
+  },
+  nl: {
+    nav:   { home: "Home", about: "Over mij", portfolio: "Portfolio", contact: "Contact" },
+    footer: { tagline: "Grafisch ontwerper aan het snijpunt van film, muziek en machines die denken.", pages: "Pagina’s", elsewhere: "Elders", reach: "Bereik", composed: "Gemaakt in Bornem · ◇" },
+    hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Jouw lokale ontwerper uit de buurt.", tagline2: "Geobsedeerd door film, muziek en het vakmanschap", tagline3: "dat ergens tussen beide leeft.", scroll: "Scroll" },
+    featured: { eyebrow: "Uitgelicht Werk · 03", heading: "Enkele", headingItalic: "recente", heading2: "werken.", viewAll: "Bekijk alles" },
+    aboutTeaser: { eyebrow: "Over mij · 02", body: "Ik ben een grafisch en webdesigner uit België, momenteel bezig met mijn studies. Ik breng het grootste deel van mijn tijd door met het bouwen van websites en merken, maar wat me echt enthousiast maakt is film, muziek en het soort design dat aanvoelt alsof het bij beide hoort. Als grafisch en UX/UI designer probeer ik die mix te vertalen naar werk dat je voelt, niet alleen ziet.", readMore: "Lees meer", downloadCV: "CV downloaden" },
+    contactTeaser: { eyebrow: "Laten we praten · 04", heading: "Heb je een project in gedachten?", body: "Open voor samenwerkingen, opdrachten en nieuwsgierige gesprekken.", getInTouch: "Neem contact op", seeWork: "Bekijk het werk" },
+    about: {
+      eyebrow: "Over mij · 02", headingWord: "ontwerper", heading2: "achter het werk.",
+      quote: "Ik ben een grafisch ontwerper die niet één obsessie kon kiezen —", quoteItalic: "dus koos ik ze allemaal.",
+      bio1: "Van zo ver ik me kan herinneren ben ik aangetrokken tot elke vorm van creativiteit — film, muziek, animatie, kunst. Niet als aparte hobby’s, maar als één niet-aflatende drang om dingen te maken. Ik stopte vroeg met langs de zijlijn kijken en besloot het zelf te doen, zowel professioneel als voor de liefde ervan.",
+      bio2: "De ideïen houden nooit op, en ik ben echt bereid de uren te maken voor grote, ambitieuze projecten. Ik schrijf momenteel mijn eigen boek, en ik ben de tel kwijtgeraakt van de liedjes die ik schreef op piano en gitaar. Drie jaar als jeugdleider — wat een uitstekende training blijkt voor het managen van creatieve chaos.",
+      bio3: "Als ik niet achter een deadline of een melodie aan jaag, vind je me op een voetbalveld, een basketbalveld of in de gym. Sport is hoe ik mijn hoofd leegmaak. Zelfs designers moeten af en toe buiten komen.",
+      downloadCV: "CV downloaden", getInTouch: "Neem contact op",
+      factsheet: "Factsheet · 03",
+      facts: [["Momenteel","UX/UI Designer Stage @ JUNE20"],["Studie","Graduaat Digitale Vormgeving"],["Gebaseerd In","Bornem · Antwerpen · BE — ook remote beschikbaar"],["Talen","EN · NL"],["Open Voor","Freelance, samenwerkingen"]],
+      stack: "Stack · 04", stackHeading: "Wat zit er", stackItalic: "in de tas.",
+      stackGroups: [
+        { title: "Design",            items: ["Figma","Photoshop","Illustrator","InDesign"] },
+        { title: "Motion",            items: ["After Effects","Premiere","Spline","Blender"] },
+        { title: "Code",              items: ["HTML","CSS","VSCode"] },
+        { title: "AI",                items: ["Claude Code","Claude Design","Gemini","ChatGPT","NotebookLM","Google AI Studio"] },
+        { title: "Buiten het scherm", items: ["Piano","Gitaar","Voetbal","Basketball","Letterboxd","Boeken"] },
+        { title: "In rotatie",        items: ["Rock","Jazz","Hip-Hop","Singer-Songwriter","Animatiefilms","Dramaseries"] },
+      ],
+    },
+    portfolio: { eyebrow: "Portfolio · 03", heading: "Geselecteerd werk.", projects: "projecten", showing: "Toont", archive: "Meer gearchiveerd werk beschikbaar op aanvraag.", archiveBtn: "Vraag het archief op", filters: ["Alles","Web","Brand","Social & Motion","Fotografie"] },
+    contact: { eyebrow: "Contact · 04", heading: "Laten we iets maken dat de moeite waard is om naar te kijken.", formEyebrow: "Vertel me over je project.", nameLabel: "Jouw naam", emailLabel: "E-mail", projectLabel: "Type project", messageLabel: "Vertel me erover", messagePlaceholder: "Project, tijdlijn, budget, referenties — alles wat helpt.", replyTime: "Typische reactie · binnen 48u", channels: "Andere kanalen", studioHours: "Studiouren", studioTime: "Ma — Vr · 10:00 — 17:00 CET", studioLocation: "Bornem · Antwerpen · België. Weekenden gereserveerd voor films en veldopnames.", shortestRoute: "De kortste route ↓", copied: "Gekopieerd ✓", clickCopy: "Klik om te kopiëren", sent: "Verzonden ✓ Bedankt.", sending: "Versturen…", submit: "Laten we praten →", errGeneral: "Er ging iets mis. Probeer opnieuw.", errNetwork: "Netwerkfout. Controleer je verbinding en probeer opnieuw." },
+    card: { viewProject: "Bekijk Project ↗", previewSoon: "Binnenkort beschikbaar", featured: "★ Uitgelicht", soon: "Binnenkort" },
+  },
+};
+const LangContext = React.createContext({ lang: "en", setLang: () => {} });
+function useLang() { const { lang, setLang } = React.useContext(LangContext); return { lang, setLang, t: COPY[lang] }; }
+
+function Nav({ route }) {
+  const { lang, setLang, t } = useLang();
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const items = [
+    { href: "#/home",    num: "01", label: t.nav.home },
+    { href: "#/about",   num: "02", label: t.nav.about },
+    { href: "#/work",    num: "03", label: t.nav.portfolio },
+    { href: "#/contact", num: "04", label: t.nav.contact },
+  ];
+  return (
+    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "22px 0", backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none", background: scrolled ? "rgba(8, 12, 20, 0.85)" : "transparent", borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent", transition: "background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease" }}>
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <a href="#/home" style={{ fontFamily: "var(--serif)", fontSize: 22, letterSpacing: "-0.01em", color: "var(--ink)", textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontStyle: "italic" }}>Brent</span>
+          <span style={{ color: "var(--accent)" }}>Demulder</span>
+        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+          {items.map((l) => (
+            <a key={l.href} href={l.href} className={`nav-link ${route === l.href ? "active" : ""}`}>
+              <span className="num">{l.num}</span>{l.label}
+            </a>
+          ))}
+          <button onClick={() => setLang(lang === "en" ? "nl" : "en")}
+            style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-dim)", background: "transparent", border: "1px solid var(--rule)", padding: "5px 10px", cursor: "pointer", transition: "color 200ms, border-color 200ms" }}
+            onMouseEnter={e => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.borderColor = "var(--ink)"; }}
+            onMouseLeave={e => { e.currentTarget.style.color = "var(--ink-dim)"; e.currentTarget.style.borderColor = "var(--rule)"; }}>
+            {lang === "en" ? "NL" : "EN"}
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function Marquee() {
+  const items = ["DESIGN", "✺", "UX/UI", "✺", "BRAND", "✺", "MOTION", "✺", "FILM", "✺", "MUSIC", "✺"];
+  return (
+    <div style={{ position: "relative", padding: "32px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)", overflow: "hidden" }}>
+      <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 38s linear infinite", willChange: "transform" }}>
+        {[...items, ...items].map((it, i) => (
+          <span key={i} className="marquee-item" style={{ fontFamily: "var(--serif)", fontStyle: it === "✺" ? "normal" : "italic", fontSize: 64, letterSpacing: "-0.01em", paddingRight: 64 }}>{it}</span>
+        ))}
+      </div>
+      <style>{`
+        @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .marquee-item { color: var(--ink); transition: color 200ms ease; cursor: default; }
+        .marquee-item:hover { color: var(--accent); }
+      `}</style>
+    </div>
+  );
+}
+
+function Footer() {
+  const { t } = useLang();
+  const navLabels = [t.nav.home, t.nav.about, t.nav.portfolio, t.nav.contact];
+  return (
+    <footer style={{ borderTop: "1px solid var(--rule)", marginTop: 120, padding: "48px 0 32px", background: "rgba(0,0,0,0.15)" }}>
+      <div className="container">
+        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, alignItems: "start" }}>
+          <div>
+            <a href="#/home" style={{ fontFamily: "var(--serif)", fontSize: 28, color: "var(--ink)", textDecoration: "none" }}>
+              <span style={{ fontStyle: "italic" }}>Brent</span> <span style={{ color: "var(--ink-faint)" }}>Demulder</span>
+            </a>
+            <p style={{ marginTop: 12, color: "var(--ink-dim)", fontSize: 14, maxWidth: 360 }}>{t.footer.tagline}</p>
+          </div>
+          {[
+            [t.footer.pages,     navLabels.map((l, i) => [l, ["#/home","#/about","#/work","#/contact"][i]])],
+            [t.footer.elsewhere, [["LinkedIn", "https://www.linkedin.com/in/brent-demulder-042508356/"], ["GitHub", "https://github.com/Brent-Demulder"], ["Instagram", "https://www.instagram.com/brentdemulder/"], ["Letterboxd", "#"]]],
+            [t.footer.reach,     [["brent220405@gmail.com", "mailto:brent220405@gmail.com"], ["Bornem · Antwerp · BE", "#"]]],
+          ].map(([title, links]) => (
+            <div key={title}>
+              <div className="eyebrow" style={{ marginBottom: 14 }}>{title}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {links.map(([label, href]) => (
+                  <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener" style={{ fontFamily: "var(--sans)", fontSize: 14, color: "var(--ink)", textDecoration: "none", transition: "color 200ms ease" }} onMouseEnter={e => e.currentTarget.style.color = "var(--accent)"} onMouseLeave={e => e.currentTarget.style.color = "var(--ink)"}>{label}</a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hairline" style={{ marginTop: 48 }}></div>
+        <div style={{ display: "flex", justifyContent: "space-between", padding: "20px 0 0", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+          <span>© 2026 Brent Demulder</span>
+          <span>{t.footer.composed}</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+Object.assign(window, { Nav, Marquee, Footer, EdCard, ThumbPlaceholder, useReveal, PROJECTS, FILTERS, LangContext, useLang, COPY, TONE_COLOR, CAT_TONE });
+  </script>
+
+  <!-- pages -->
+  <script type="text/babel">
+const { useState: useState2, useMemo: useMemo2 } = React;
+
+function HeroCanvas() {
+  const canvasRef = React.useRef(null);
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, pts = [], raf;
+    const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+
+    function resize() {
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+
+    function init() {
+      pts = Array.from({ length: 180 }, () => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        z: 0.1 + Math.random() * 0.9,
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: (Math.random() - 0.5) * 0.10,
+        accent: Math.random() < 0.25,
+        gold: Math.random() < 0.15,
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      mouse.x += (mouse.tx - mouse.x) * 0.04;
+      mouse.y += (mouse.ty - mouse.y) * 0.04;
+      const mx = (mouse.x - 0.5) * 50;
+      const my = (mouse.y - 0.5) * 35;
+
+      for (const p of pts) {
+        p.x += p.vx + mx * p.z * 0.003;
+        p.y += p.vy + my * p.z * 0.002;
+        if (p.x < -5) p.x = W + 5;
+        if (p.x > W + 5) p.x = -5;
+        if (p.y < -5) p.y = H + 5;
+        if (p.y > H + 5) p.y = -5;
+
+        const r = 0.5 + p.z * 2;
+        const a = 0.1 + p.z * 0.5;
+        let color;
+        if (p.accent) color = `rgba(200, 70, 80, ${a})`;
+        else if (p.gold) color = `rgba(220, 180, 120, ${a})`;
+        else color = `rgba(244, 236, 216, ${a * 0.8})`;
+
+        if (p.z > 0.82 && (p.accent || p.gold)) {
+          ctx.shadowBlur = 7;
+          ctx.shadowColor = p.accent ? 'rgba(200,70,80,0.5)' : 'rgba(220,180,120,0.5)';
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      raf = requestAnimationFrame(draw);
+    }
+
+    function onMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      mouse.tx = (e.clientX - rect.left) / rect.width;
+      mouse.ty = (e.clientY - rect.top) / rect.height;
+    }
+
+    function onResize() { resize(); init(); }
+    resize(); init(); draw();
+    window.addEventListener('resize', onResize);
+    window.addEventListener('mousemove', onMove);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('mousemove', onMove);
+    };
+  }, []);
+
+  return (
+    <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 2, pointerEvents: "none" }} />
+  );
+}
+
+function HeroSpline() {
+  return (
+    <spline-viewer
+      url="https://prod.spline.design/B8sUHgb6KLFsLvIZ/scene.splinecode"
+      events-target="none"
+      style={{
+        position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 3,
+        pointerEvents: "none",
+      }}
+    ></spline-viewer>
+  );
+}
+
+function HomePage() {
+  const { t, lang } = useLang();
+  const titleRef = useReveal();
+  const subRef = useReveal();
+  const cueRef = useReveal();
+  const reelRef = useReveal();
+  const featured = PROJECTS.filter((p) => p.featured);
+  const scrollRef = React.useRef(null);
+  const scroll = (dir) => {
+    const el = scrollRef.current;
+    if (el) el.scrollBy({ left: dir * 444, behavior: "smooth" });
+  };
+  const heroRef = React.useRef(null);
+  const [splineActive, setSplineActive] = React.useState(true);
+  React.useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setSplineActive(e.isIntersecting), { threshold: 0 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div className="page" style={{ paddingTop: 0 }}>
+      <section ref={heroRef} className="vignette" style={{ position: "relative", height: "100vh", minHeight: 600, overflow: "hidden" }}>
+        <div className="hero-stage" aria-hidden="true" style={{ background: "#000" }}>
+          {splineActive && <HeroSpline />}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0.45) 50%, rgba(8,12,20,0.2) 100%)", zIndex: 4, pointerEvents: "none" }}></div>
+        </div>
+        <div className="container" style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: 96, zIndex: 5 }}>
+          <div ref={subRef} className="fade-up" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
+            <span className="accent-dot"></span>
+            <span className="eyebrow">{t.hero.eyebrow}</span>
+          </div>
+          <h1 ref={titleRef} className="fade-up hero-title" style={{ fontSize: "clamp(64px, 13vw, 220px)", margin: 0, transitionDelay: "120ms" }}>
+            Brent <span style={{ fontStyle: "italic", color: "var(--accent)" }}>Demulder</span>
+          </h1>
+          <div ref={cueRef} className="fade-up" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 32, gap: 24, flexWrap: "wrap", transitionDelay: "240ms" }}>
+            <p style={{ fontFamily: "var(--sans)", fontWeight: 300, fontSize: "clamp(15px, 1.4vw, 19px)", maxWidth: 460, color: "var(--ink-dim)", margin: 0, lineHeight: 1.55 }}>
+              {t.hero.tagline1} <span style={{ color: "var(--ink)" }}>{t.hero.tagline2}</span> {t.hero.tagline3}
+            </p>
+            <div style={{ display: "flex", gap: 12, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-dim)" }}>
+              <span>Design</span><span style={{ color: "var(--ink-faint)" }}>·</span>
+              <span>Film</span><span style={{ color: "var(--ink-faint)" }}>·</span>
+              <span>Music</span><span style={{ color: "var(--ink-faint)" }}>·</span>
+              <span className="ag">AI</span>
+            </div>
+          </div>
+        </div>
+        <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", zIndex: 5, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, color: "var(--ink-dim)", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase" }}>
+          <span>{t.hero.scroll}</span>
+          <div style={{ width: 1, height: 40, background: "var(--rule)", position: "relative", overflow: "hidden" }}>
+            <div className="scroll-cue-line" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 16, background: "var(--accent)" }}></div>
+          </div>
+        </div>
+      </section>
+      <Marquee />
+      <AboutTeaser />
+      <section style={{ padding: "140px 0 100px", background: "rgba(0,0,0,0.18)", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }}>
+        <div className="container">
+          <div ref={reelRef} className="fade-up" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 64, gap: 24, flexWrap: "wrap" }}>
+            <div>
+              <div className="eyebrow" style={{ marginBottom: 18 }}>
+                <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.featured.eyebrow}
+              </div>
+              <h2 style={{ fontSize: "clamp(40px, 6vw, 88px)", margin: 0, lineHeight: 0.95 }}>
+                {t.featured.heading} <span style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.featured.headingItalic}</span> {t.featured.heading2}
+              </h2>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", gap: 8 }}>
+                {[[-1,"←"],[1,"→"]].map(([dir, arrow]) => (
+                  <button key={dir} onClick={() => scroll(dir)} style={{ width: 44, height: 44, borderRadius: "50%", border: "1px solid var(--rule)", background: "transparent", color: "var(--ink)", fontFamily: "var(--serif)", fontSize: 18, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 250ms, background 250ms" }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = "var(--accent)"; e.currentTarget.style.background = "rgba(192,24,42,0.08)"; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--rule)"; e.currentTarget.style.background = "transparent"; }}>
+                    {arrow}
+                  </button>
+                ))}
+              </div>
+              <a href="#/work" className="btn">
+                <span>{t.featured.viewAll}</span>
+                <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>→</span>
+              </a>
+            </div>
+          </div>
+          <div style={{ position: "relative" }}>
+            <div ref={scrollRef} className="no-scrollbar" style={{ display: "flex", gap: "24px", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none", msOverflowStyle: "none" }}>
+              {featured.map((p) => (
+                <div key={p.id} style={{ flex: "0 0 480px", scrollSnapAlign: "start" }}>
+                  <EdCard p={p} ratio="16/9" />
+                </div>
+              ))}
+            </div>
+            <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 220, background: "linear-gradient(to right, transparent, #070a10)", pointerEvents: "none", zIndex: 2 }} />
+          </div>
+        </div>
+      </section>
+      <ContactTeaser />
+    </div>
+  );
+}
+
+function AboutTeaser() {
+  const { t, lang } = useLang();
+  const ref = useReveal();
+  return (
+    <section style={{ padding: "100px 0" }}>
+      <div className="container">
+        <div ref={ref} className="fade-up" style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 80, alignItems: "center" }}>
+          <div style={{ position: "relative", aspectRatio: "4/5" }}>
+            <img src="assets/Me/Home/foto ik piano.png" alt="Brent Demulder at piano" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
+            <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2 }}>
+              <span className="chip">Portrait · 01</span>
+            </div>
+          </div>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 24 }}>
+              <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.aboutTeaser.eyebrow}
+            </div>
+            <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(28px, 3.4vw, 50px)", lineHeight: 1.15, margin: 0, letterSpacing: "-0.01em" }}>
+              {lang === "en"
+                ? <>I'm a graphic designer who<br />converts <span style={{ color: "var(--accent)" }}>feelings</span> into <span className="ag" style={{ fontStyle: "italic" }}>notes.</span></>
+                : <>Ik ben een grafisch ontwerper die<br /><span style={{ color: "var(--accent)" }}>gevoelens</span> omzet in <span className="ag" style={{ fontStyle: "italic" }}>noten.</span></>
+              }
+            </p>
+            <p style={{ marginTop: 24, color: "var(--ink-dim)", fontSize: 17, lineHeight: 1.7, maxWidth: 540 }}>
+              {t.aboutTeaser.body}
+            </p>
+            <div style={{ marginTop: 32, display: "flex", gap: 14 }}>
+              <a href="#/about" className="btn">{t.aboutTeaser.readMore}</a>
+              <a href="#" className="btn" onClick={(e) => e.preventDefault()}>
+                <span>{t.aboutTeaser.downloadCV}</span>
+                <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactTeaser() {
+  const { t } = useLang();
+  const ref = useReveal();
+  return (
+    <section style={{ padding: "120px 0" }}>
+      <div className="container">
+        <div ref={ref} className="fade-up" style={{ textAlign: "center" }}>
+          <div className="eyebrow" style={{ marginBottom: 24 }}>{t.contactTeaser.eyebrow}</div>
+          <h2 style={{ fontSize: "clamp(48px, 8vw, 120px)", margin: 0, lineHeight: 0.95 }}>
+            {t.contactTeaser.heading}
+          </h2>
+          <p style={{ marginTop: 24, color: "var(--ink-dim)", fontSize: 18, maxWidth: 540, marginLeft: "auto", marginRight: "auto" }}>
+            {t.contactTeaser.body}
+          </p>
+          <div style={{ marginTop: 36, display: "inline-flex", gap: 14 }}>
+            <a href="#/contact" className="btn btn-primary">{t.contactTeaser.getInTouch}</a>
+            <a href="#/work" className="btn">{t.contactTeaser.seeWork}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+function AboutPage() {
+  const { t, lang } = useLang();
+  const headerRef = useReveal();
+  const portraitRef = useReveal();
+  const bioRef = useReveal();
+  const factsRef = useReveal();
+  const stackRef = useReveal();
+  return (
+    <div className="page">
+      <div className="container">
+        <div ref={headerRef} className="fade-up" style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 40, paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 20 }}>
+              <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.eyebrow}
+            </div>
+            <h1 style={{ fontSize: "clamp(56px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
+              {lang === "en"
+                ? <>The <span className="ag" style={{ fontStyle: "italic" }}>designer</span><br />behind the work.</>
+                : <>De <span className="ag" style={{ fontStyle: "italic" }}>ontwerper</span><br />achter het werk.</>
+              }
+            </h1>
+          </div>
+          <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+            <div>Bornem · Antwerp · BE</div><div>EST. 2005</div>
+          </div>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 80, paddingTop: 80 }}>
+          <div ref={portraitRef} className="fade-up" style={{ position: "sticky", top: 120, alignSelf: "start" }}>
+            <div style={{ position: "relative", aspectRatio: "4/5" }}>
+              <img src="assets/Me/About/Foto 1.png" alt="Brent Demulder" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "90% center", display: "block" }} />
+              <div style={{ position: "absolute", top: 14, left: 14 }}>
+                <span className="chip">Portrait · 02</span>
+              </div>
+            </div>
+            <div style={{ marginTop: 18, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", display: "flex", justifyContent: "space-between" }}>
+              <span>Brent · 21</span><span>Belgium</span>
+            </div>
+          </div>
+          <div ref={bioRef} className="fade-up">
+            <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(28px, 3vw, 44px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
+              {t.about.quote} <span className="ag" style={{ fontStyle: "italic" }}>{t.about.quoteItalic}</span>
+            </p>
+            <div style={{ marginTop: 40, display: "grid", gap: 22, fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-dim)" }}>
+              <p style={{ margin: 0 }}>{t.about.bio1}</p>
+              <p style={{ margin: 0 }}>{t.about.bio2}</p>
+              <p style={{ margin: 0 }}>{t.about.bio3}</p>
+            </div>
+            <div style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <a href="#" className="btn btn-primary" onClick={(e) => e.preventDefault()}>
+                <span>{t.about.downloadCV}</span>
+                <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
+              </a>
+              <a href="#/contact" className="btn">{t.about.getInTouch}</a>
+            </div>
+          </div>
+        </div>
+        <div ref={factsRef} className="fade-up" style={{ marginTop: 120 }}>
+          <div className="eyebrow" style={{ marginBottom: 24 }}>
+            <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.factsheet}
+          </div>
+          <div style={{ borderTop: "1px solid var(--rule)" }}>
+            {t.about.facts.map(([k, v]) => (
+              <div key={k} style={{ display: "grid", gridTemplateColumns: "240px 1fr", padding: "22px 0", borderBottom: "1px solid var(--rule)", alignItems: "baseline" }}>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{k}</span>
+                <span style={{ fontFamily: "var(--serif)", fontSize: "clamp(20px, 1.8vw, 28px)", color: "var(--ink)" }}>{v}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div ref={stackRef} className="fade-up" style={{ marginTop: 120 }}>
+          <div className="eyebrow" style={{ marginBottom: 24 }}>
+            <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.stack}
+          </div>
+          <h2 style={{ fontSize: "clamp(32px, 4vw, 56px)", margin: "0 0 32px", lineHeight: 1, letterSpacing: "-0.01em" }}>
+            {t.about.stackHeading} <span style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.about.stackItalic}</span>
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+            {t.about.stackGroups.map((g) => (
+              <div key={g.title} style={{ padding: "20px 0", borderTop: "1px solid var(--rule)" }}>
+                <div className="eyebrow ag" style={{ marginBottom: 12 }}>{g.title}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {g.items.map((item) => <span key={item} className="chip">{item}</span>)}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function PortfolioPage() {
+
+  const { t, lang } = useLang();
+  const [filter, setFilter] = useState2(window.__returnFilter || "All");
+  const [visible, setVisible] = useState2(true);
+  const headerRef = useReveal();
+  React.useEffect(() => { window.__returnFilter = null; }, []);
+  const counts = useMemo2(() => {
+    const c = { All: PROJECTS.length };
+    FILTERS.slice(1).forEach((f) => { c[f] = PROJECTS.filter((p) => p.category === f).length; });
+    return c;
+  }, []);
+  const filtered = useMemo2(() => (filter === "All" ? PROJECTS : PROJECTS.filter((p) => p.category === filter)), [filter]);
+  const handleFilter = (f) => {
+    if (f === filter) return;
+    setVisible(false);
+    setTimeout(() => { setFilter(f); setVisible(true); }, 150);
+  };
+  return (
+    <div className="page">
+      <div className="container">
+        <div ref={headerRef} className="fade-up" style={{ paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 40 }}>
+            <div>
+              <div className="eyebrow" style={{ marginBottom: 20 }}>
+                <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.portfolio.eyebrow}
+              </div>
+              <h1 style={{ fontSize: "clamp(56px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
+
+                <span className="ag" style={{ fontStyle: "italic" }}>{lang === "en" ? "Selected" : "Geselecteerd"} <span style={{ color: "var(--accent)" }}>{lang === "en" ? "work." : "werk."}</span></span>
+              </h1>
+            </div>
+            <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+              <div>{String(PROJECTS.length).padStart(2, "0")} {t.portfolio.projects}</div>
+              <div>2024 — 2026</div>
+            </div>
+          </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "32px 0", borderBottom: "1px solid var(--rule)", gap: 24, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+            {FILTERS.map((f, fi) => (
+              <button key={f} onClick={() => handleFilter(f)} className={`filter-tab ${filter === f ? "active" : ""}`}>
+                {t.portfolio.filters[fi]}<span className="count">{String(counts[f] || 0).padStart(2, "0")}</span>
+              </button>
+            ))}
+          </div>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+            {t.portfolio.showing} {String(filtered.length).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
+          </div>
+        </div>
+        <div style={{ padding: "64px 0 32px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "56px 32px" }}>
+            {filtered.map((p, i) => (
+              <div key={`${filter}-${p.id}`} style={visible
+                ? { animation: `filterIn 650ms cubic-bezier(0.16,1,0.3,1) ${(i % 3) * 140}ms both` }
+                : { opacity: 0, transform: "translateY(30px)", transition: "opacity 240ms ease, transform 240ms ease" }
+              }>
+                <EdCard p={p} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div style={{ marginTop: 40, padding: "32px 0", borderTop: "1px solid var(--rule)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+          <p style={{ margin: 0, fontFamily: "var(--serif)", fontSize: 22, fontStyle: "italic", color: "var(--accent)" }}>{t.portfolio.archive}</p>
+          <a href="#/contact" className="btn btn-primary">{t.portfolio.archiveBtn}</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+function ContactPage() {
+
+  const { t, lang } = useLang();
+  const headerRef = useReveal();
+  const emailRef = useReveal();
+  const formRef = useReveal();
+  const [copied, setCopied] = useState2(false);
+  const [form, setForm] = useState2({ name: "", email: "", project: "Web", message: "" });
+  const [sent, setSent] = useState2(false);
+  const [submitting, setSubmitting] = useState2(false);
+  const [error, setError] = useState2(null);
+  const copy = (e) => {
+    e.preventDefault();
+    navigator.clipboard?.writeText("brent220405@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+  const submit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await fetch("https://formspree.io/f/xkoezpnv", {
+        method: "POST",
+        headers: { "Accept": "application/json", "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name, email: form.email, project: form.project, message: form.message }),
+      });
+      if (res.ok) {
+        setSent(true);
+        setForm({ name: "", email: "", project: "Web", message: "" });
+      } else {
+        const data = await res.json();
+        setError(data.errors ? data.errors.map((err) => err.message).join(", ") : t.contact.errGeneral);
+      }
+    } catch {
+      setError(t.contact.errNetwork);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  return (
+    <div className="page">
+      <div className="container">
+        <div ref={headerRef} className="fade-up" style={{ paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
+          <div className="eyebrow" style={{ marginBottom: 20 }}>
+            <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.contact.eyebrow}
+          </div>
+          <h1 style={{ fontSize: "clamp(56px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
+            {lang === "en" ? "Let" + "'s make something " : "Laten we iets maken dat "}<span style={{ color: "var(--accent)" }}>{lang === "en" ? "worth watching." : "de moeite waard is om te bekijken."}</span>
+          </h1>
+        </div>
+        <div style={{ padding: "80px 0" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "7fr 5fr", gap: 80, alignItems: "start" }}>
+            <form ref={formRef} className="fade-up" onSubmit={submit}>
+              <div className="eyebrow" style={{ marginBottom: 24 }}>{t.contact.formEyebrow}</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+                <label style={{ display: "block" }}>
+                  <span style={{ display: "block", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.nameLabel}</span>
+                  <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Jane Doe"
+                    style={{ width: "100%", marginTop: 8, padding: "14px 16px", background: "rgba(0,0,0,0.18)", border: "1px solid var(--rule)", color: "var(--ink)", fontFamily: "var(--sans)", fontSize: 15, outline: "none", borderRadius: 0 }}
+                    onFocus={(e) => (e.target.style.borderColor = "var(--accent)")} onBlur={(e) => (e.target.style.borderColor = "var(--rule)")} />
+                </label>
+                <label style={{ display: "block" }}>
+                  <span style={{ display: "block", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.emailLabel}</span>
+                  <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="jane@studio.com"
+                    style={{ width: "100%", marginTop: 8, padding: "14px 16px", background: "rgba(0,0,0,0.18)", border: "1px solid var(--rule)", color: "var(--ink)", fontFamily: "var(--sans)", fontSize: 15, outline: "none", borderRadius: 0 }}
+                    onFocus={(e) => (e.target.style.borderColor = "var(--accent)")} onBlur={(e) => (e.target.style.borderColor = "var(--rule)")} />
+                </label>
+              </div>
+              <div style={{ marginBottom: 24 }}>
+                <span style={{ display: "block", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.projectLabel}</span>
+                <div style={{ display: "flex", gap: 0, marginTop: 8, border: "1px solid var(--rule)" }}>
+                  {["Web", "Brand", "Motion", "AI", "Other"].map((p) => (
+                    <button key={p} type="button" onClick={() => setForm({ ...form, project: p })}
+                      style={{ flex: 1, padding: "14px 12px", background: form.project === p ? "linear-gradient(90deg, #c0182a, #8a1040)" : "transparent", color: form.project === p ? "var(--bg)" : "var(--ink-dim)", border: "none", borderRight: "1px solid var(--rule)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", cursor: "pointer", transition: "all 200ms ease" }}>{p}</button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ marginBottom: 32 }}>
+                <span style={{ display: "block", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.messageLabel}</span>
+                <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={6}
+                  placeholder={t.contact.messagePlaceholder}
+                  style={{ width: "100%", marginTop: 8, padding: 16, background: "rgba(0,0,0,0.18)", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--ink)", fontFamily: "var(--sans)", fontSize: 15, resize: "vertical", outline: "none" }}
+                  onFocus={(e) => (e.target.style.borderColor = "var(--accent)")} onBlur={(e) => (e.target.style.borderColor = "var(--rule)")} />
+              </div>
+              {error && (
+                <p style={{ margin: "0 0 16px", fontFamily: "var(--mono)", fontSize: 11, color: "var(--accent)", letterSpacing: "0.1em" }}>{error}</p>
+              )}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
+                <button type="submit" disabled={submitting || sent} className="btn btn-primary" style={{ padding: "16px 32px", opacity: (submitting || sent) ? 0.7 : 1 }}>
+                  {sent ? t.contact.sent : submitting ? t.contact.sending : t.contact.submit}
+                </button>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.replyTime}</span>
+              </div>
+            </form>
+            <aside style={{ position: "sticky", top: 120 }}>
+              <div className="eyebrow" style={{ marginBottom: 24 }}>{t.contact.channels}</div>
+              <div style={{ borderTop: "1px solid var(--rule)" }}>
+                {[["LinkedIn", "linkedin.com/in/brent-demulder", "https://www.linkedin.com/in/brent-demulder-042508356/"], ["GitHub", "github.com/Brent-Demulder", "https://github.com/Brent-Demulder"], ["Instagram", "@brentdemulder", "https://www.instagram.com/brentdemulder/"], ["Letterboxd", "@brentdemulder", "https://letterboxd.com/brentdemulder/"]].map(([label, handle, href]) => (
+                  <a key={label} href={href} target={href !== "#" ? "_blank" : undefined} rel="noopener"
+                    style={{ display: "grid", gridTemplateColumns: "1fr auto", padding: "20px 0", borderBottom: "1px solid var(--rule)", alignItems: "center", textDecoration: "none", color: "var(--ink)", transition: "color 200ms ease" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}>
+                    <span style={{ fontFamily: "var(--serif)", fontSize: 22 }}>{label}</span>
+                    <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.15em", color: "var(--ink-faint)" }}>{handle} ↗</span>
+                  </a>
+                ))}
+              </div>
+              <div style={{ marginTop: 48, padding: 24, border: "1px solid var(--rule)", background: "rgba(0,0,0,0.18)" }}>
+                <div className="eyebrow ag" style={{ marginBottom: 12 }}>{t.contact.studioHours}</div>
+                <p style={{ margin: 0, fontFamily: "var(--serif)", fontSize: 20, lineHeight: 1.4 }}>{t.contact.studioTime}</p>
+                <p style={{ margin: "10px 0 0", fontSize: 13, color: "var(--ink-dim)" }}>{t.contact.studioLocation}</p>
+                <p style={{ margin: "16px 0 0", fontSize: 13, color: "var(--ink-dim)" }}>
+                  <a href="tel:+32470805961" style={{ color: "var(--ink)", textDecoration: "none" }}>+32 470 80 59 61</a>
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+        <div ref={emailRef} className="fade-up" style={{ padding: "80px 0", textAlign: "center", borderTop: "1px solid var(--rule)" }}>
+          <p style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", margin: "0 0 24px" }}>{t.contact.shortestRoute}</p>
+          <a href="mailto:brent220405@gmail.com" onClick={copy} className="contact-email">
+            brent220405<span className="ag">@</span>gmail.com
+          </a>
+          <div style={{ marginTop: 18, height: 18, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: copied ? "var(--accent)" : "var(--ink-faint)" }}>
+            {copied ? t.contact.copied : t.contact.clickCopy}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+function BackButton({ category }) {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <a href="#/work" onClick={() => { if (category) window.__returnFilter = category; }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+       style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: hov ? "var(--accent)" : "var(--ink-dim)", textDecoration: "none", marginBottom: 48, transition: "color 0.2s, transform 0.2s", transform: hov ? "translateX(-4px)" : "translateX(0)" }}>
+      &#8592; Back
+    </a>
+  );
+}
+
+function ProjectHeader({ p }) {
+  const tone = CAT_TONE[p.category] || "crimson";
+  const ac = TONE_COLOR[tone];
+  return (
+    <div style={{ marginBottom: 60 }}>
+      <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: ac, marginBottom: 20, display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ width: 6, height: 6, borderRadius: "50%", background: ac, display: "inline-block" }} />
+        {p.category} · {p.year}
+      </div>
+      <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(42px, 6vw, 80px)", fontWeight: 400, fontStyle: "italic", lineHeight: 1, margin: "0 0 20px", letterSpacing: "-0.02em" }}>{p.title}</h1>
+      <p style={{ fontSize: 17, color: "var(--ink-dim)", maxWidth: 600, margin: "0 0 10px", lineHeight: 1.6 }}>{p.tagline}</p>
+      <p style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{p.role}</p>
+    </div>
+  );
+}
+
+function WebHero({ p, accentColor }) {
+  const [hovered, setHovered] = React.useState(false);
+  return p.href ? (
+    <a href={p.href} target="_blank" rel="noopener"
+       style={{ display: "block", position: "relative", overflow: "hidden", borderTop: `2px solid ${accentColor}`, textDecoration: "none" }}>
+      <img src={p.hero || p.thumb} alt={p.title} style={{ width: "100%", display: "block", objectFit: "cover", maxHeight: "72vh" }} />
+      <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.15)", display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: 24, transition: "background 0.3s" }}
+           onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+        <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "#fff", background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.6)", padding: "8px 16px" }}>
+          Visit site &#8599;
+        </span>
+      </div>
+    </a>
+  ) : (
+    <div style={{ borderTop: `2px solid ${accentColor}`, position: "relative" }}>
+      <img src={p.hero || p.thumb} alt={p.title} style={{ width: "100%", display: "block", objectFit: "cover", maxHeight: "72vh" }} />
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", pointerEvents: "none" }} />
+    </div>
+  );
+}
+
+function Carousel({ images }) {
+  const [idx, setIdx] = React.useState(0);
+  if (!images || images.length === 0) return null;
+  const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
+  const next = () => setIdx(i => (i + 1) % images.length);
+  return (
+    <div>
+      <div style={{ position: "relative", overflow: "hidden", background: "var(--bg-2)" }}>
+        <img src={images[idx]} alt="" style={{ width: "100%", display: "block", objectFit: "contain", maxHeight: "72vh" }} />
+        {images.length > 1 && (
+          <>
+            <button onClick={prev} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid var(--rule)", color: "#fff", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 16, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center" }}>&#8592;</button>
+            <button onClick={next} style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid var(--rule)", color: "#fff", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 16, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center" }}>&#8594;</button>
+            <div style={{ position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8 }}>
+              {images.map((_, i) => (
+                <button key={i} onClick={() => setIdx(i)}
+                        style={{ width: i === idx ? 24 : 8, height: 8, border: "none", borderRadius: 4, background: i === idx ? "#fff" : "rgba(255,255,255,0.3)", cursor: "pointer", padding: 0, transition: "width 0.2s, background 0.2s" }} />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div style={{ marginTop: 10, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-faint)", textAlign: "right" }}>{idx + 1} / {images.length}</div>
+    </div>
+  );
+}
+
+function Lightbox({ images, index, onClose }) {
+  const [idx, setIdx] = React.useState(index);
+  const [hovPrev, setHovPrev] = React.useState(false);
+  const [hovNext, setHovNext] = React.useState(false);
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); if (e.key === "ArrowLeft") setIdx(i => Math.max(0, i - 1)); if (e.key === "ArrowRight") setIdx(i => Math.min(images.length - 1, i + 1)); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose, images.length]);
+  const btn = (hov) => ({ background: "transparent", border: `1px solid ${hov ? "#fff" : "rgba(255,255,255,0.35)"}`, color: hov ? "#fff" : "rgba(255,255,255,0.6)", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s, color 0.2s" });
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.93)", zIndex: 9000, display: "flex", alignItems: "center", justifyContent: "center", cursor: "zoom-out" }}>
+      <img src={encodeURI(images[idx])} alt="" style={{ maxWidth: "88vw", maxHeight: "88vh", objectFit: "contain" }} onClick={e => e.stopPropagation()} />
+      {idx > 0 && <button onMouseEnter={() => setHovPrev(true)} onMouseLeave={() => setHovPrev(false)} onClick={e => { e.stopPropagation(); setIdx(i => i - 1); }} style={{ ...btn(hovPrev), position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)" }}>&#8592;</button>}
+      {idx < images.length - 1 && <button onMouseEnter={() => setHovNext(true)} onMouseLeave={() => setHovNext(false)} onClick={e => { e.stopPropagation(); setIdx(i => i + 1); }} style={{ ...btn(hovNext), position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)" }}>&#8594;</button>}
+      <button onClick={onClose} style={{ ...btn(false), position: "absolute", top: 20, right: 20 }}>&#10005;</button>
+      <div style={{ position: "absolute", bottom: 20, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", color: "rgba(255,255,255,0.5)" }}>{idx + 1} / {images.length}</div>
+    </div>
+  );
+}
+const CASE_STUDY_DATA = {
+  "gedeon-richter": { sections: [
+    { heading: "De Opdracht", body: "Dit was mijn eerste project bij JUNE20 — een puur UX/UI project. We moesten een extensie maken van de bestaande Gedeon Richter website, exclusief voor dokters en verplegers met een RIZIV-nummer. Het platform bundelt medische en wetenschappelijke informatie over vrouwengezondheid: contraceptie, endometriose, fertiliteit, menopauze en meer." },
+    { heading: "Pagina's", images: ["assets/projects/NEW/Web/Gedeon Richter Pro/Pagina's/GR - Content detailpagina.png","assets/projects/NEW/Web/Gedeon Richter Pro/Pagina's/GR - Geneesmiddel detailpagina.png"], type: "thumbs" },
+    { heading: "Mijn Bijdrage", body: "Ik mocht nieuwe pagina's en content blokken designen. De speciale pagina's — de 404-pagina en de evenementenpagina — heb ik volledig zelf ontworpen. Ook het favicon logo is van mijn hand. Het moment dat mijn designs op een echte professionele site verschenen gaf me echt een voldaan gevoel." },
+    { images: ["assets/projects/NEW/Web/Gedeon Richter Pro/Cards/GR_Template_MetBeeld_Blauw.png","assets/projects/NEW/Web/Gedeon Richter Pro/Cards/GR_Template_MetBeeld_Roze.png","assets/projects/NEW/Web/Gedeon Richter Pro/Cards/GR_Template_ZonderBeeld_DonkerBlauw.png"] },
+    { images: ["assets/projects/NEW/Web/Gedeon Richter Pro/Pop-ups/Login pop-up.png","assets/projects/NEW/Web/Gedeon Richter Pro/Pop-ups/Bevestigingsboodschap.png","assets/projects/NEW/Web/Gedeon Richter Pro/Pop-ups/Foutmeldingen.png"] },
+    { heading: "Grafieken", images: ["assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/Frans.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/Frans - 1.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/Frans - 3.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/Lenzetto 1.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/Lenzetto 2 - Nederlands.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/RYEQO® - Frans - 1.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/RYEQO® - Frans - 2.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/RYEQO® - FRANS - 4.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/RYEQO® - Nederlands - 1.png","assets/projects/NEW/Web/Gedeon Richter Pro/Grafieken/RYEQO® -Nederlands - 2.png"], type: "carousel" }
+  ]},
+  "curendis": { sections: [
+    { heading: "De Opdracht", body: "Curendis is mijn recentste project. De bedoeling was de website volledig opnieuw aan te pakken — een puur UX/UI gerichte opdracht. Na een korte briefing en brand guide begon ik met vele low-fi wireframes." },
+    { heading: "Het Proces", body: "Daaruit kon ik cherry-picken om zo mid-fi designs te realiseren. Michiel was ondertussen ook zelf bezig, dus voor mijn high-fi designs heb ik alles samengebracht en daar nog meerdere varianten op gemaakt. In totaal maakte ik ongeveer 14 landingspagina's. Curendis is een multidisciplinaire kliniek gericht op het verbeteren van gezondheid en levenskwaliteit." }
+  ]},
+  "june20-web": { sections: [
+    { heading: "De Opdracht", body: "Voor JUNE20 zelf heb ik ook een paar opdrachten mogen doen. Waaronder een motion vacature voor een nieuwe brand designer — vier animaties die de sfeer van het bureau neerzetten." },
+    { heading: "Headers & Footers", body: "Daarna heb ik ook headers en footers ontworpen voor de vernieuwde JUNE20 website. Verschillende varianten, zodat het team kon kiezen welke het best bij de nieuwe huisstijl aansluit. JUNE20 is een Belgisch creatief bureau dat zich profileert als: 'Small enough to CARE and big enough to MAKE IT HAPPEN.'" },
+    { heading: "Headers", images: ["assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 1.png","assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 4.png","assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 7.png"] },
+    { heading: "Footers", images: ["assets/projects/NEW/Web/JUNE20/Footer/Footer.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 2.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 3.png"] }
+  ]},
+  "june20-social": { sections: [
+    { heading: "De Opdracht", body: "Voor JUNE20 heb ik een motion vacature gemaakt voor een nieuwe brand designer — vier animaties die de sfeer van het bureau neerzetten. JUNE20 is een Belgisch creatief bureau dat zich profileert als: 'Small enough to CARE and big enough to MAKE IT HAPPEN.'" }
+  ]},
+  "oscare": { sections: [
+  { heading:"De Opdracht", body:"De bedoeling van deze opdracht was om mijn marketing skills uit te breiden. Ik moest onderzoek doen naar Oscare — al een klant van JUNE20 — en een campagne verzinnen en uitwerken. Ik koos voor de Fire Escape Truck: een mobiele escape room die ze al hebben maar waarvoor nog weinig reclame is gemaakt." },
+  { heading:"De Campagne", body:"Ik heb research gedaan met behulp van NotebookLM en alles in een rapport gebundeld. Daarna maakte ik banner designs en social media posts, waarbij ik A/B testing gebruikte en vier verschillende thema's uitwerkte: Kamp, BBQ, Nieuwjaar en School. Als laatste maakte ik een landingspagina met een formulier om de truck te huren — beschikbaar in een licht en donker thema." },
+  { heading:"Banners", images:["assets/projects/NEW/Brand/Oscare/Banners/Banner A.png","assets/projects/NEW/Brand/Oscare/Banners/Banner B.1.png","assets/projects/NEW/Brand/Oscare/Banners/Banner B.2.png"] },
+  { heading:"Sociale media posts", type:"accordion", items:[{ label:"Kamp — Leiding", images:["assets/projects/NEW/Brand/Oscare/Posts/DG_Leiding_Kamp/4x5_Oscare_Statisch_1.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Leiding_Kamp/4x5_Oscare_Statisch_2.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Leiding_Kamp/4x5_Oscare_Statisch_3.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Leiding_Kamp/4x5_Oscare_Statisch_4.png"] },
+    { label:"BBQ — Ouders", images:["assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_BBQ/4x5_Oscare_Statisch_1.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_BBQ/4x5_Oscare_Statisch_2.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_BBQ/4x5_Oscare_Statisch_3.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_BBQ/4x5_Oscare_Statisch_4.png"] },
+    { label:"Nieuwjaar — Ouders", images:["assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_Nieuwjaar/4x5_Oscare_Statisch_1.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_Nieuwjaar/4x5_Oscare_Statisch_2.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_Nieuwjaar/4x5_Oscare_Statisch_3.png","assets/projects/NEW/Brand/Oscare/Posts/DG_Ouders_Nieuwjaar/4x5_Oscare_Statisch_4.png"] },
+    { label:"School", images:["assets/projects/NEW/Brand/Oscare/Posts/DG_School/4x5_Oscare_Statisch_1.png","assets/projects/NEW/Brand/Oscare/Posts/DG_School/4x5_Oscare_Statisch_2.png","assets/projects/NEW/Brand/Oscare/Posts/DG_School/4x5_Oscare_Statisch_3.png","assets/projects/NEW/Brand/Oscare/Posts/DG_School/4x5_Oscare_Statisch_4.png"] }] }
+] },
+  "thomas-more": { sections: [
+  { heading:"De Opdracht", body:"Dit project heb ik al de eerste dag van stage gekregen. We moesten sociale media posts maken voor campagnes van verpleegkunde, vroedkunde en sociaal werk. Ik maakte templates in meerdere kleuren en lay-outs (1x1, 4x5 en 9x16) en Motion Designs in After Effects in dezelfde formaten." },
+  { heading:"Verpleegkunde", type:"accordion", items:[{ label:"Statisch — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/A3 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/A3 4x5 (TikTok & Instagram).png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/A3 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/B1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/B1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/B1 9x16 (TikTok).png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/C2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/C2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Blauw/C2 9x16 (Instagram).png"] },
+    { label:"Statisch — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/A3 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/A3 4x5 (TikTok & Instagram).png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/A3 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/B1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/B1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/B1 9x16 (TikTok).png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/C2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/C2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Oranje/C2 9x16 (Instagram).png"] },
+    { label:"Carrousel — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 3 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 3 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Blauw/Carrousel 3 9x16.png"] },
+    { label:"Carrousel — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 3 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 3 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Carrousel/Oranje/Carrousel 3 9x16.png"] },
+    { label:"Motion", videos:["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Motion/THMO_Verpleegkunde.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Motion/THMO_Verpleegkunde_1.mp4"] }] },
+  { heading:"Vroedkunde", type:"accordion", items:[{ label:"Sell Statisch — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static3_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static3_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static5_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static5_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static5_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static7_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static7_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Statisch/Sell_static7_9x16.png"] },
+    { label:"Sell Carrousel — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_1_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_1_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_2_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_2_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Blauw/Carrousel/Sell_Carrousel_3_4x5.png"] },
+    { label:"Sell Statisch — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static3_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static3_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static5_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static5_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static5_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static7_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static7_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/Statisch/Sell_static7_9x16.png"] },
+    { label:"Sell Carrousel — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_1_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_1_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_2_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_2_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Sell/Oranje/carrousel/Sell_Carrousel_3_4x5.png"] },
+    { label:"Touch Statisch — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static3_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static3_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static3_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static4_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static4_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static5_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static8_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static8_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Statisch/touch_static8_9x16.png"] },
+    { label:"Touch Carrousel — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_1_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_1_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_2_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_2_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Blauw/Carrousel/Touch_Carrousel_3_4x5.png"] },
+    { label:"Touch Statisch — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static3_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static3_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static3_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static4_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static4_9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static5_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static8_1_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static8_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/statisch/touch_static8_9x16.png"] },
+    { label:"Touch Carrousel — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_1_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_1_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_2_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_2_4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_3_1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Touch/Oranje/Carrousel/Touch_Carrousel_3_4x5.png"] },
+    { label:"Motion", videos:["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Motion/THMO_Vroedkunde_Sell.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Motion/THMO_Vroedkunde_Tell.mp4"] }] },
+  { heading:"Sociaal Werk", type:"accordion", items:[{ label:"Touch Statisch — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/1x1_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/1x1_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/1x1_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/4x5THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/4x5_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/4x5_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/9x16_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/9x16_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Blauw/9x16_THMO_Static_3.png"] },
+    { label:"Touch Statisch — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/1x1_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/1x1_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/1x1_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/4x5THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/4x5_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/4x5_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/9x16_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/9x16_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Statisch/Oranje/9x16_THMO_Static_3.png"] },
+    { label:"Sell Statisch — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/1x1_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/1x1_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/1x1_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/1x1_THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/1x1_THMO_Static_3_V3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/4x5THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/4x5THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/4x5THMO_Static_3_V3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/4x5_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/4x5_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/9x16_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/9x16_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/9x16_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/9x16_THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Blauw/9x16_THMO_Static_3_V3.png"] },
+    { label:"Sell Statisch — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/1x1_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/1x1_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/1x1_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/1x1_THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/1x1_THMO_Static_3_V3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/4x5THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/4x5THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/4x5THMO_Static_3_V3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/4x5_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/4x5_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/9x16_THMO_Static_1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/9x16_THMO_Static_2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/9x16_THMO_Static_3.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/9x16_THMO_Static_3_V2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Static/Oranje/9x16_THMO_Static_3_V3.png"] },
+    { label:"Touch Carrousel — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 3 1x1-1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 3 1x1-2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Blauw/Carrousel 3 1x1.png"] },
+    { label:"Touch Carrousel — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 3 1x1-1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 3 1x1-2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 3 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 3 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Carrousel/Oranje/Carrousel 3 9x16.png"] },
+    { label:"Sell Carrousel — Blauw", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 3 1x1-1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 3 1x1-2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/blauw/Carrousel 3 1x1.png"] },
+    { label:"Sell Carrousel — Oranje", images:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 1 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 1 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 1 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 2 1x1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 2 4x5.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 2 9x16.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 3 1x1-1.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 3 1x1-2.png","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Sell Carrousel/Oranje/Carrousel 3 1x1.png"] },
+    { label:"Motion", videos:["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Motion/THMO_SociaalWerk_Sell.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Motion/THMO_SociaalWerk_Touch.mp4"] }] },
+  { body:"Na afloop gaf ik de templates in via Figma Buzz en presenteerde ik een korte uitleg aan de collega's zodat zij de templates zelf snel kunnen aanpassen. Na feedback van de klant werden ook kleurvariaties toegevoegd, waarna het project was afgerond." }
+] },
+  "stromer": { sections: [
+  { heading:"De Opdracht", body:"Voor Stromer — een Zwitsers merk van speed pedelecs — maakte ik een volledige social media campagne op basis van een Tell & Sell strategie. De Tell-campagne focust op merkbeleving via testimonials en brand storytelling: personal, financial en reputation. De Sell-campagne zet de USP's van de fietsmodellen in de kijker. Per strategie maakte ik statische posts, carousels en motion designs in meerdere formaten." },
+  { heading:"Tell", type:"accordion", items:[{ label:"Statische posts", images:["assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1 Stromer_Static_Credebility_ZQ_2.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Christoph__ST3_-De_auto_is_verl.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Claudia__ST2__1-Op_kantoor_aank.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Claudia__ST2__1-Snel,_betrouwba.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Elly__ST2__3745-Elke_rit_is_een.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Jael__ST5__2335-Nooit_meer_wach.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Kristian__ST5__-‎Heb_m’n_fitnes.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Martin__ST5__+_-Ik_pak_nu_lieve.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Martin__ST5__+_-Net_zo_betrouwb.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Martin__ST5__17-17.000_km_en_no.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Martin__ST5__17-Nooit_gedacht_d.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Olivier__ST2__1-Rijdt_zo_soepel.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Patrick__ST7__1-Beste_aankoop_d.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Raphael__ST3__2-Auto_weg!_Nu_10.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Raphael__ST3__2-Beste_keuze_die.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Statische posts/1x1_Stromer_Sta-Wim__ST7__11146-Dé_oplossing_vo.png"] },
+    { label:"Carrousel Financial", images:["assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/1/1x1 Stromer_Carrousel_Financial_1.1.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/1/1x1 Stromer_Carrousel_Financial_1.2.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/1/1x1 Stromer_Carrousel_Financial_1.3.png"] },
+    { label:"Carrousel Credibility", images:["assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/2/1x1 Stromer_Carrousel_Credebility_1.1.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/2/1x1 Stromer_Carrousel_Credebility_1.2.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/2/1x1 Stromer_Carrousel_Credebility_1.3.png"] },
+    { label:"Carrousel Personality", images:["assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/3/1x1 Stromer_Carrousel_Personality_1.1.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/3/1x1 Stromer_Carrousel_Personality_1.2.png","assets/projects/NEW/Motion&Socials/Stromer/Tell/Carrousels/3/1x1 Stromer_Carrousel_Personality_1.3.png"] },
+    { label:"Motion Financial", videos:["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Financial/1x1/1x1_Stromer_Motion_Financial.mp4"] },
+    { label:"Motion Personal", videos:["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Personal/1x1/1x1_Stromer_Motion_Personal.mp4"] },
+    { label:"Motion Reputation", videos:["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Reputation/1x1/1x1_Stromer_Motion_Reputation.mp4"] }] },
+  { heading:"Sell", type:"accordion", items:[{ label:"Statische posts", images:["assets/projects/NEW/Motion&Socials/Stromer/Sell/Statische posts/1x1 Stromer_Static_Sell_MB_2.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Statische posts/1x1 Stromer_Static_Sell_ST1.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Statische posts/1x1 Stromer_Static_Sell_ST2.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Statische posts/1x1 Stromer_Static_Sell_ST3.png"] },
+    { label:"Carrousel", images:["assets/projects/NEW/Motion&Socials/Stromer/Sell/Carrousels/1x1 Stromer_Carrousel_Sell_ST3 1.1.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Carrousels/1x1 Stromer_Carrousel_Sell_ST3 1.2.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Carrousels/1x1 Stromer_Carrousel_Sell_ST3 1.3.png","assets/projects/NEW/Motion&Socials/Stromer/Sell/Carrousels/1x1 Stromer_Carrousel_Sell_ST3 1.4.png"] },
+    { label:"Motion", videos:["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST1_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST1_USPs_CTA_01_9x16.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST2_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST2_USPs_CTA_01_9x16.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST3_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST3_USPs_CTA_01_9x16.mp4"] }] }
+] },
+  "flipper": { sections: [
+    { heading: "De Opdracht", body: "Flipper is een vzw uit Mortsel die kinderen in groep leert zwemmen. Samen met het team gaven we de volledige huisstijl en het logo een frisse make-over." },
+    { heading: "Het Logo", body: "Het logo ontwierpen we samen met Kobe Truyens — moderner en speelser, met een herkenbaar dolfijntje als centraal element.", images: ["assets/projects/NEW/Brand/Flipper/Logo/Logo-Flipper (1).svg"], maxW: 480 },
+    { heading: "Logo Animaties", body: "Bij een nieuw logo horen animaties. De eerste laat golven over het strand rollen die het logo onthullen. De tweede bootst rimpels op het wateroppervlak na die de dolfijn omhoog laten springen.", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Golven-1.mp4","assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Rippels.mp4"], type: "video-thumbs" },
+    { heading: "Zeedieren & Stickers", body: "Flipper werkt met een niveausysteem waarbij elke groep de naam van een zeedier draagt. Ik tekende alle diertjes uit en maakte er stickers van — kinderen plakken ze na elke les in hun stickerboekje.", images: ["assets/projects/NEW/Brand/Flipper/Dieren/Clownvis.png","assets/projects/NEW/Brand/Flipper/Dieren/Guppies.png","assets/projects/NEW/Brand/Flipper/Dieren/Orka.png","assets/projects/NEW/Brand/Flipper/Dieren/Pinguïn.png","assets/projects/NEW/Brand/Flipper/Dieren/Schildpad.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeehond.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeeleeuw.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeepaard.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeester.png"], type: "icon-grid" },
+    { heading: "Stickerboekje", images: ["assets/projects/NEW/Brand/Flipper/Stickerboekje/2425_Mockupstickerboek-binnenkant_project1_Groep3-1-scaled.jpg","assets/projects/NEW/Brand/Flipper/Stickerboekje/2425_Mockupstickerboekbuitenkant_project1_Groep3.jpg-scaled.jpg"], type: "thumbs" }
+  ]},
+  "de-schakel": { sections: [
+    { heading: "De Opdracht", body: "De Schakel is een vzw uit Puurs die kwetsbare jongeren begeleidt via sport en gemeenschap. In groep werkten we aan een volledige rebranding: van logo-concepten en huisstijl tot een brandbook en merkanimaties." },
+    { heading: "Brainstorm", pdfs: ["assets/projects/NEW/Brand/De Schakel/Brainstorm/styles ideas.pdf"] },
+    { heading: "Logo Concepten", body: "De eerste logo-ontwerpen zijn volledig van mijn hand — zeven richtingen als vertrekpunt voor de rebranding, van speels tot zakelijk.", images: ["assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 1.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 2.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 3.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 4.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 5.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 6.png","assets/projects/NEW/Brand/De Schakel/logo's/Eerste versies/1x/Asset 7.png"], type: "icon-grid" },
+    { heading: "Finale Logo", body: "Het finale logo is ontworpen door een medestudent en vormt het sluitstuk van het rebrandingtraject.", pdfs: ["assets/projects/NEW/Brand/De Schakel/logo's/Finale Logo.pdf"] },
+    { heading: "Brandbook", body: "Het brandbook legt de volledige visuele identiteit van De Schakel vast en is ontworpen door Kobe Truyens.", pdfs: ["assets/projects/NEW/Brand/De Schakel/Brandbook/2526_S3_Groep3_BrandbookProject2.pdf"] },
+    { heading: "Merchandise", images: ["assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup DonkerGroen Voorkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup DonkerGroen Achterkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup Groen Voorkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup Groen Achterkant.png"], type: "grid-2" },
+    { heading: "Logo Animaties", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 1 Project 2.mp4","assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 2 Project 2.mp4"], type: "video-grid" },
+    { heading: "Case Reel", videos: ["assets/projects/NEW/Brand/De Schakel/Case video/2526_S3_Groep3_Reel Project 2.mp4"], type: "video-grid" }
+  ]},
+};
+function VideoThumb({ src, onClick }) {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <div onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+         style={{ position: "relative", cursor: "pointer", flex: "1 1 0", minWidth: 0, borderRadius: 4, overflow: "hidden" }}>
+      <video src={src} muted playsInline preload="metadata" style={{ width: "100%", display: "block", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", inset: 0, background: hov ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)", transition: "background 0.2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div style={{ width: 48, height: 48, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.8)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ borderLeft: "16px solid #fff", borderTop: "9px solid transparent", borderBottom: "9px solid transparent", marginLeft: 5 }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+function VideoLightbox({ src, onClose }) {
+  React.useEffect(() => {
+    const h = e => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, [onClose]);
+  return (
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: "relative", width: "min(90vw,960px)" }}>
+        <video src={src} controls autoPlay loop playsInline style={{ width: "100%", display: "block" }} />
+        <button onClick={onClose} style={{ position: "absolute", top: -36, right: 0, background: "none", border: "none", color: "#fff", fontSize: 24, cursor: "pointer", lineHeight: 1 }}>×</button>
+      </div>
+    </div>
+  );
+}
+function CaseAccordionItem({ item, accentColor }) {
+  const [open, setOpen] = React.useState(false);
+  const imgs = item.images ? item.images.map(src => encodeURI(src)) : [];
+  const vids = item.videos ? item.videos.map(src => encodeURI(src)) : [];
+  return (
+    <div style={{ borderTop: "1px solid var(--rule)" }}>
+      <div onClick={() => setOpen(o => !o)} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0", cursor: "pointer", userSelect: "none" }}>
+        <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: open ? accentColor : "var(--ink-dim)" }}>{item.label}</span>
+        <span style={{ fontFamily: "var(--mono)", fontSize: 18, color: accentColor, lineHeight: 1 }}>{open ? "−" : "+"}</span>
+      </div>
+      {open && (
+        <div style={{ paddingBottom: 24 }}>
+          {imgs.length > 0 && <Carousel images={imgs} />}
+          {vids.map((src, i) => (
+            <video key={i} src={src} controls loop muted playsInline style={{ width: "100%", display: "block", marginTop: (i > 0 || imgs.length > 0) ? 16 : 0 }} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+function CaseThumb({ src, onClick }) {
+  const [hov, setHov] = React.useState(false);
+  return (
+    <div onClick={onClick} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+         style={{ position: "relative", cursor: "pointer", overflow: "hidden", height: 220, flex: "0 0 auto", border: "1px solid var(--rule)" }}>
+      <img src={src} alt="" style={{ height: "100%", width: "auto", display: "block" }} />
+      <div style={{ position: "absolute", inset: 0, background: hov ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0)", transition: "background 0.2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {hov && <span style={{ color: "#fff", border: "1px solid rgba(255,255,255,0.7)", width: 36, height: 36, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>+</span>}
+      </div>
+    </div>
+  );
+}
+function CaseStudy({ p, accentColor }) {
+  const data = CASE_STUDY_DATA[p.id]; if (!data) return null; const sections = data.sections || [];
+  const [lb, setLb] = React.useState(null);
+  const [vl, setVl] = React.useState(null);
+  const [hovIdx, setHovIdx] = React.useState(-1);
+  return (
+    <div style={{ marginTop: 80, borderTop: "1px solid var(--rule)", paddingTop: 80 }}>
+      {sections.map((s, i) => {
+        const imgs = s.images ? s.images.map(src => encodeURI(src)) : [];
+        return (
+          <div key={i} style={{ marginBottom: 72 }}>
+            {(s.heading || s.body) && (
+              <div style={{ maxWidth: 680, marginBottom: (imgs.length || s.videos || s.pdfs) ? 32 : 0 }}>
+                {s.heading && (
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: accentColor }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: accentColor, flexShrink: 0 }} />
+                    {s.heading}
+                  </div>
+                )}
+                {s.body && <p style={{ margin: 0, fontSize: "clamp(15px,1.4vw,17px)", lineHeight: 1.8, color: "var(--ink-dim)" }}>{s.body}</p>}
+              </div>
+            )}
+            {imgs.length > 0 && s.type === "carousel" && <Carousel images={imgs} />}
+            {imgs.length > 0 && s.type === "thumbs" && (
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                {imgs.map((src, j) => <CaseThumb key={j} src={src} onClick={() => setLb({ images: imgs, index: j })} />)}
+              </div>
+            )}
+            {imgs.length > 0 && s.type === "icon-grid" && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
+                {imgs.map((src, j) => (
+                  <div key={j} onMouseEnter={() => setHovIdx(i * 1000 + j)} onMouseLeave={() => setHovIdx(-1)}
+                       style={{ flex: "0 0 170px", height: 170, border: hovIdx === i * 1000 + j ? `1px solid ${accentColor}` : "1px solid var(--rule)", borderRadius: 12, padding: 14, display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.18s, transform 0.18s", transform: hovIdx === i * 1000 + j ? "scale(1.06)" : "scale(1)" }}>
+                    <img src={src} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+            )}
+            {imgs.length > 0 && s.type === "grid-2" && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8, maxWidth: 560, margin: "0 auto" }}>
+                {imgs.map((src, j) => <img key={j} src={src} alt="" style={{ width: "100%", display: "block", height: "auto" }} />)}
+              </div>
+            )}
+            {s.type === "video-thumbs" && s.videos && (
+              <div style={{ display: "flex", gap: 16, maxWidth: 680, margin: "0 auto" }}>
+                {s.videos.map((src, j) => <VideoThumb key={j} src={encodeURI(src)} onClick={() => setVl(encodeURI(src))} />)}
+              </div>
+            )}
+            {s.type === "video-grid" && s.videos && (
+              <div style={{ display: "flex", gap: 16, maxWidth: s.videos.length === 1 ? 380 : 680, margin: "0 auto" }}>
+                {s.videos.map((src, j) => (
+                  <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ flex: "1 1 0", minWidth: 0, display: "block" }} />
+                ))}
+              </div>
+            )}
+            {s.type === "accordion" && s.items && s.items.length > 0 && (
+              <div style={{ border: "1px solid var(--rule)", padding: "0 20px" }}>
+                {s.items.map((item, j) => <CaseAccordionItem key={j} item={item} accentColor={accentColor} />)}
+              </div>
+            )}
+            {imgs.length > 0 && !s.type && (
+              <div style={{ display: "grid", gridTemplateColumns: imgs.length === 1 ? "1fr" : imgs.length === 2 ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: 8, maxWidth: s.maxW || undefined, margin: s.maxW ? "0 auto" : undefined }}>
+                {imgs.map((src, j) => <img key={j} src={src} alt="" style={{ width: "100%", display: "block", height: "auto" }} />)}
+              </div>
+            )}
+            {s.type !== "video-thumbs" && s.type !== "video-grid" && s.videos && s.videos.map((src, j) => (
+              <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ width: "100%", display: "block", marginTop: j > 0 ? 16 : 0 }} />
+            ))}
+            {s.pdfs && s.pdfs.map((src, j) => (
+              <embed key={j} src={encodeURI(src)} type="application/pdf" style={{ width: "100%", height: 700, display: "block", marginTop: j > 0 ? 16 : 0 }} />
+            ))}
+          </div>
+        );
+      })}
+      {lb && <Lightbox images={lb.images} index={lb.index} onClose={() => setLb(null)} />}
+      {vl && <VideoLightbox src={vl} onClose={() => setVl(null)} />}
+    </div>
+  );
+}
+
+
+function WebProjectPage({ p }) {
+  const tone = CAT_TONE[p.category] || "crimson";
+  const ac = TONE_COLOR[tone];
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
+        <BackButton category={p.category} />
+        <ProjectHeader p={p} />
+        <WebHero p={p} accentColor={ac} />
+        {CASE_STUDY_DATA[p.id] && <CaseStudy p={p} accentColor={ac} />}
+        <ProjectNav currentId={p.id} category={p.category} />
+      </div>
+    </div>
+  );
+}
+
+function BrandSocialProjectPage({ p }) {
+  const tone = CAT_TONE[p.category] || "crimson";
+  const ac = TONE_COLOR[tone];
+  const images = p.images || [];
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
+        <BackButton category={p.category} />
+        <ProjectHeader p={p} />
+        {images.length > 0 && <div style={{ borderTop: `2px solid ${ac}` }}><Carousel images={images} /></div>}
+        {CASE_STUDY_DATA[p.id] && <CaseStudy p={p} accentColor={ac} />}
+        <ProjectNav currentId={p.id} category={p.category} />
+      </div>
+    </div>
+  );
+}
+
+function PhotoProjectPage({ p }) {
+  const [lightboxIdx, setLightboxIdx] = React.useState(null);
+  const images = p.images || [];
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
+        <BackButton category={p.category} />
+        <ProjectHeader p={p} />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6, gridAutoRows: 240 }}>
+          {images.map((src, i) => (
+            <div key={i} onClick={() => setLightboxIdx(i)}
+                 style={{ gridColumn: `span ${(i % 4 === 0 || i % 4 === 3) ? 2 : 1}`, overflow: "hidden", cursor: "zoom-in", background: "var(--bg-2)" }}>
+              <img src={encodeURI(src)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.4s" }}
+                   onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+                   onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"} />
+            </div>
+          ))}
+        </div>
+        <ProjectNav currentId={p.id} category={p.category} />
+      </div>
+      {lightboxIdx !== null && <Lightbox images={images} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />}
+    </div>
+  );
+}
+function MixedProjectPage({ p }) {
+  const brandP = PROJECTS.find(pr => pr.id === "francais-brand") || p;
+  const webAc = TONE_COLOR[CAT_TONE["Web"]];
+  const brandAc = TONE_COLOR[CAT_TONE["Brand"]];
+  const images = brandP.images || (brandP.thumb ? [brandP.thumb] : []);
+  return (
+    <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
+        <BackButton category={p.category} />
+        <ProjectHeader p={p} />
+        <WebHero p={p} accentColor={webAc} />
+        <div style={{ marginTop: 80 }}>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: brandAc, marginBottom: 24, display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: brandAc, display: "inline-block" }} />
+            Brand Identity
+          </div>
+          <div style={{ borderTop: `2px solid ${brandAc}` }}>
+            <Carousel images={images} />
+          </div>
+        </div>
+        <ProjectNav currentId={p.id} category={p.category} />
+      </div>
+    </div>
+  );
+}
+
+function ProjectPage({ slug }) {
+  const resolvedSlug = slug === "francais-brand" ? "francais-web" : slug;
+  const p = PROJECTS.find(pr => pr.id === resolvedSlug);
+  if (!p) return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", marginBottom: 16 }}>404</div>
+        <a href="#/work" style={{ color: "var(--accent)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase" }}>&#8592; Back to work</a>
+      </div>
+    </div>
+  );
+  if (resolvedSlug === "francais-web") return <MixedProjectPage p={p} />;
+  if (p.category === "Photography") return <PhotoProjectPage p={p} />;
+  if (p.category === "Web") return <WebProjectPage p={p} />;
+  return <BrandSocialProjectPage p={p} />;
+}
+function ProjectNav({ currentId, category }) {
+  const navProjects = PROJECTS.filter(p => p.status !== "Coming Soon" && p.id !== "francais-brand" && p.category === category);
+  const idx = navProjects.findIndex(p => p.id === currentId);
+  const prev = idx > 0 ? navProjects[idx - 1] : null;
+  const next = idx < navProjects.length - 1 ? navProjects[idx + 1] : null;
+  const tone = (p) => TONE_COLOR[CAT_TONE[p.category] || "crimson"];
+  const [hovPrev, setHovPrev] = React.useState(false);
+  const [hovNext, setHovNext] = React.useState(false);
+  return (
+    <div style={{ borderTop: "1px solid var(--rule)", marginTop: 80, paddingTop: 48, display: "flex", justifyContent: "space-between", gap: 24, flexWrap: "wrap" }}>
+      {prev ? (
+        <a href={`#/project/${prev.id}`}
+           onMouseEnter={() => setHovPrev(true)} onMouseLeave={() => setHovPrev(false)}
+           style={{ flex: "1 1 0", minWidth: 0, textDecoration: "none", display: "flex", flexDirection: "column", gap: 10 }}>
+           <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: hovPrev ? tone(prev) : "var(--ink-faint)", transition: "color 0.2s, transform 0.2s", display: "inline-block", transform: hovPrev ? "translateX(-4px)" : "translateX(0)" }}>&#8592; Previous</span>
+           <div style={{ fontFamily: "var(--serif)", fontSize: "clamp(18px,2vw,24px)", fontStyle: "italic", lineHeight: 1.1, color: hovPrev ? tone(prev) : "var(--ink)", transition: "color 0.2s" }}>{prev.title}</div>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: tone(prev) }}>{prev.category}</div>
+        </a>
+      ) : <div style={{ flex: "1 1 0" }} />}
+      {next ? (
+        <a href={`#/project/${next.id}`}
+           onMouseEnter={() => setHovNext(true)} onMouseLeave={() => setHovNext(false)}
+           style={{ flex: "1 1 0", minWidth: 0, textDecoration: "none", display: "flex", flexDirection: "column", gap: 10, alignItems: "flex-end", textAlign: "right" }}>
+           <span style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: hovNext ? tone(next) : "var(--ink-faint)", transition: "color 0.2s, transform 0.2s", display: "inline-block", transform: hovNext ? "translateX(4px)" : "translateX(0)" }}>Next &#8594;</span>
+           <div style={{ fontFamily: "var(--serif)", fontSize: "clamp(18px,2vw,24px)", fontStyle: "italic", lineHeight: 1.1, color: hovNext ? tone(next) : "var(--ink)", transition: "color 0.2s" }}>{next.title}</div>
+          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: tone(next) }}>{next.category}</div>
+        </a>
+      ) : <div style={{ flex: "1 1 0" }} />}
+    </div>
+  );
+}
+
+Object.assign(window, { HomePage, AboutPage, PortfolioPage, ContactPage, ProjectPage });
+  </script>
+
+
+  <!-- app -->
+  <script type="text/babel">
+const TWEAK_DEFAULTS = {
+  accent: "#c0182a",
+  typePair: "instrument-grotesk",
+  depth: "noir",
+  wash: 0.4,
+  grain: 0.09,
+};
+
+const ACCENT_MAP = {
+  "#c0182a": { fg: "oklch(0.52 0.22 18)",  hueA: 18,  hueB: 8,   hueC: 28  },
+  "#e02030": { fg: "oklch(0.60 0.24 20)",  hueA: 20,  hueB: 10,  hueC: 30  },
+  "#c8862a": { fg: "oklch(0.72 0.14 60)",  hueA: 60,  hueB: 45,  hueC: 75  },
+  "#b5205e": { fg: "oklch(0.55 0.22 350)", hueA: 350, hueB: 320, hueC: 20  },
+};
+
+const TYPE_PAIRS = {
+  "instrument-grotesk": { serif: `"Instrument Serif", "Cormorant Garamond", serif`, sans: `"Space Grotesk", "DM Sans", system-ui, sans-serif` },
+  "cormorant-dm":       { serif: `"Cormorant Garamond", "Instrument Serif", serif`, sans: `"DM Sans", "Space Grotesk", system-ui, sans-serif` },
+};
+
+const DEPTH_PRESETS = {
+  noir:      { bg: "#080c14", bg2: "#0d1220", bg3: "#12182e", rule: "#1e2640", ruleSoft: "#12182e", inkFaint: "#4a5878", heroBase: "#080c14", heroTop: "#0d1220" },
+  cinema:    { bg: "#1a1410", bg2: "#241d17", bg3: "#322820", rule: "#3a342c", ruleSoft: "#2e2820", inkFaint: "#7a7160", heroBase: "#1a1410", heroTop: "#221a13" },
+  editorial: { bg: "#2b211a", bg2: "#3a2d22", bg3: "#4a3a2c", rule: "#5a4a3a", ruleSoft: "#4a3a2c", inkFaint: "#948770", heroBase: "#2b211a", heroTop: "#3a2d22" },
+};
+
+function useRoute() {
+  const isValid = (h) => ["#/home","#/about","#/work","#/contact"].includes(h) || h.startsWith("#/project/");
+  const norm = (h) => isValid(h) ? h : "#/home";
+  const [route, setRoute] = React.useState(norm(window.location.hash));
+  React.useEffect(() => {
+    if (!isValid(window.location.hash)) window.history.replaceState(null, "", "#/home");
+    const onHash = () => { setRoute(norm(window.location.hash)); window.scrollTo({ top: 0, behavior: "auto" }); };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+  return route;
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const route = useRoute();
+  const [lang, setLang] = React.useState("en");
+
+  React.useEffect(() => {
+    const r = document.documentElement.style;
+    const a = ACCENT_MAP[t.accent] || ACCENT_MAP["#b53049"];
+    r.setProperty("--accent", a.fg);
+    r.setProperty("--hero-hue-a", String(a.hueA));
+    r.setProperty("--hero-hue-b", String(a.hueB));
+    r.setProperty("--hero-hue-c", String(a.hueC));
+    const pair = TYPE_PAIRS[t.typePair] || TYPE_PAIRS["instrument-grotesk"];
+    r.setProperty("--serif", pair.serif);
+    r.setProperty("--sans", pair.sans);
+    r.setProperty("--grain-opacity", String(t.grain));
+    r.setProperty("--color-wash", String(t.wash));
+    const d = DEPTH_PRESETS[t.depth] || DEPTH_PRESETS.editorial;
+    r.setProperty("--bg", d.bg);
+    r.setProperty("--bg-2", d.bg2);
+    r.setProperty("--bg-3", d.bg3);
+    r.setProperty("--rule", d.rule);
+    r.setProperty("--rule-soft", d.ruleSoft);
+    r.setProperty("--ink-faint", d.inkFaint);
+    r.setProperty("--hero-base", d.heroBase);
+    r.setProperty("--hero-top", d.heroTop);
+  }, [t]);
+
+  let Page = HomePage;
+  if (route === "#/about")   Page = AboutPage;
+  if (route === "#/work")    Page = PortfolioPage;
+  if (route === "#/contact") Page = ContactPage;
+  const projectSlug = route.startsWith("#/project/") ? route.slice(10) : null;
+  return (
+    <LangContext.Provider value={{ lang, setLang }}>
+      <Nav route={route} />
+      <main key={route}>{projectSlug ? <ProjectPage slug={projectSlug} /> : <Page />}</main>
+      <Footer />
+      <TweaksPanel title="Tweaks">
+        <TweakSection label="Accent">
+          <TweakColor label="Color" value={t.accent} options={["#c0182a", "#e02030", "#c8862a", "#b5205e"]} onChange={(v) => setTweak("accent", v)} />
+        </TweakSection>
+        <TweakSection label="Typography">
+          <TweakRadio label="Pairing" value={t.typePair}
+            options={[{ value: "instrument-grotesk", label: "Instrument" }, { value: "cormorant-dm", label: "Cormorant" }]}
+            onChange={(v) => setTweak("typePair", v)} />
+        </TweakSection>
+        <TweakSection label="Mood">
+          <TweakRadio label="Depth" value={t.depth}
+            options={[{ value: "noir", label: "Noir" }, { value: "cinema", label: "Cinema" }, { value: "editorial", label: "Editorial" }]}
+            onChange={(v) => setTweak("depth", v)} />
+          <TweakSlider label="Color wash" value={t.wash} min={0} max={2} step={0.05} onChange={(v) => setTweak("wash", v)} />
+          <TweakSlider label="Film grain" value={t.grain} min={0} max={0.2} step={0.005} onChange={(v) => setTweak("grain", v)} />
+        </TweakSection>
+      </TweaksPanel>
+    </LangContext.Provider>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <script>
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    let ringX = mouseX, ringY = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+    });
+
+    (function animateRing() {
+      ringX += (mouseX - ringX) * 0.06;
+      ringY += (mouseY - ringY) * 0.06;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) {
+        dot.classList.add('hovered');
+        ring.classList.add('hovered');
+      }
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('a, button, input, textarea, select, label, [role="button"]')) {
+        dot.classList.remove('hovered');
+        ring.classList.remove('hovered');
+      }
+    });
+  </script>
+</body>
+</html>
