@@ -145,7 +145,7 @@ function AboutTeaser() {
             </p>
             <div style={{ marginTop: 32, display: "flex", gap: 14 }}>
               <a href="#/about" className="btn">Read more</a>
-              <a href="#" className="btn" onClick={(e) => e.preventDefault()}>
+              <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn">
                 <span>Download CV</span>
                 <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
               </a>
@@ -241,7 +241,7 @@ function AboutPage() {
             </div>
 
             <div style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <a href="#" className="btn btn-primary" onClick={(e) => e.preventDefault()}>
+              <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn btn-primary">
                 <span>Download CV</span>
                 <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
               </a>

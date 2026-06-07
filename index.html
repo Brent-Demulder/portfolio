@@ -1,9 +1,20 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Brent Demulder — Graphic Designer</title>
+<meta name="description" content="Portfolio of Brent Demulder — graphic and web designer from Belgium. Branding, web design, motion, and photography." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Brent Demulder — Graphic Designer" />
+<meta property="og:description" content="Portfolio of Brent Demulder — graphic and web designer from Belgium. Branding, web design, motion, and photography." />
+<meta property="og:image" content="https://YOURDOMAIN.COM/assets/Me/Home/foto ik piano.png" />
+<meta property="og:url" content="https://YOURDOMAIN.COM" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Brent Demulder — Graphic Designer" />
+<meta name="twitter:description" content="Portfolio of Brent Demulder — graphic and web designer from Belgium. Branding, web design, motion, and photography." />
+<meta name="twitter:image" content="https://YOURDOMAIN.COM/assets/Me/Home/foto ik piano.png" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23070a10'/><text x='16' y='24' font-family='Georgia,serif' font-style='italic' font-size='24' fill='%23c84050' text-anchor='middle'>B</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -380,6 +391,60 @@
   @keyframes pulse {
     0%,100% { opacity: 1; }
     50% { opacity: 0.3; }
+  }
+
+  /* ── mobile ─────────────────────────────────────────────────────────────── */
+  @media (hover: none) {
+    * { cursor: auto !important; }
+    .cursor-dot, .cursor-ring { display: none !important; }
+  }
+  .nav-hamburger {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 8px 12px;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+    transition: transform 300ms ease, opacity 300ms ease;
+  }
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 12, 20, 0.97);
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms ease;
+    backdrop-filter: blur(12px);
+  }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+  .nav-overlay-link {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(36px, 10vw, 64px);
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 200ms ease;
+    letter-spacing: -0.01em;
+  }
+  .nav-overlay-link:hover, .nav-overlay-link.active { color: var(--accent); }
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .page { padding-top: 80px; }
   }
 </style>
 </head>
@@ -1170,6 +1235,17 @@ function useReveal(opts = { threshold: 0.15 }) {
   return ref;
 }
 
+function useIsMobile(bp = 768) {
+  const [m, setM] = React.useState(() => window.innerWidth <= bp);
+  React.useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${bp}px)`);
+    const h = (e) => setM(e.matches);
+    mq.addEventListener("change", h);
+    return () => mq.removeEventListener("change", h);
+  }, [bp]);
+  return m;
+}
+
 function ThumbPlaceholder({ label, tone = "warm", variant = "bokeh" }) {
   const palettes = {
     warm:    ["#1e1612", "#3a2418", "#8a4622"],
@@ -1198,7 +1274,7 @@ function ThumbPlaceholder({ label, tone = "warm", variant = "bokeh" }) {
 
 const PROJECTS = [
   // 2026 — featured first
-  { id: "eindproject",       title: "Eindproject",          tagline: "A showcase of everything learned during my internship.",         category: "Web",             role: "Concept, Design, Dev",  year: "2026", status: "Live",         featured: true, tone: "sand",  href: "https://brentdemulder-eindproject.netlify.app", hero: "assets/projects/NEW/Web/Heroes/Eindproject.png", thumb: "assets/projects/NEW/Web/Thumbnails/Eindproject.png" },
+  { id: "eindproject",       title: "Eindproject",          tagline: "A showcase of everything learned during my internship.",         category: "Web",             role: "Concept, Design, Dev",  year: "2026", status: "Live",         featured: true,              href: "https://brentdemulder-eindproject.netlify.app", hero: "assets/projects/NEW/Web/Heroes/Eindproject.png", thumb: "assets/projects/NEW/Web/Thumbnails/Eindproject.png" },
   { id: "uptx",              title: "UPTX",                 tagline: "Studio website for design and development services.",            category: "Web",             role: "Identity, Site, Dev",   year: "2026", status: "Live",         featured: true, tone: "warm",  href: "https://uptx-website.netlify.app",              hero: "assets/projects/NEW/Web/Heroes/UPTX.png", thumb: "assets/projects/NEW/Web/Thumbnails/UPTX.png" },
   { id: "lumeo",             title: "Lumeo",                tagline: "Letterboxd, Netflix and Disney — combined into one.",           category: "Web",             role: "Concept, UX/UI Design", year: "2026",                           featured: true, status: "Coming Soon", tone: "plum",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/Lumeo.png" },
   // 2026 — non-featured, colours mixed
@@ -1207,9 +1283,10 @@ const PROJECTS = [
   { id: "stromer",           title: "Stromer",              tagline: "Static and motion Meta ads for a premium cycling brand.",      category: "Social & Motion", role: "Motion, Social",        year: "2026",                                           tone: "cool",                                                                 featured: true, thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/Stromer.png",          objectPos: "20% center" },
   { id: "francais-web",      title: "Français at Work",     tagline: "Website for a self-employed French teacher for professionals.", category: "Web",             role: "Design, Dev",           year: "2026", status: "Live",                         tone: "warm",  href: "https://francaisatwork.eu",                     hero: "assets/projects/NEW/Web/Heroes/Francais at Work.png", thumb: "assets/projects/NEW/Web/Thumbnails/Francais at Work.png" },
   { id: "thomas-more",       title: "Thomas More",          tagline: "Social media campaign posts — motion and static.",             category: "Social & Motion", role: "Social Design",         year: "2026",                                           tone: "plum",                                                                 thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/Thomas More.png",      objectPos: "20% center" },
-  { id: "studio-linea",      title: "Studio Linea",         tagline: "Team school project combining branding and web design.",        category: "Web",             role: "Design, Dev",           year: "2026", status: "Live",                         tone: "moss",  href: "https://wpnet.apstudent.be/09/site008/",        hero: "assets/projects/NEW/Web/Heroes/Studio Linea.png", thumb: "assets/projects/NEW/Web/Thumbnails/Studio Linea.png" },
-  { id: "francais-brand",    title: "Français at Work",     tagline: "Brand concept exploration for F@W.",                           category: "Brand",           role: "Brand Identity",        year: "2026",                                           tone: "warm",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Francais at Work.png" },
-  { id: "gedeon-richter",    title: "Gedeon Richter Pro",   tagline: "Pages and content blocks for a pharmaceutical brand.",         category: "Web",             role: "UI Design",             year: "2026",                                           tone: "sand",                                                                 href: "https://gedeonrichterpro.com/nl-be/", hero: "assets/projects/NEW/Web/Heroes/Gedeon Richter pro.png", thumb: "assets/projects/NEW/Web/Thumbnails/Gedeon Richter Pro.png" },
+  { id: "studio-linea-brand", title: "Studio Linea",         tagline: "Brand identity developed alongside the Studio Linea website.",     category: "Brand",           role: "Brand Identity",        year: "2026",                                           tone: "purple",                                                               thumb: "assets/projects/NEW/Brand/Thumbnails/Studio Linea.png" },
+  { id: "studio-linea",      title: "Studio Linea",         tagline: "Team school project: full brand identity and a live website.",  category: "Web",             role: "Design, Dev, Branding", year: "2026", status: "Live",                         tone: "purple", href: "https://wpnet.apstudent.be/09/site008/",        hero: "assets/projects/NEW/Web/Heroes/Studio Linea.png", thumb: "assets/projects/NEW/Web/Thumbnails/Studio Linea.png" },
+  { id: "francais-brand",    title: "Français at Work",     tagline: "Brand concept exploration for F@W.",                           category: "Brand",           role: "Brand Identity",        year: "2026",                                           tone: "warm",                                                                 images: ["assets/projects/NEW/Brand/Francais at Work/2de website versies/1_FAW - Home.png","assets/projects/NEW/Brand/Francais at Work/2de website versies/2_FAW - Wat je krijgt.png","assets/projects/NEW/Brand/Francais at Work/2de website versies/3_FAW - Over Mij.png","assets/projects/NEW/Brand/Francais at Work/2de website versies/4_FAW - Blog.png","assets/projects/NEW/Brand/Francais at Work/2de website versies/5_FAW - Contact.png","assets/projects/NEW/Brand/Francais at Work/2de website versies/6_FAW - Gratis.png"], thumb: "assets/projects/NEW/Brand/Thumbnails/Francais at Work.png" },
+  { id: "gedeon-richter",    title: "Gedeon Richter Pro",   tagline: "Pages and content blocks for a pharmaceutical brand.",         category: "Web",             role: "UI Design",             year: "2026",                                           tone: "purple",                                                                 href: "https://gedeonrichterpro.com/nl-be/", hero: "assets/projects/NEW/Web/Heroes/Gedeon Richter pro.png", thumb: "assets/projects/NEW/Web/Thumbnails/Gedeon Richter Pro.png" },
   { id: "oscare",            title: "Oscare",               tagline: "Concept campaign designs for Oscare.",                         category: "Brand",           role: "Campaign Design",       year: "2026",                                           tone: "ochre",                                                                thumb: "assets/projects/NEW/Brand/Thumbnails/Oscare.png" },
   // 2026 — coming soon
   { id: "curendis",          title: "Curendis",             tagline: "Concept pages for a new website redesign.",                     category: "Web",             role: "UI Design",             year: "2026", status: "Coming Soon",                  tone: "cool",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/Curendis.png" },
@@ -1218,7 +1295,7 @@ const PROJECTS = [
   // 2025
   { id: "flipper",           title: "Flipper",              tagline: "Rebranding of swimming club Flipper from Mortsel.",             category: "Brand",           role: "Branding, Design",      year: "2025",                                           tone: "cool",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Flipper.png" },
   { id: "cattractive",       title: "Cattractive",          tagline: "Website for Nicky, a home-based cat groomer.",                  category: "Web",             role: "Design, Dev",           year: "2025",                                           tone: "rose",                                                                 hero: "assets/projects/NEW/Web/Heroes/Cattractive.png", status: "Coming Soon", thumb: "assets/projects/NEW/Web/Thumbnails/Cattractive.png" },
-  { id: "parijs-foto",       title: "Paris",                tagline: "Street and travel photography from Paris.",                   category: "Photography",     role: "Photography",           year: "2025",                                           tone: "sand",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Paris.png",   images: ["assets/projects/NEW/Photography/Parijs/Parijs (1).png","assets/projects/NEW/Photography/Parijs/Parijs (2).png","assets/projects/NEW/Photography/Parijs/Parijs (3).png","assets/projects/NEW/Photography/Parijs/Parijs (4).png","assets/projects/NEW/Photography/Parijs/Parijs (5).png","assets/projects/NEW/Photography/Parijs/Parijs (6).png","assets/projects/NEW/Photography/Parijs/Parijs (7).png","assets/projects/NEW/Photography/Parijs/Parijs (8).png","assets/projects/NEW/Photography/Parijs/Parijs (9).png","assets/projects/NEW/Photography/Parijs/Parijs (10).png","assets/projects/NEW/Photography/Parijs/Parijs (11).png","assets/projects/NEW/Photography/Parijs/Parijs (12).png","assets/projects/NEW/Photography/Parijs/Parijs (13).png","assets/projects/NEW/Photography/Parijs/Parijs (14).png"] },
+  { id: "parijs-foto",       title: "Paris",                tagline: "Street and travel photography from Paris.",                   category: "Photography",     role: "Photography",           year: "2025",                                           tone: "sand",                                                                 heroVideo: "assets/projects/NEW/Photography/Parijs/Hero video/Parijs video.mp4", thumb: "assets/projects/NEW/Photography/Thumbnails/Paris.png",   images: ["assets/projects/NEW/Photography/Parijs/Parijs (1).png","assets/projects/NEW/Photography/Parijs/Parijs (2).png","assets/projects/NEW/Photography/Parijs/Parijs (3).png","assets/projects/NEW/Photography/Parijs/Parijs (4).png","assets/projects/NEW/Photography/Parijs/Parijs (5).png","assets/projects/NEW/Photography/Parijs/Parijs (6).png","assets/projects/NEW/Photography/Parijs/Parijs (7).png","assets/projects/NEW/Photography/Parijs/Parijs (8).png","assets/projects/NEW/Photography/Parijs/Parijs (9).png","assets/projects/NEW/Photography/Parijs/Parijs (10).png","assets/projects/NEW/Photography/Parijs/Parijs (11).png","assets/projects/NEW/Photography/Parijs/Parijs (12).png","assets/projects/NEW/Photography/Parijs/Parijs (13).png","assets/projects/NEW/Photography/Parijs/Parijs (14).png"] },
   { id: "de-schakel",        title: "De Schakel",           tagline: "Rebranding of VZW De Schakel in Puurs.",                       category: "Brand",           role: "Rebranding, Design",    year: "2025",                                           tone: "warm",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/De Schakel.png" },
   { id: "dinant",            title: "Dinant",               tagline: "Photography from Dinant.",                                     category: "Photography",     role: "Photography",           year: "2025",                                           tone: "cool",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Dinant.png",  images: ["assets/projects/NEW/Photography/Dinant/Dinant (1).png","assets/projects/NEW/Photography/Dinant/Dinant (2).png","assets/projects/NEW/Photography/Dinant/Dinant (3).png","assets/projects/NEW/Photography/Dinant/Dinant (4).png","assets/projects/NEW/Photography/Dinant/Dinant (5).png"] },
   { id: "hingene",           title: "Hingene",              tagline: "Photography from Hingene.",                                    category: "Photography",     role: "Photography",           year: "2025",                                           tone: "moss",                                                                 thumb: "assets/projects/NEW/Photography/Thumbnails/Hingene.png", images: ["assets/projects/NEW/Photography/Hingene/Hingene (1).png","assets/projects/NEW/Photography/Hingene/Hingene (2).png","assets/projects/NEW/Photography/Hingene/Hingene (3).png","assets/projects/NEW/Photography/Hingene/Hingene (4).png","assets/projects/NEW/Photography/Hingene/Hingene (5).png","assets/projects/NEW/Photography/Hingene/Hingene (6).png","assets/projects/NEW/Photography/Hingene/Hingene (7).png","assets/projects/NEW/Photography/Hingene/Hingene (8).png"] },
@@ -1300,7 +1377,7 @@ const COPY = {
       bio3: "When I’m not chasing a deadline or a melody, you’ll find me on a football pitch, a basketball court, or in the gym. Sport is how I switch my brain off. Even designers need to touch grass.",
       downloadCV: "Download CV", getInTouch: "Get in touch",
       factsheet: "Factsheet · 03",
-      facts: [["Currently","UX/UI Designer Internship @ JUNE20"],["Studying","Graduaat Digitale Vormgeving"],["Based In","Bornem · Antwerp · BE — available remote"],["Languages","EN · NL"],["Open To","Freelance, collaborations"]],
+      facts: [["Currently","Launching UPTX — my first studio"],["Studying","Graduaat Digitale Vormgeving"],["Based In","Bornem · Antwerp · BE — available remote"],["Languages","EN · NL"],["Open To","Freelance, collaborations"]],
       stack: "Stack · 04", stackHeading: "What’s in", stackItalic: "the bag.",
       stackGroups: [
         { title: "Design",      items: ["Figma","Photoshop","Illustrator","InDesign"] },
@@ -1330,7 +1407,7 @@ const COPY = {
       bio3: "Als ik niet achter een deadline of een melodie aan jaag, vind je me op een voetbalveld, een basketbalveld of in de gym. Sport is hoe ik mijn hoofd leegmaak. Zelfs designers moeten af en toe buiten komen.",
       downloadCV: "CV downloaden", getInTouch: "Neem contact op",
       factsheet: "Factsheet · 03",
-      facts: [["Momenteel","UX/UI Designer Stage @ JUNE20"],["Studie","Graduaat Digitale Vormgeving"],["Gebaseerd In","Bornem · Antwerpen · BE — ook remote beschikbaar"],["Talen","EN · NL"],["Open Voor","Freelance, samenwerkingen"]],
+      facts: [["Momenteel","UPTX opstarten — mijn eerste studio"],["Studie","Graduaat Digitale Vormgeving"],["Gebaseerd In","Bornem · Antwerpen · BE — ook remote beschikbaar"],["Talen","EN · NL"],["Open Voor","Freelance, samenwerkingen"]],
       stack: "Stack · 04", stackHeading: "Wat zit er", stackItalic: "in de tas.",
       stackGroups: [
         { title: "Design",            items: ["Figma","Photoshop","Illustrator","InDesign"] },
@@ -1352,11 +1429,19 @@ function useLang() { const { lang, setLang } = React.useContext(LangContext); re
 function Nav({ route }) {
   const { lang, setLang, t } = useLang();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  useEffect(() => { setMenuOpen(false); }, [route]);
+  useEffect(() => { if (!isMobile) setMenuOpen(false); }, [isMobile]);
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
   const items = [
     { href: "#/home",    num: "01", label: t.nav.home },
     { href: "#/about",   num: "02", label: t.nav.about },
@@ -1364,27 +1449,48 @@ function Nav({ route }) {
     { href: "#/contact", num: "04", label: t.nav.contact },
   ];
   return (
-    <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "22px 0", backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none", background: scrolled ? "rgba(8, 12, 20, 0.85)" : "transparent", borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent", transition: "background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease" }}>
-      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <a href="#/home" style={{ fontFamily: "var(--serif)", fontSize: 22, letterSpacing: "-0.01em", color: "var(--ink)", textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontStyle: "italic" }}>Brent</span>
-          <span style={{ color: "var(--accent)" }}>Demulder</span>
-        </a>
-        <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
-          {items.map((l) => (
-            <a key={l.href} href={l.href} className={`nav-link ${route === l.href ? "active" : ""}`}>
-              <span className="num">{l.num}</span>{l.label}
-            </a>
-          ))}
-          <button onClick={() => setLang(lang === "en" ? "nl" : "en")}
-            style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-dim)", background: "transparent", border: "1px solid var(--rule)", padding: "5px 10px", cursor: "pointer", transition: "color 200ms, border-color 200ms" }}
-            onMouseEnter={e => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.borderColor = "var(--ink)"; }}
-            onMouseLeave={e => { e.currentTarget.style.color = "var(--ink-dim)"; e.currentTarget.style.borderColor = "var(--rule)"; }}>
-            {lang === "en" ? "NL" : "EN"}
-          </button>
+    <>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "22px 0", backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none", background: scrolled ? "rgba(8, 12, 20, 0.85)" : "transparent", borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent", transition: "background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease" }}>
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <a href="#/home" style={{ fontFamily: "var(--serif)", fontSize: 22, letterSpacing: "-0.01em", color: "var(--ink)", textDecoration: "none", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ fontStyle: "italic" }}>Brent</span>
+            <span style={{ color: "var(--accent)" }}>Demulder</span>
+          </a>
+          {isMobile ? (
+            <button onClick={() => setMenuOpen(o => !o)} className="nav-hamburger" aria-label="Menu">
+              <span style={{ transform: menuOpen ? "rotate(45deg) translate(4px, 5px)" : "none" }} />
+              <span style={{ opacity: menuOpen ? 0 : 1 }} />
+              <span style={{ transform: menuOpen ? "rotate(-45deg) translate(4px, -5px)" : "none" }} />
+            </button>
+          ) : (
+            <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
+              {items.map((l) => (
+                <a key={l.href} href={l.href} className={`nav-link ${route === l.href ? "active" : ""}`}>
+                  <span className="num">{l.num}</span>{l.label}
+                </a>
+              ))}
+              <button onClick={() => setLang(lang === "en" ? "nl" : "en")}
+                style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-dim)", background: "transparent", border: "1px solid var(--rule)", padding: "5px 10px", cursor: "pointer", transition: "color 200ms, border-color 200ms" }}
+                onMouseEnter={e => { e.currentTarget.style.color = "var(--ink)"; e.currentTarget.style.borderColor = "var(--ink)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "var(--ink-dim)"; e.currentTarget.style.borderColor = "var(--rule)"; }}>
+                {lang === "en" ? "NL" : "EN"}
+              </button>
+            </div>
+          )}
         </div>
+      </nav>
+      <div className={`nav-overlay${menuOpen ? " open" : ""}`}>
+        {items.map((l) => (
+          <a key={l.href} href={l.href} className={`nav-overlay-link${route === l.href ? " active" : ""}`} onClick={() => setMenuOpen(false)}>
+            {l.label}
+          </a>
+        ))}
+        <button onClick={() => setLang(lang === "en" ? "nl" : "en")}
+          style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-dim)", background: "transparent", border: "1px solid var(--rule)", padding: "8px 18px", cursor: "pointer", marginTop: 8 }}>
+          {lang === "en" ? "NL" : "EN"}
+        </button>
       </div>
-    </nav>
+    </>
   );
 }
 
@@ -1408,11 +1514,12 @@ function Marquee() {
 
 function Footer() {
   const { t } = useLang();
+  const isMobile = useIsMobile();
   const navLabels = [t.nav.home, t.nav.about, t.nav.portfolio, t.nav.contact];
   return (
     <footer style={{ borderTop: "1px solid var(--rule)", marginTop: 120, padding: "48px 0 32px", background: "rgba(0,0,0,0.15)" }}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "2fr 1fr 1fr 1fr", gap: isMobile ? 32 : 48, alignItems: "start" }}>
           <div>
             <a href="#/home" style={{ fontFamily: "var(--serif)", fontSize: 28, color: "var(--ink)", textDecoration: "none" }}>
               <span style={{ fontStyle: "italic" }}>Brent</span> <span style={{ color: "var(--ink-faint)" }}>Demulder</span>
@@ -1444,7 +1551,7 @@ function Footer() {
   );
 }
 
-Object.assign(window, { Nav, Marquee, Footer, EdCard, ThumbPlaceholder, useReveal, PROJECTS, FILTERS, LangContext, useLang, COPY, TONE_COLOR, CAT_TONE });
+Object.assign(window, { Nav, Marquee, Footer, EdCard, ThumbPlaceholder, useReveal, useIsMobile, PROJECTS, FILTERS, LangContext, useLang, COPY, TONE_COLOR, CAT_TONE });
   </script>
 
   <!-- pages -->
@@ -1549,6 +1656,7 @@ function HeroSpline() {
 
 function HomePage() {
   const { t, lang } = useLang();
+  const isMobile = useIsMobile();
   const titleRef = useReveal();
   const subRef = useReveal();
   const cueRef = useReveal();
@@ -1634,7 +1742,7 @@ function HomePage() {
           <div style={{ position: "relative" }}>
             <div ref={scrollRef} className="no-scrollbar" style={{ display: "flex", gap: "24px", overflowX: "auto", scrollSnapType: "x mandatory", scrollbarWidth: "none", msOverflowStyle: "none" }}>
               {featured.map((p) => (
-                <div key={p.id} style={{ flex: "0 0 480px", scrollSnapAlign: "start" }}>
+                <div key={p.id} style={{ flex: `0 0 ${isMobile ? "calc(100vw - 48px)" : "480px"}`, scrollSnapAlign: "start" }}>
                   <EdCard p={p} ratio="16/9" />
                 </div>
               ))}
@@ -1651,10 +1759,11 @@ function HomePage() {
 function AboutTeaser() {
   const { t, lang } = useLang();
   const ref = useReveal();
+  const isMobile = useIsMobile();
   return (
     <section style={{ padding: "100px 0" }}>
       <div className="container">
-        <div ref={ref} className="fade-up" style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 80, alignItems: "center" }}>
+        <div ref={ref} className="fade-up" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "5fr 7fr", gap: isMobile ? 40 : 80, alignItems: "center" }}>
           <div style={{ position: "relative", aspectRatio: "4/5" }}>
             <img src="assets/Me/Home/foto ik piano.png" alt="Brent Demulder at piano" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
             <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2 }}>
@@ -1676,7 +1785,7 @@ function AboutTeaser() {
             </p>
             <div style={{ marginTop: 32, display: "flex", gap: 14 }}>
               <a href="#/about" className="btn">{t.aboutTeaser.readMore}</a>
-              <a href="#" className="btn" onClick={(e) => e.preventDefault()}>
+              <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn">
                 <span>{t.aboutTeaser.downloadCV}</span>
                 <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
               </a>
@@ -1713,6 +1822,7 @@ function ContactTeaser() {
 }
 function AboutPage() {
   const { t, lang } = useLang();
+  const isMobile = useIsMobile();
   const headerRef = useReveal();
   const portraitRef = useReveal();
   const bioRef = useReveal();
@@ -1721,25 +1831,25 @@ function AboutPage() {
   return (
     <div className="page">
       <div className="container">
-        <div ref={headerRef} className="fade-up" style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 40, paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
-          <div>
-            <div className="eyebrow" style={{ marginBottom: 20 }}>
-              <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.eyebrow}
+        <div ref={headerRef} className="fade-up" style={{ paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
+          <div className="eyebrow" style={{ marginBottom: 20 }}>
+            <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.eyebrow}
+          </div>
+          <h1 style={{ fontSize: "clamp(48px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
+            {lang === "en"
+              ? <>The <span className="ag" style={{ fontStyle: "italic" }}>designer</span><br />behind the work.</>
+              : <>De <span className="ag" style={{ fontStyle: "italic" }}>ontwerper</span><br />achter het werk.</>
+            }
+          </h1>
+          {!isMobile && (
+            <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", marginTop: 12 }}>
+              <div>Bornem · Antwerp · BE</div><div>EST. 2005</div>
             </div>
-            <h1 style={{ fontSize: "clamp(56px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
-              {lang === "en"
-                ? <>The <span className="ag" style={{ fontStyle: "italic" }}>designer</span><br />behind the work.</>
-                : <>De <span className="ag" style={{ fontStyle: "italic" }}>ontwerper</span><br />achter het werk.</>
-              }
-            </h1>
-          </div>
-          <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
-            <div>Bornem · Antwerp · BE</div><div>EST. 2005</div>
-          </div>
+          )}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 80, paddingTop: 80 }}>
-          <div ref={portraitRef} className="fade-up" style={{ position: "sticky", top: 120, alignSelf: "start" }}>
-            <div style={{ position: "relative", aspectRatio: "4/5" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "5fr 7fr", gap: isMobile ? 40 : 80, paddingTop: 80 }}>
+          <div ref={portraitRef} className="fade-up" style={{ position: isMobile ? "relative" : "sticky", top: 120, alignSelf: "start" }}>
+            <div style={{ position: "relative", aspectRatio: "4/5", maxWidth: isMobile ? 320 : "none" }}>
               <img src="assets/Me/About/Foto 1.png" alt="Brent Demulder" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "90% center", display: "block" }} />
               <div style={{ position: "absolute", top: 14, left: 14 }}>
                 <span className="chip">Portrait · 02</span>
@@ -1750,7 +1860,7 @@ function AboutPage() {
             </div>
           </div>
           <div ref={bioRef} className="fade-up">
-            <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(28px, 3vw, 44px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
+            <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(24px, 3vw, 44px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
               {t.about.quote} <span className="ag" style={{ fontStyle: "italic" }}>{t.about.quoteItalic}</span>
             </p>
             <div style={{ marginTop: 40, display: "grid", gap: 22, fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-dim)" }}>
@@ -1759,7 +1869,7 @@ function AboutPage() {
               <p style={{ margin: 0 }}>{t.about.bio3}</p>
             </div>
             <div style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap" }}>
-              <a href="#" className="btn btn-primary" onClick={(e) => e.preventDefault()}>
+              <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn btn-primary">
                 <span>{t.about.downloadCV}</span>
                 <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
               </a>
@@ -1767,27 +1877,27 @@ function AboutPage() {
             </div>
           </div>
         </div>
-        <div ref={factsRef} className="fade-up" style={{ marginTop: 120 }}>
+        <div ref={factsRef} className="fade-up" style={{ marginTop: 80 }}>
           <div className="eyebrow" style={{ marginBottom: 24 }}>
             <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.factsheet}
           </div>
           <div style={{ borderTop: "1px solid var(--rule)" }}>
             {t.about.facts.map(([k, v]) => (
-              <div key={k} style={{ display: "grid", gridTemplateColumns: "240px 1fr", padding: "22px 0", borderBottom: "1px solid var(--rule)", alignItems: "baseline" }}>
+              <div key={k} style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "240px 1fr", padding: "18px 0", borderBottom: "1px solid var(--rule)", alignItems: "baseline", gap: isMobile ? 4 : 0 }}>
                 <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{k}</span>
-                <span style={{ fontFamily: "var(--serif)", fontSize: "clamp(20px, 1.8vw, 28px)", color: "var(--ink)" }}>{v}</span>
+                <span style={{ fontFamily: "var(--serif)", fontSize: "clamp(18px, 1.8vw, 28px)", color: "var(--ink)" }}>{v}</span>
               </div>
             ))}
           </div>
         </div>
-        <div ref={stackRef} className="fade-up" style={{ marginTop: 120 }}>
+        <div ref={stackRef} className="fade-up" style={{ marginTop: 80 }}>
           <div className="eyebrow" style={{ marginBottom: 24 }}>
             <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.stack}
           </div>
-          <h2 style={{ fontSize: "clamp(32px, 4vw, 56px)", margin: "0 0 32px", lineHeight: 1, letterSpacing: "-0.01em" }}>
+          <h2 style={{ fontSize: "clamp(28px, 4vw, 56px)", margin: "0 0 32px", lineHeight: 1, letterSpacing: "-0.01em" }}>
             {t.about.stackHeading} <span style={{ fontStyle: "italic", color: "var(--accent)" }}>{t.about.stackItalic}</span>
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(3, 1fr)", gap: 24 }}>
             {t.about.stackGroups.map((g) => (
               <div key={g.title} style={{ padding: "20px 0", borderTop: "1px solid var(--rule)" }}>
                 <div className="eyebrow ag" style={{ marginBottom: 12 }}>{g.title}</div>
@@ -1803,8 +1913,8 @@ function AboutPage() {
   );
 }
 function PortfolioPage() {
-
   const { t, lang } = useLang();
+  const isMobile = useIsMobile();
   const [filter, setFilter] = useState2(window.__returnFilter || "All");
   const [visible, setVisible] = useState2(true);
   const headerRef = useReveal();
@@ -1820,43 +1930,37 @@ function PortfolioPage() {
     setVisible(false);
     setTimeout(() => { setFilter(f); setVisible(true); }, 150);
   };
+  const cols = isMobile ? 1 : 3;
   return (
     <div className="page">
       <div className="container">
         <div ref={headerRef} className="fade-up" style={{ paddingBottom: 56, borderBottom: "1px solid var(--rule)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 40 }}>
-            <div>
-              <div className="eyebrow" style={{ marginBottom: 20 }}>
-                <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.portfolio.eyebrow}
-              </div>
-              <h1 style={{ fontSize: "clamp(56px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
-
-                <span className="ag" style={{ fontStyle: "italic" }}>{lang === "en" ? "Selected" : "Geselecteerd"} <span style={{ color: "var(--accent)" }}>{lang === "en" ? "work." : "werk."}</span></span>
-              </h1>
-            </div>
-            <div style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
-              <div>{String(PROJECTS.length).padStart(2, "0")} {t.portfolio.projects}</div>
-              <div>2024 — 2026</div>
-            </div>
+          <div className="eyebrow" style={{ marginBottom: 20 }}>
+            <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.portfolio.eyebrow}
           </div>
+          <h1 style={{ fontSize: "clamp(48px, 10vw, 160px)", margin: 0, lineHeight: 0.92, letterSpacing: "-0.02em" }}>
+            <span style={{ fontStyle: "italic" }}>{lang === "en" ? "Selected" : "Geselecteerd"} <span style={{ color: "var(--accent)" }}>{lang === "en" ? "work." : "werk."}</span></span>
+          </h1>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "32px 0", borderBottom: "1px solid var(--rule)", gap: 24, flexWrap: "wrap" }}>
-          <div style={{ display: "flex", gap: 36, alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "32px 0", borderBottom: "1px solid var(--rule)", gap: 16, flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: isMobile ? 20 : 36, alignItems: "center", flexWrap: "wrap" }}>
             {FILTERS.map((f, fi) => (
               <button key={f} onClick={() => handleFilter(f)} className={`filter-tab ${filter === f ? "active" : ""}`}>
                 {t.portfolio.filters[fi]}<span className="count">{String(counts[f] || 0).padStart(2, "0")}</span>
               </button>
             ))}
           </div>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
-            {t.portfolio.showing} {String(filtered.length).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
-          </div>
+          {!isMobile && (
+            <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>
+              {t.portfolio.showing} {String(filtered.length).padStart(2, "0")} / {String(PROJECTS.length).padStart(2, "0")}
+            </div>
+          )}
         </div>
         <div style={{ padding: "64px 0 32px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "56px 32px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: isMobile ? "40px 0" : "56px 32px" }}>
             {filtered.map((p, i) => (
               <div key={`${filter}-${p.id}`} style={visible
-                ? { animation: `filterIn 650ms cubic-bezier(0.16,1,0.3,1) ${(i % 3) * 140}ms both` }
+                ? { animation: `filterIn 650ms cubic-bezier(0.16,1,0.3,1) ${(i % cols) * 140}ms both` }
                 : { opacity: 0, transform: "translateY(30px)", transition: "opacity 240ms ease, transform 240ms ease" }
               }>
                 <EdCard p={p} />
@@ -1873,8 +1977,8 @@ function PortfolioPage() {
   );
 }
 function ContactPage() {
-
   const { t, lang } = useLang();
+  const isMobile = useIsMobile();
   const headerRef = useReveal();
   const emailRef = useReveal();
   const formRef = useReveal();
@@ -1924,10 +2028,10 @@ function ContactPage() {
           </h1>
         </div>
         <div style={{ padding: "80px 0" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "7fr 5fr", gap: 80, alignItems: "start" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "7fr 5fr", gap: isMobile ? 48 : 80, alignItems: "start" }}>
             <form ref={formRef} className="fade-up" onSubmit={submit}>
               <div className="eyebrow" style={{ marginBottom: 24 }}>{t.contact.formEyebrow}</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: 24, marginBottom: 24 }}>
                 <label style={{ display: "block" }}>
                   <span style={{ display: "block", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)" }}>{t.contact.nameLabel}</span>
                   <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Jane Doe"
@@ -2030,11 +2134,12 @@ function ProjectHeader({ p }) {
   );
 }
 
-function WebHero({ p, accentColor }) {
+function WebHero({ p, accentColor, borderColor }) {
   const [hovered, setHovered] = React.useState(false);
+  const bc = borderColor || accentColor;
   return p.href ? (
     <a href={p.href} target="_blank" rel="noopener"
-       style={{ display: "block", position: "relative", overflow: "hidden", borderTop: `2px solid ${accentColor}`, textDecoration: "none" }}>
+       style={{ display: "block", position: "relative", overflow: "hidden", borderTop: `2px solid ${bc}`, textDecoration: "none" }}>
       <img src={p.hero || p.thumb} alt={p.title} style={{ width: "100%", display: "block", objectFit: "cover", maxHeight: "72vh" }} />
       <div style={{ position: "absolute", inset: 0, background: hovered ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.15)", display: "flex", alignItems: "flex-end", justifyContent: "flex-end", padding: 24, transition: "background 0.3s" }}
            onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
@@ -2044,7 +2149,7 @@ function WebHero({ p, accentColor }) {
       </div>
     </a>
   ) : (
-    <div style={{ borderTop: `2px solid ${accentColor}`, position: "relative" }}>
+    <div style={{ borderTop: `2px solid ${bc}`, position: "relative" }}>
       <img src={p.hero || p.thumb} alt={p.title} style={{ width: "100%", display: "block", objectFit: "cover", maxHeight: "72vh" }} />
       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.15)", pointerEvents: "none" }} />
     </div>
@@ -2053,17 +2158,20 @@ function WebHero({ p, accentColor }) {
 
 function Carousel({ images }) {
   const [idx, setIdx] = React.useState(0);
+  const [hovPrev, setHovPrev] = React.useState(false);
+  const [hovNext, setHovNext] = React.useState(false);
   if (!images || images.length === 0) return null;
   const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
   const next = () => setIdx(i => (i + 1) % images.length);
+  const arrowBtn = (hov, side) => ({ position: "absolute", [side]: 16, top: "50%", transform: "translateY(-50%)", background: hov ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.5)", border: `1px solid ${hov ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.25)"}`, color: hov ? "#fff" : "rgba(255,255,255,0.6)", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 16, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.2s, border-color 0.2s, color 0.2s", transform: `translateY(-50%) scale(${hov ? 1.08 : 1})` });
   return (
     <div>
       <div style={{ position: "relative", overflow: "hidden", background: "var(--bg-2)" }}>
         <img src={images[idx]} alt="" style={{ width: "100%", display: "block", objectFit: "contain", maxHeight: "72vh" }} />
         {images.length > 1 && (
           <>
-            <button onClick={prev} style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid var(--rule)", color: "#fff", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 16, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center" }}>&#8592;</button>
-            <button onClick={next} style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", background: "rgba(0,0,0,0.6)", border: "1px solid var(--rule)", color: "#fff", width: 44, height: 44, cursor: "pointer", fontFamily: "var(--mono)", fontSize: 16, backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center" }}>&#8594;</button>
+            <button onClick={prev} onMouseEnter={() => setHovPrev(true)} onMouseLeave={() => setHovPrev(false)} style={arrowBtn(hovPrev, "left")}>&#8592;</button>
+            <button onClick={next} onMouseEnter={() => setHovNext(true)} onMouseLeave={() => setHovNext(false)} style={arrowBtn(hovNext, "right")}>&#8594;</button>
             <div style={{ position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 8 }}>
               {images.map((_, i) => (
                 <button key={i} onClick={() => setIdx(i)}
@@ -2115,10 +2223,12 @@ const CASE_STUDY_DATA = {
     { heading: "De Opdracht", body: "Voor JUNE20 zelf heb ik ook een paar opdrachten mogen doen. Waaronder een motion vacature voor een nieuwe brand designer — vier animaties die de sfeer van het bureau neerzetten." },
     { heading: "Headers & Footers", body: "Daarna heb ik ook headers en footers ontworpen voor de vernieuwde JUNE20 website. Verschillende varianten, zodat het team kon kiezen welke het best bij de nieuwe huisstijl aansluit. JUNE20 is een Belgisch creatief bureau dat zich profileert als: 'Small enough to CARE and big enough to MAKE IT HAPPEN.'" },
     { heading: "Headers", images: ["assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 1.png","assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 4.png","assets/projects/NEW/Web/JUNE20/Headers/Wireframe - 7.png"] },
-    { heading: "Footers", images: ["assets/projects/NEW/Web/JUNE20/Footer/Footer.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 2.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 3.png"] }
+    { heading: "Footers", images: ["assets/projects/NEW/Web/JUNE20/Footer/Footer.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 2.png","assets/projects/NEW/Web/JUNE20/Footer/Footer 3.png"] },
+    { heading: "Motion Vacature", type: "accordion", items: [{ label: "Animaties", videos: ["assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_1.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_2.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_3.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/Vacature_BD_4x5.mp4"] }] }
   ]},
   "june20-social": { sections: [
-    { heading: "De Opdracht", body: "Voor JUNE20 heb ik een motion vacature gemaakt voor een nieuwe brand designer — vier animaties die de sfeer van het bureau neerzetten. JUNE20 is een Belgisch creatief bureau dat zich profileert als: 'Small enough to CARE and big enough to MAKE IT HAPPEN.'" }
+    { heading: "De Opdracht", body: "Voor JUNE20 heb ik een motion vacature gemaakt voor een nieuwe brand designer — vier animaties die de sfeer van het bureau neerzetten. JUNE20 is een Belgisch creatief bureau dat zich profileert als: 'Small enough to CARE and big enough to MAKE IT HAPPEN.'" },
+    { heading: "Motion Vacature", type: "accordion", items: [{ label: "Animaties", videos: ["assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_1.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_2.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_3.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/Vacature_BD_4x5.mp4"] }] }
   ]},
   "oscare": { sections: [
   { heading:"De Opdracht", body:"De bedoeling van deze opdracht was om mijn marketing skills uit te breiden. Ik moest onderzoek doen naar Oscare — al een klant van JUNE20 — en een campagne verzinnen en uitwerken. Ik koos voor de Fire Escape Truck: een mobiele escape room die ze al hebben maar waarvoor nog weinig reclame is gemaakt." },
@@ -2172,7 +2282,7 @@ const CASE_STUDY_DATA = {
   "flipper": { sections: [
     { heading: "De Opdracht", body: "Flipper is een vzw uit Mortsel die kinderen in groep leert zwemmen. Samen met het team gaven we de volledige huisstijl en het logo een frisse make-over." },
     { heading: "Het Logo", body: "Het logo ontwierpen we samen met Kobe Truyens — moderner en speelser, met een herkenbaar dolfijntje als centraal element.", images: ["assets/projects/NEW/Brand/Flipper/Logo/Logo-Flipper (1).svg"], maxW: 480 },
-    { heading: "Logo Animaties", body: "Bij een nieuw logo horen animaties. De eerste laat golven over het strand rollen die het logo onthullen. De tweede bootst rimpels op het wateroppervlak na die de dolfijn omhoog laten springen.", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Golven-1.mp4","assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Rippels.mp4"], type: "video-thumbs" },
+    { heading: "Logo Animaties", body: "Bij een nieuw logo horen animaties. De eerste laat golven over het strand rollen die het logo onthullen. De tweede bootst rimpels op het wateroppervlak na die de dolfijn omhoog laten springen.", type: "accordion", items: [{ label: "Golven", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Golven-1.mp4"] }, { label: "Rippels", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Rippels.mp4"] }] },
     { heading: "Zeedieren & Stickers", body: "Flipper werkt met een niveausysteem waarbij elke groep de naam van een zeedier draagt. Ik tekende alle diertjes uit en maakte er stickers van — kinderen plakken ze na elke les in hun stickerboekje.", images: ["assets/projects/NEW/Brand/Flipper/Dieren/Clownvis.png","assets/projects/NEW/Brand/Flipper/Dieren/Guppies.png","assets/projects/NEW/Brand/Flipper/Dieren/Orka.png","assets/projects/NEW/Brand/Flipper/Dieren/Pinguïn.png","assets/projects/NEW/Brand/Flipper/Dieren/Schildpad.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeehond.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeeleeuw.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeepaard.png","assets/projects/NEW/Brand/Flipper/Dieren/Zeester.png"], type: "icon-grid" },
     { heading: "Stickerboekje", images: ["assets/projects/NEW/Brand/Flipper/Stickerboekje/2425_Mockupstickerboek-binnenkant_project1_Groep3-1-scaled.jpg","assets/projects/NEW/Brand/Flipper/Stickerboekje/2425_Mockupstickerboekbuitenkant_project1_Groep3.jpg-scaled.jpg"], type: "thumbs" }
   ]},
@@ -2183,10 +2293,69 @@ const CASE_STUDY_DATA = {
     { heading: "Finale Logo", body: "Het finale logo is ontworpen door een medestudent en vormt het sluitstuk van het rebrandingtraject.", pdfs: ["assets/projects/NEW/Brand/De Schakel/logo's/Finale Logo.pdf"] },
     { heading: "Brandbook", body: "Het brandbook legt de volledige visuele identiteit van De Schakel vast en is ontworpen door Kobe Truyens.", pdfs: ["assets/projects/NEW/Brand/De Schakel/Brandbook/2526_S3_Groep3_BrandbookProject2.pdf"] },
     { heading: "Merchandise", images: ["assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup DonkerGroen Voorkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup DonkerGroen Achterkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup Groen Voorkant.png","assets/projects/NEW/Brand/De Schakel/Nieuwe shirts/Tshirt Mockup Groen Achterkant.png"], type: "grid-2" },
-    { heading: "Logo Animaties", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 1 Project 2.mp4","assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 2 Project 2.mp4"], type: "video-grid" },
-    { heading: "Case Reel", videos: ["assets/projects/NEW/Brand/De Schakel/Case video/2526_S3_Groep3_Reel Project 2.mp4"], type: "video-grid" }
+    { heading: "Video", type: "accordion", items: [{ label: "Logo Animatie 1", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 1 Project 2.mp4"] }, { label: "Logo Animatie 2", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 2 Project 2.mp4"] }, { label: "Case Reel", videos: ["assets/projects/NEW/Brand/De Schakel/Case video/2526_S3_Groep3_Reel Project 2.mp4"] }] }
   ]},
+  "wuustwezel": { sections: [
+    { heading: "De Opdracht", body: "Voor Gemeente Wuustwezel werkten we aan een volledige rebranding van de gemeentelijke communicatie. Het project omvatte logodesign, een brandbook, hero visuals, content templates en animaties." },
+    { heading: "Logo's", body: "We ontwierpen vier logo-varianten als bouwstenen voor de huisstijl, met een finaal logo als sluitstuk.", images: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Logo's/logo - Niks (1).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Logo's/logo - Niks (2).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Logo's/logo - Niks (3).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Logo's/logo - Niks (4).png"], type: "icon-grid" },
+    { heading: "Finale Logo", images: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Logo's/Logo - niks Finaal.png"], type: "stage" },
+    { heading: "Brandbook", pdfs: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Brandbook/Brandbook NIKS.pdf"] },
+    { heading: "Hero Visuals", images: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Heroes/Hero - NIks (1).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Heroes/Hero - NIks (2).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Heroes/Hero - NIks (3).png","assets/projects/NEW/Brand/Gemeente Wuustwezel/Heroes/Hero - Niks (4).png"], type: "carousel" },
+    { heading: "Banner", images: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Banner/Banner - niks.png"], type: "cinematic" },
+    { heading: "Animaties & Video", type: "accordion", items: [{ label: "Logo Animatie", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/logo animatie/Logoanimatie_1_NIKS.mp4"] }, { label: "3D Animaties", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/3D animatie/1ste_3D_ANIM.mp4","assets/projects/NEW/Brand/Gemeente Wuustwezel/3D animatie/3D_ANIM_Butterfly.mp4"] }, { label: "Case Video", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Case video/2526_FS_Groep8_Casevideo (1).mp4"] }] },
+    { heading: "Content Templates", body: "Drie Instagram-templates en een sociale media mockup.", images: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Content Templates/mockup template.png"], maxW: 560, pdfs: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Content Templates/InstagramPost_Template_Brent.pdf","assets/projects/NEW/Brand/Gemeente Wuustwezel/Content Templates/InstagramPost_2_Template_Brent.pdf","assets/projects/NEW/Brand/Gemeente Wuustwezel/Content Templates/Carousel_Template_Brent.pdf"], pdfH: 480 }
+  ] },
+  "studio-linea": { sections: [
+    { heading: "De Opdracht", body: "Studio Linea is een teamschoolproject waarbij we een volledig concept uitwerkten, van merkidentiteit tot een werkende website. De site is live en bereikbaar via de knop hierboven." },
+    { heading: "Heroes", images: ["assets/projects/NEW/Web/Studio Linea/Heroes/hero versie 1.png","assets/projects/NEW/Web/Studio Linea/Heroes/hero versie 2.png"], type: "thumbs" },
+    { heading: "Logo Concepten", body: "Vijf logo-richtingen als startpunt voor de visuele identiteit van Studio Linea.", images: ["assets/projects/NEW/Web/Studio Linea/Eerste logo versies/logo - studio linea (1).png","assets/projects/NEW/Web/Studio Linea/Eerste logo versies/logo - studio linea (2).png","assets/projects/NEW/Web/Studio Linea/Eerste logo versies/logo - studio linea (3).png","assets/projects/NEW/Web/Studio Linea/Eerste logo versies/logo - studio linea (4).png","assets/projects/NEW/Web/Studio Linea/Eerste logo versies/logo - studio linea (5).png"], type: "icon-grid" },
+    { heading: "Brandbook", pdfs: ["assets/projects/NEW/Web/Studio Linea/Brandbook Studio Linea.pdf"] }
+  ] },
+  "francais-web": { sections: [
+    { heading: "Logo Concepten", body: "Vijf logo-richtingen als startpunt voor de merkidentiteit van Francais at Work.", images: ["assets/projects/NEW/Brand/Francais at Work/1ste versie logo/PNG/1x/Logo 1.png","assets/projects/NEW/Brand/Francais at Work/1ste versie logo/PNG/1x/Logo 2.png","assets/projects/NEW/Brand/Francais at Work/1ste versie logo/PNG/1x/Logo 3.png","assets/projects/NEW/Brand/Francais at Work/1ste versie logo/PNG/1x/Logo 4.png","assets/projects/NEW/Brand/Francais at Work/1ste versie logo/PNG/1x/Logo 5.png"], type: "icon-grid", bg: "#fff" },
+    { heading: "Logo Ideeën", pdfs: ["assets/projects/NEW/Brand/Francais at Work/1ste versie logo/Logo_Ideeën_1.pdf"] },
+    { heading: "Eerste Website Versies", body: "De eerste versie van de website als vertrekpunt voor de verdere ontwikkeling.", images: ["assets/projects/NEW/Brand/Francais at Work/1ste website versies/1_FAW - Home.png","assets/projects/NEW/Brand/Francais at Work/1ste website versies/2_FAW - Wat je krijgt.jpg","assets/projects/NEW/Brand/Francais at Work/1ste website versies/3_FAW - Over Mij.jpg","assets/projects/NEW/Brand/Francais at Work/1ste website versies/4_FAW - Blog.jpg","assets/projects/NEW/Brand/Francais at Work/1ste website versies/5_FAW - Contact.png","assets/projects/NEW/Brand/Francais at Work/1ste website versies/6_FAW - Gratis.jpg"], type: "thumbs" }
+  ] },
+  "school-motion": { sections: [
+    { heading: "Coca-Cola", body: "Ik heb deze 2D animatiespot gemaakt in Adobe After Effects, geïnspireerd door de retro-stijl en klassieke uitstraling van Coca-Cola. De animatie is een eerbetoon aan de tijdloze branding van het merk, met een focus op het iconische script en de kenmerkende rode kleur. Het doel was om een korte, pakkende reclamespot te creëren met een nostalgische en authentieke sfeer.", type: "accordion", items: [{ label: "Animatie", videos: ["assets/projects/NEW/Motion&Socials/School projecten/Coca Cola/Coca Cola ad.mp4"] }] },
+    { heading: "Thomas More", body: "Voor de hogeschool Thomas More maakte ik Motion Design templates voor drie opleidingen: verpleegkunde, vroedkunde en sociaal werk. Per opleiding ontwierp ik animaties in meerdere formaten voor sociale media.", type: "accordion", items: [
+      { label: "Verpleegkunde", videos: ["assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Motion/THMO_Verpleegkunde.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Verpleegkunde/Motion/THMO_Verpleegkunde_1.mp4"] },
+      { label: "Vroedkunde", videos: ["assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Motion/THMO_Vroedkunde_Sell.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Vroedkunde/Motion/THMO_Vroedkunde_Tell.mp4"] },
+      { label: "Sociaal Werk", videos: ["assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Motion/THMO_SociaalWerk_Sell.mp4","assets/projects/NEW/Motion&Socials/Thomas More/Sociaal Werk/Motion/THMO_SociaalWerk_Touch.mp4"] }
+    ] },
+    { heading: "Stromer", body: "Voor het Zwitserse speed pedelec merk Stromer maakte ik motion designs voor een Tell & Sell campagne. De Tell-campagne focust op merkbeleving via testimonials, de Sell-campagne zet de USP's van de fietsen in de kijker.", type: "accordion", items: [
+      { label: "Tell - Financial", videos: ["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Financial/1x1/1x1_Stromer_Motion_Financial.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Financial/4x5/4x5_Stromer_Motion_Financial.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Financial/9x16/9x16_Stromer_Motion_Financial.mp4"] },
+      { label: "Tell - Personal", videos: ["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Personal/1x1/1x1_Stromer_Motion_Personal.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Personal/4x5/4x5_Stromer_Motion_Personal.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Personal/9x16/9x16_Stromer_Motion_Personal.mp4"] },
+      { label: "Tell - Reputation", videos: ["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Reputation/1x1/1x1_Stromer_Motion_Reputation.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Reputation/4x5/4x5_Stromer_Motion_Reputation.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Tell/Reputation/9x16/9x16_Stromer_Motion_Reputation.mp4"] },
+      { label: "Sell", videos: ["assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST1_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST1_USPs_CTA_01_9x16.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST2_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST2_USPs_CTA_01_9x16.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST3_USPs_CTA_01_4x5.mp4","assets/projects/NEW/Motion&Socials/Stromer/Motion Designs/Sell/ST3_USPs_CTA_01_9x16.mp4"] }
+    ] },
+    { heading: "Flipper", body: "Voor Flipper, een vzw uit Mortsel, maakte ik logo-animaties als onderdeel van de volledige rebranding. De animaties onthullen het nieuwe logo via golvende en rimpelende waterbewegingen.", type: "accordion", items: [{ label: "Golven", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Golven-1.mp4"] }, { label: "Rippels", videos: ["assets/projects/NEW/Brand/Flipper/Logo Animaties/Flipper-Logo-Animatie-Rippels.mp4"] }] },
+    { heading: "De Schakel", body: "Voor De Schakel, een vzw die kwetsbare jongeren begeleidt via sport, maakte ik twee logo-animaties en een case reel als onderdeel van de rebranding.", type: "accordion", items: [{ label: "Logo Animatie 1", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 1 Project 2.mp4"] }, { label: "Logo Animatie 2", videos: ["assets/projects/NEW/Brand/De Schakel/Logo Animaties/2526_S3_Groep3_Animatie 2 Project 2.mp4"] }, { label: "Case Reel", videos: ["assets/projects/NEW/Brand/De Schakel/Case video/2526_S3_Groep3_Reel Project 2.mp4"] }] },
+    { heading: "Gemeente Wuustwezel", body: "Voor Gemeente Wuustwezel maakte ik een logo-animatie, twee 3D-animaties en een case video als onderdeel van de volledige rebranding van de gemeentelijke communicatie.", type: "accordion", items: [{ label: "Logo Animatie", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/logo animatie/Logoanimatie_1_NIKS.mp4"] }, { label: "3D Animaties", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/3D animatie/1ste_3D_ANIM.mp4","assets/projects/NEW/Brand/Gemeente Wuustwezel/3D animatie/3D_ANIM_Butterfly.mp4"] }, { label: "Case Video", videos: ["assets/projects/NEW/Brand/Gemeente Wuustwezel/Case video/2526_FS_Groep8_Casevideo (1).mp4"] }] },
+    { heading: "JUNE20", body: "Voor het creatieve bureau JUNE20 maakte ik een motion vacature voor een nieuwe brand designer, vier animaties die de sfeer en cultuur van het bureau tot leven brengen.", type: "accordion", items: [{ label: "Animaties", videos: ["assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_1.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_2.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/BDA_ANIM_3.mp4","assets/projects/NEW/Web/JUNE20/Motion Vacature/Vacature_BD_4x5.mp4"] }] }
+  ] }
 };
+function HeroVideo({ src }) {
+  const [playing, setPlaying] = React.useState(false);
+  const [hov, setHov] = React.useState(false);
+  const ref = React.useRef(null);
+  const play = () => { setPlaying(true); ref.current && ref.current.play(); };
+  return (
+    <div style={{ aspectRatio: "21/9", overflow: "hidden", marginBottom: 32, position: "relative", cursor: playing ? "default" : "pointer" }}
+         onClick={!playing ? play : undefined}
+         onMouseEnter={() => !playing && setHov(true)}
+         onMouseLeave={() => setHov(false)}>
+      <video ref={ref} src={src} muted loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+      {!playing && (
+        <div style={{ position: "absolute", inset: 0, background: hov ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.25)", transition: "background 0.2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div style={{ width: 72, height: 72, borderRadius: "50%", border: `2px solid ${hov ? "#fff" : "rgba(255,255,255,0.7)"}`, display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.2s, transform 0.2s", transform: hov ? "scale(1.08)" : "scale(1)" }}>
+            <div style={{ borderLeft: "24px solid #fff", borderTop: "14px solid transparent", borderBottom: "14px solid transparent", marginLeft: 8 }} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 function VideoThumb({ src, onClick }) {
   const [hov, setHov] = React.useState(false);
   return (
@@ -2208,9 +2377,9 @@ function VideoLightbox({ src, onClose }) {
     return () => window.removeEventListener("keydown", h);
   }, [onClose]);
   return (
-    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 }}>
-      <div onClick={e => e.stopPropagation()} style={{ position: "relative", width: "min(90vw,960px)" }}>
-        <video src={src} controls autoPlay loop playsInline style={{ width: "100%", display: "block" }} />
+    <div onClick={onClose} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.92)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000, padding: "48px 20px 20px" }}>
+      <div onClick={e => e.stopPropagation()} style={{ position: "relative", cursor: "default", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <video src={src} controls autoPlay loop playsInline style={{ display: "block", maxWidth: "min(90vw, 960px)", maxHeight: "calc(90vh - 60px)", width: "auto", height: "auto", cursor: "default" }} />
         <button onClick={onClose} style={{ position: "absolute", top: -36, right: 0, background: "none", border: "none", color: "#fff", fontSize: 24, cursor: "pointer", lineHeight: 1 }}>×</button>
       </div>
     </div>
@@ -2218,6 +2387,8 @@ function VideoLightbox({ src, onClose }) {
 }
 function CaseAccordionItem({ item, accentColor }) {
   const [open, setOpen] = React.useState(false);
+  const [vl, setVl] = React.useState(null);
+  const [hovVid, setHovVid] = React.useState(-1);
   const imgs = item.images ? item.images.map(src => encodeURI(src)) : [];
   const vids = item.videos ? item.videos.map(src => encodeURI(src)) : [];
   return (
@@ -2229,11 +2400,25 @@ function CaseAccordionItem({ item, accentColor }) {
       {open && (
         <div style={{ paddingBottom: 24 }}>
           {imgs.length > 0 && <Carousel images={imgs} />}
-          {vids.map((src, i) => (
-            <video key={i} src={src} controls loop muted playsInline style={{ width: "100%", display: "block", marginTop: (i > 0 || imgs.length > 0) ? 16 : 0 }} />
-          ))}
+          {vids.length > 0 && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: imgs.length > 0 ? 16 : 0 }}>
+              {vids.map((src, i) => (
+                <div key={i} style={{ position: "relative", flex: "0 0 auto", cursor: "pointer" }}
+                     onMouseEnter={() => setHovVid(i)} onMouseLeave={() => setHovVid(-1)}
+                     onClick={() => setVl(src)}>
+                  <video src={src} muted loop playsInline style={{ maxWidth: 280, maxHeight: 320, height: "auto", display: "block", pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", inset: 0, background: hovVid === i ? "rgba(0,0,0,0.45)" : "rgba(0,0,0,0.18)", transition: "background 0.2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ width: 44, height: 44, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.8)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ borderLeft: "16px solid #fff", borderTop: "10px solid transparent", borderBottom: "10px solid transparent", marginLeft: 4 }} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
+      {vl && <VideoLightbox src={vl} onClose={() => setVl(null)} />}
     </div>
   );
 }
@@ -2254,12 +2439,13 @@ function CaseStudy({ p, accentColor }) {
   const [lb, setLb] = React.useState(null);
   const [vl, setVl] = React.useState(null);
   const [hovIdx, setHovIdx] = React.useState(-1);
+  const isMobile = useIsMobile();
   return (
     <div style={{ marginTop: 80, borderTop: "1px solid var(--rule)", paddingTop: 80 }}>
       {sections.map((s, i) => {
         const imgs = s.images ? s.images.map(src => encodeURI(src)) : [];
         return (
-          <div key={i} style={{ marginBottom: 72 }}>
+          <div key={i} style={{ marginBottom: 72, borderTop: i > 0 ? "1px solid var(--rule)" : "none", paddingTop: i > 0 ? 64 : 0 }}>
             {(s.heading || s.body) && (
               <div style={{ maxWidth: 680, marginBottom: (imgs.length || s.videos || s.pdfs) ? 32 : 0 }}>
                 {s.heading && (
@@ -2273,15 +2459,15 @@ function CaseStudy({ p, accentColor }) {
             )}
             {imgs.length > 0 && s.type === "carousel" && <Carousel images={imgs} />}
             {imgs.length > 0 && s.type === "thumbs" && (
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                {imgs.map((src, j) => <CaseThumb key={j} src={src} onClick={() => setLb({ images: imgs, index: j })} />)}
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+                {imgs.map((src, j) => <CaseThumb key={j} src={src} onClick={() => setLb({ images: s.images, index: j })} />)}
               </div>
             )}
             {imgs.length > 0 && s.type === "icon-grid" && (
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
                 {imgs.map((src, j) => (
                   <div key={j} onMouseEnter={() => setHovIdx(i * 1000 + j)} onMouseLeave={() => setHovIdx(-1)}
-                       style={{ flex: "0 0 170px", height: 170, border: hovIdx === i * 1000 + j ? `1px solid ${accentColor}` : "1px solid var(--rule)", borderRadius: 12, padding: 14, display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.18s, transform 0.18s", transform: hovIdx === i * 1000 + j ? "scale(1.06)" : "scale(1)" }}>
+                       style={{ flex: "0 0 170px", height: 170, border: hovIdx === i * 1000 + j ? `1px solid ${accentColor}` : "1px solid var(--rule)", borderRadius: 12, padding: 14, display: "flex", alignItems: "center", justifyContent: "center", transition: "border-color 0.18s, transform 0.18s", transform: hovIdx === i * 1000 + j ? "scale(1.06)" : "scale(1)", background: s.bg || "transparent" }}>
                     <img src={src} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
                   </div>
                 ))}
@@ -2292,15 +2478,35 @@ function CaseStudy({ p, accentColor }) {
                 {imgs.map((src, j) => <img key={j} src={src} alt="" style={{ width: "100%", display: "block", height: "auto" }} />)}
               </div>
             )}
+            {imgs.length > 0 && s.type === "stage" && (
+              <div style={{ display: "grid", gridTemplateColumns: imgs.length === 1 ? "1fr" : "repeat(2,1fr)", gap: 8 }}>
+                {imgs.map((src, j) => (
+                  <div key={j} style={{ background: "var(--bg-2)", aspectRatio: "16/9", display: "flex", alignItems: "center", justifyContent: "center", padding: 56 }}>
+                    <img src={src} alt="" style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+            )}
+            {imgs.length > 0 && s.type === "cinematic" && (
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {imgs.map((src, j) => (
+                  <div key={j} style={{ aspectRatio: "21/9", overflow: "hidden" }}>
+                    <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                ))}
+              </div>
+            )}
             {s.type === "video-thumbs" && s.videos && (
-              <div style={{ display: "flex", gap: 16, maxWidth: 680, margin: "0 auto" }}>
-                {s.videos.map((src, j) => <VideoThumb key={j} src={encodeURI(src)} onClick={() => setVl(encodeURI(src))} />)}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                {s.videos.map((src, j) => (
+                  <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ maxWidth: 280, maxHeight: 320, height: "auto", flex: "0 0 auto", display: "block" }} />
+                ))}
               </div>
             )}
             {s.type === "video-grid" && s.videos && (
-              <div style={{ display: "flex", gap: 16, maxWidth: s.videos.length === 1 ? 380 : 680, margin: "0 auto" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
                 {s.videos.map((src, j) => (
-                  <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ flex: "1 1 0", minWidth: 0, display: "block" }} />
+                  <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ maxWidth: 280, maxHeight: 320, height: "auto", flex: "0 0 auto", display: "block" }} />
                 ))}
               </div>
             )}
@@ -2310,15 +2516,19 @@ function CaseStudy({ p, accentColor }) {
               </div>
             )}
             {imgs.length > 0 && !s.type && (
-              <div style={{ display: "grid", gridTemplateColumns: imgs.length === 1 ? "1fr" : imgs.length === 2 ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: 8, maxWidth: s.maxW || undefined, margin: s.maxW ? "0 auto" : undefined }}>
+              <div style={{ display: "grid", gridTemplateColumns: imgs.length === 1 ? "1fr" : imgs.length === 2 ? "repeat(2,1fr)" : isMobile ? "repeat(2,1fr)" : "repeat(3,1fr)", gap: 8, maxWidth: s.maxW || undefined, margin: s.maxW ? "0 auto" : undefined }}>
                 {imgs.map((src, j) => <img key={j} src={src} alt="" style={{ width: "100%", display: "block", height: "auto" }} />)}
               </div>
             )}
-            {s.type !== "video-thumbs" && s.type !== "video-grid" && s.videos && s.videos.map((src, j) => (
-              <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ width: "100%", display: "block", marginTop: j > 0 ? 16 : 0 }} />
-            ))}
+            {s.type !== "video-thumbs" && s.type !== "video-grid" && s.type !== "accordion" && s.videos && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+                {s.videos.map((src, j) => (
+                  <video key={j} src={encodeURI(src)} controls loop muted playsInline style={{ maxWidth: 280, maxHeight: 320, height: "auto", flex: "0 0 auto", display: "block" }} />
+                ))}
+              </div>
+            )}
             {s.pdfs && s.pdfs.map((src, j) => (
-              <embed key={j} src={encodeURI(src)} type="application/pdf" style={{ width: "100%", height: 700, display: "block", marginTop: j > 0 ? 16 : 0 }} />
+              <embed key={j} src={encodeURI(src)} type="application/pdf" style={{ width: "100%", height: s.pdfH || 700, display: "block", marginTop: j > 0 ? 16 : 0 }} />
             ))}
           </div>
         );
@@ -2330,24 +2540,30 @@ function CaseStudy({ p, accentColor }) {
 }
 
 
-function WebProjectPage({ p }) {
-  const tone = CAT_TONE[p.category] || "crimson";
+function WebProjectPage({ p, navCategory, navCurrentId }) {
+  const tone = (p.tone && TONE_COLOR[p.tone]) ? p.tone : (CAT_TONE[p.category] || "crimson");
   const ac = TONE_COLOR[tone];
+  const heroBorderColor = TONE_COLOR[CAT_TONE[p.category] || "crimson"];
+  const nav = navCategory || p.category;
+  const navId = navCurrentId || p.id;
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
-        <BackButton category={p.category} />
+        <BackButton category={nav} />
         <ProjectHeader p={p} />
-        <WebHero p={p} accentColor={ac} />
+        <WebHero p={p} accentColor={ac} borderColor={heroBorderColor} />
         {CASE_STUDY_DATA[p.id] && <CaseStudy p={p} accentColor={ac} />}
-        <ProjectNav currentId={p.id} category={p.category} />
+        <ProjectNav currentId={navId} category={nav} />
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 64 }}>
+          <BackButton category={nav} />
+        </div>
       </div>
     </div>
   );
 }
 
 function BrandSocialProjectPage({ p }) {
-  const tone = CAT_TONE[p.category] || "crimson";
+  const tone = (p.tone && TONE_COLOR[p.tone]) ? p.tone : (CAT_TONE[p.category] || "crimson");
   const ac = TONE_COLOR[tone];
   const images = p.images || [];
   return (
@@ -2358,6 +2574,9 @@ function BrandSocialProjectPage({ p }) {
         {images.length > 0 && <div style={{ borderTop: `2px solid ${ac}` }}><Carousel images={images} /></div>}
         {CASE_STUDY_DATA[p.id] && <CaseStudy p={p} accentColor={ac} />}
         <ProjectNav currentId={p.id} category={p.category} />
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 64 }}>
+          <BackButton category={p.category} />
+        </div>
       </div>
     </div>
   );
@@ -2365,13 +2584,16 @@ function BrandSocialProjectPage({ p }) {
 
 function PhotoProjectPage({ p }) {
   const [lightboxIdx, setLightboxIdx] = React.useState(null);
+  const isMobile = useIsMobile();
   const images = p.images || [];
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
         <BackButton category={p.category} />
         <ProjectHeader p={p} />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 6, gridAutoRows: 240 }}>
+        {p.heroVideo && <HeroVideo src={encodeURI(p.heroVideo)} />}
+
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: 6, gridAutoRows: isMobile ? 160 : 240 }}>
           {images.map((src, i) => (
             <div key={i} onClick={() => setLightboxIdx(i)}
                  style={{ gridColumn: `span ${(i % 4 === 0 || i % 4 === 3) ? 2 : 1}`, overflow: "hidden", cursor: "zoom-in", background: "var(--bg-2)" }}>
@@ -2382,40 +2604,55 @@ function PhotoProjectPage({ p }) {
           ))}
         </div>
         <ProjectNav currentId={p.id} category={p.category} />
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 64 }}>
+          <BackButton category={p.category} />
+        </div>
       </div>
       {lightboxIdx !== null && <Lightbox images={images} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />}
     </div>
   );
 }
-function MixedProjectPage({ p }) {
+function MixedProjectPage({ p, navCategory, navCurrentId }) {
   const brandP = PROJECTS.find(pr => pr.id === "francais-brand") || p;
   const webAc = TONE_COLOR[CAT_TONE["Web"]];
   const brandAc = TONE_COLOR[CAT_TONE["Brand"]];
-  const images = brandP.images || (brandP.thumb ? [brandP.thumb] : []);
+  const rawImages = brandP.images || [];
+  const [lightboxIdx, setLightboxIdx] = React.useState(null);
+  const nav = navCategory || p.category;
+  const navId = navCurrentId || p.id;
   return (
     <div style={{ minHeight: "100vh", background: "var(--bg)" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(80px,12vw,140px) clamp(20px,5vw,60px) 120px" }}>
-        <BackButton category={p.category} />
+        <BackButton category={nav} />
         <ProjectHeader p={p} />
         <WebHero p={p} accentColor={webAc} />
-        <div style={{ marginTop: 80 }}>
-          <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: brandAc, marginBottom: 24, display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: brandAc, display: "inline-block" }} />
-            Brand Identity
+        {CASE_STUDY_DATA[p.id] && <CaseStudy p={p} accentColor={brandAc} />}
+        {rawImages.length > 0 && (
+          <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 64, marginBottom: 72 }}>
+            <div style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: brandAc, marginBottom: 32, display: "flex", alignItems: "center", gap: 10 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: brandAc, display: "inline-block" }} />
+              Tweede Website Versies
+            </div>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+              {rawImages.map((src, i) => <CaseThumb key={i} src={encodeURI(src)} onClick={() => setLightboxIdx(i)} />)}
+            </div>
           </div>
-          <div style={{ borderTop: `2px solid ${brandAc}` }}>
-            <Carousel images={images} />
-          </div>
+        )}
+        <ProjectNav currentId={navId} category={nav} />
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 64 }}>
+          <BackButton category={nav} />
         </div>
-        <ProjectNav currentId={p.id} category={p.category} />
       </div>
+      {lightboxIdx !== null && <Lightbox images={rawImages} index={lightboxIdx} onClose={() => setLightboxIdx(null)} />}
     </div>
   );
 }
 
 function ProjectPage({ slug }) {
-  const resolvedSlug = slug === "francais-brand" ? "francais-web" : slug;
+  const originalP = PROJECTS.find(pr => pr.id === slug);
+  const resolvedSlug = slug === "francais-brand" ? "francais-web" : slug === "studio-linea-brand" ? "studio-linea" : slug;
   const p = PROJECTS.find(pr => pr.id === resolvedSlug);
+  const navCategory = originalP ? originalP.category : (p ? p.category : null);
   if (!p) return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
@@ -2424,9 +2661,9 @@ function ProjectPage({ slug }) {
       </div>
     </div>
   );
-  if (resolvedSlug === "francais-web") return <MixedProjectPage p={p} />;
+  if (resolvedSlug === "francais-web") return <MixedProjectPage p={p} navCategory={navCategory} navCurrentId={slug} />;
   if (p.category === "Photography") return <PhotoProjectPage p={p} />;
-  if (p.category === "Web") return <WebProjectPage p={p} />;
+  if (p.category === "Web") return <WebProjectPage p={p} navCategory={navCategory} navCurrentId={slug} />;
   return <BrandSocialProjectPage p={p} />;
 }
 function ProjectNav({ currentId, category }) {
@@ -2506,6 +2743,7 @@ function useRoute() {
   return route;
 }
 
+const IS_DEV = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const route = useRoute();
@@ -2544,7 +2782,7 @@ function App() {
       <Nav route={route} />
       <main key={route}>{projectSlug ? <ProjectPage slug={projectSlug} /> : <Page />}</main>
       <Footer />
-      <TweaksPanel title="Tweaks">
+      {IS_DEV && <TweaksPanel title="Tweaks">
         <TweakSection label="Accent">
           <TweakColor label="Color" value={t.accent} options={["#c0182a", "#e02030", "#c8862a", "#b5205e"]} onChange={(v) => setTweak("accent", v)} />
         </TweakSection>
@@ -2560,7 +2798,7 @@ function App() {
           <TweakSlider label="Color wash" value={t.wash} min={0} max={2} step={0.05} onChange={(v) => setTweak("wash", v)} />
           <TweakSlider label="Film grain" value={t.grain} min={0} max={0.2} step={0.005} onChange={(v) => setTweak("grain", v)} />
         </TweakSection>
-      </TweaksPanel>
+      </TweaksPanel>}
     </LangContext.Provider>
   );
 }
