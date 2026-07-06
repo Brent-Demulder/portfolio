@@ -543,7 +543,7 @@ function ContactPage() {
               <div style={{ marginTop: 48, padding: 24, border: "1px solid var(--rule)", background: "rgba(0,0,0,0.18)" }}>
                 <div className="eyebrow" style={{ marginBottom: 12, color: "var(--accent)" }}>Studio Hours</div>
                 <p style={{ margin: 0, fontFamily: "var(--serif)", fontSize: 20, lineHeight: 1.4 }}>
-                  Mon — Fri · 09:00 — 18:00 CET
+                  Mon — Fri · 11:00 — 22:00 CET
                 </p>
                 <p style={{ margin: "10px 0 0", fontSize: 13, color: "var(--ink-dim)" }}>
                   Ghent, Belgium. Weekends reserved for films and field recordings.

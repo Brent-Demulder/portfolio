@@ -196,6 +196,7 @@
   }
   .scroll-cue-line { animation: scrollCue 2.4s ease-in-out infinite; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
+  spline-viewer::part(logo) { display: none !important; }
 
   * { cursor: none !important; }
   .cursor-dot {
@@ -361,7 +362,7 @@
 
   .contact-email {
     font-family: var(--serif);
-    font-size: clamp(48px, 9vw, 144px);
+    font-size: clamp(28px, 7vw, 144px);
     font-style: italic;
     line-height: 1;
     color: var(--ink);
@@ -1275,10 +1276,10 @@ function ThumbPlaceholder({ label, tone = "warm", variant = "bokeh" }) {
 const PROJECTS = [
   // 2026 — featured first
   { id: "eindproject",       title: "Eindproject",          tagline: "A showcase of everything learned during my internship.",         category: "Web",             role: "Concept, Design, Dev",  year: "2026", status: "Live",         featured: true,              href: "https://brentdemulder-eindproject.netlify.app", hero: "assets/projects/NEW/Web/Heroes/Eindproject.png", thumb: "assets/projects/NEW/Web/Thumbnails/Eindproject.png" },
-  { id: "uptx",              title: "UPTX",                 tagline: "Studio website for design and development services.",            category: "Web",             role: "Identity, Site, Dev",   year: "2026", status: "Live",         featured: true, tone: "warm",  href: "https://uptx-website.netlify.app",              hero: "assets/projects/NEW/Web/Heroes/UPTX.png", thumb: "assets/projects/NEW/Web/Thumbnails/UPTX.png" },
+  { id: "uptx",              title: "UPTX",                 tagline: "Studio website for design and development services.",            category: "Web",             role: "Identity, Site, Dev",   year: "2026", status: "Live",         featured: true, tone: "warm",  href: "https://uptx.be",              hero: "assets/projects/achtergrond uptx.png", thumb: "assets/projects/NEW/Web/Thumbnails/UPTX.png" },
   { id: "lumeo",             title: "Lumeo",                tagline: "Letterboxd, Netflix and Disney — combined into one.",           category: "Web",             role: "Concept, UX/UI Design", year: "2026",                           featured: true, status: "Coming Soon", tone: "plum",                                                                 thumb: "assets/projects/NEW/Web/Thumbnails/Lumeo.png" },
   // 2026 — non-featured, colours mixed
-  { id: "feline",            title: "Poezenhotel Feline",   tagline: "A small hotel for cats, designed warmly.",                      category: "Web",             role: "Site, Identity",        year: "2026", status: "Live",                         tone: "rose",  href: "https://poezenhotel-feline.netlify.app",                  hero: "assets/projects/NEW/Web/Heroes/poezenhotel feline.png", thumb: "assets/projects/NEW/Web/Thumbnails/Poezenhotel Feline.png" },
+  { id: "feline",            title: "Poezenhotel Feline",   tagline: "A small hotel for cats, designed warmly.",                      category: "Web",             role: "Site, Identity",        year: "2026", status: "Live",                         tone: "rose",  href: "https://poezenhotelfeline.be",                  hero: "assets/projects/NEW/Web/Heroes/poezenhotel feline.png", thumb: "assets/projects/NEW/Web/Thumbnails/Poezenhotel Feline.png" },
   { id: "wuustwezel",        title: "Gemeente Wuustwezel",  tagline: "Marketing project for the municipality of Wuustwezel.",        category: "Brand",           role: "Marketing, Design",     year: "2026",                                           tone: "moss",                                                                 thumb: "assets/projects/NEW/Brand/Thumbnails/Gemeente Wuustwezel.png" },
   { id: "stromer",           title: "Stromer",              tagline: "Static and motion Meta ads for a premium cycling brand.",      category: "Social & Motion", role: "Motion, Social",        year: "2026",                                           tone: "cool",                                                                 featured: true, thumb: "assets/projects/NEW/Motion&Socials/Thumbnails/Stromer.png",          objectPos: "20% center" },
   { id: "francais-web",      title: "Français at Work",     tagline: "Website for a self-employed French teacher for professionals.", category: "Web",             role: "Design, Dev",           year: "2026", status: "Live",                         tone: "warm",  href: "https://francaisatwork.eu",                     hero: "assets/projects/NEW/Web/Heroes/Francais at Work.png", thumb: "assets/projects/NEW/Web/Thumbnails/Francais at Work.png" },
@@ -1365,13 +1366,13 @@ const COPY = {
   en: {
     nav:   { home: "Home", about: "About", portfolio: "Portfolio", contact: "Contact" },
     footer: { tagline: "Graphic designer working at the seams of film, music, and machines that think.", pages: "Pages", elsewhere: "Elsewhere", reach: "Reach", composed: "Composed in Bornem · ◇" },
-    hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Your Friendly Neighborhood designer.", tagline2: "Obsessed with film, music, and the craft", tagline3: "that lives somewhere between both.", scroll: "Scroll" },
+    hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Your Friendly Neighborhood designer.", tagline2: "Interested in film, music, and the craft", tagline3: "that lives somewhere between both.", scroll: "Scroll" },
     featured: { eyebrow: "Featured Work · 03", heading: "Some", headingItalic: "recent", heading2: "pieces.", viewAll: "View all work" },
     aboutTeaser: { eyebrow: "About · 02", body: "I'm a graphic and web designer based in Belgium, currently finishing my studies. I spend most of my time building websites and brands, but the stuff that really gets me going is film, music, and the kind of design that feels like it belongs in both. As a graphic and UX/UI designer, I try to translate that mix into work you feel, not just see.", readMore: "Read more", downloadCV: "Download CV" },
     contactTeaser: { eyebrow: "Let's talk · 04", heading: "Have a project in mind?", body: "Open for collaborations, commissions, and curious conversations.", getInTouch: "Get in touch", seeWork: "See the work" },
     about: {
       eyebrow: "About · 02", headingWord: "designer", heading2: "behind the work.",
-      quote: "I’m a graphic designer who can’t pick just one obsession —", quoteItalic: "so I picked all of them.",
+      quote: "I’m a graphic designer drawn to everything —", quoteItalic: "film, music, and the craft between.",
       bio1: "From as far back as I can remember, I’ve been drawn to every form of creativity that exists — film, music, animation, art. Not as separate hobbies, but as one relentless urge to make things. I stopped watching from the sidelines early on and decided to do it myself, both professionally and for the love of it.",
       bio2: "The ideas never stop coming, and I’m genuinely willing to put in the hours on big, ambitious projects. I’m currently writing my own book, and I’ve lost count of the songs I’ve written on piano and guitar. Three years as a youth leader — which, it turns out, is excellent training for managing creative chaos.",
       bio3: "When I’m not chasing a deadline or a melody, you’ll find me on a football pitch, a basketball court, or in the gym. Sport is how I switch my brain off. Even designers need to touch grass.",
@@ -1389,7 +1390,7 @@ const COPY = {
       ],
     },
     portfolio: { eyebrow: "Portfolio · 03", heading: "Selected work.", projects: "projects", showing: "Showing", archive: "More archived work available on request.", archiveBtn: "Request the archive", filters: ["All","Web","Brand","Social & Motion","Photography"] },
-    contact: { eyebrow: "Contact · 04", heading: "Let’s make something worth watching.", formEyebrow: "Tell me about your project.", nameLabel: "Your name", emailLabel: "Email", projectLabel: "Project type", messageLabel: "Tell me about it", messagePlaceholder: "Project, timeline, budget, references — anything that helps.", replyTime: "Typical reply · within 48h", channels: "Other channels", studioHours: "Studio Hours", studioTime: "Mon — Fri · 10:00 — 17:00 CET", studioLocation: "Bornem · Antwerp · Belgium. Weekends reserved for films and field recordings.", shortestRoute: "The shortest route ↓", copied: "Copied to clipboard ✓", clickCopy: "Click to copy", sent: "Sent ✓ Thanks.", sending: "Sending…", submit: "Let’s talk →", errGeneral: "Something went wrong. Please try again.", errNetwork: "Network error. Please check your connection and try again." },
+    contact: { eyebrow: "Contact · 04", heading: "Let’s make something worth watching.", formEyebrow: "Tell me about your project.", nameLabel: "Your name", emailLabel: "Email", projectLabel: "Project type", messageLabel: "Tell me about it", messagePlaceholder: "Project, timeline, budget, references — anything that helps.", replyTime: "Typical reply · within 48h", channels: "Other channels", studioHours: "Studio Hours", studioTime: "Mon — Fri · 11:00 — 22:00 CET", studioLocation: "Bornem · Antwerp · Belgium. Weekends reserved for films and field recordings.", shortestRoute: "The shortest route ↓", copied: "Copied to clipboard ✓", clickCopy: "Click to copy", sent: "Sent ✓ Thanks.", sending: "Sending…", submit: "Let’s talk →", errGeneral: "Something went wrong. Please try again.", errNetwork: "Network error. Please check your connection and try again." },
     card: { viewProject: "View Project ↗", previewSoon: "Preview Soon", featured: "★ Featured", soon: "Soon" },
   },
   nl: {
@@ -1401,7 +1402,7 @@ const COPY = {
     contactTeaser: { eyebrow: "Laten we praten · 04", heading: "Heb je een project in gedachten?", body: "Open voor samenwerkingen, opdrachten en nieuwsgierige gesprekken.", getInTouch: "Neem contact op", seeWork: "Bekijk het werk" },
     about: {
       eyebrow: "Over mij · 02", headingWord: "ontwerper", heading2: "achter het werk.",
-      quote: "Ik ben een grafisch ontwerper die niet één obsessie kon kiezen —", quoteItalic: "dus koos ik ze allemaal.",
+      quote: "Ik ben een grafisch ontwerper aangetrokken tot alles —", quoteItalic: "film, muziek, en het vakmanschap daartussen.",
       bio1: "Van zo ver ik me kan herinneren ben ik aangetrokken tot elke vorm van creativiteit — film, muziek, animatie, kunst. Niet als aparte hobby’s, maar als één niet-aflatende drang om dingen te maken. Ik stopte vroeg met langs de zijlijn kijken en besloot het zelf te doen, zowel professioneel als voor de liefde ervan.",
       bio2: "De ideïen houden nooit op, en ik ben echt bereid de uren te maken voor grote, ambitieuze projecten. Ik schrijf momenteel mijn eigen boek, en ik ben de tel kwijtgeraakt van de liedjes die ik schreef op piano en gitaar. Drie jaar als jeugdleider — wat een uitstekende training blijkt voor het managen van creatieve chaos.",
       bio3: "Als ik niet achter een deadline of een melodie aan jaag, vind je me op een voetbalveld, een basketbalveld of in de gym. Sport is hoe ik mijn hoofd leegmaak. Zelfs designers moeten af en toe buiten komen.",
@@ -1419,7 +1420,7 @@ const COPY = {
       ],
     },
     portfolio: { eyebrow: "Portfolio · 03", heading: "Geselecteerd werk.", projects: "projecten", showing: "Toont", archive: "Meer gearchiveerd werk beschikbaar op aanvraag.", archiveBtn: "Vraag het archief op", filters: ["Alles","Web","Brand","Social & Motion","Fotografie"] },
-    contact: { eyebrow: "Contact · 04", heading: "Laten we iets maken dat de moeite waard is om naar te kijken.", formEyebrow: "Vertel me over je project.", nameLabel: "Jouw naam", emailLabel: "E-mail", projectLabel: "Type project", messageLabel: "Vertel me erover", messagePlaceholder: "Project, tijdlijn, budget, referenties — alles wat helpt.", replyTime: "Typische reactie · binnen 48u", channels: "Andere kanalen", studioHours: "Studiouren", studioTime: "Ma — Vr · 10:00 — 17:00 CET", studioLocation: "Bornem · Antwerpen · België. Weekenden gereserveerd voor films en veldopnames.", shortestRoute: "De kortste route ↓", copied: "Gekopieerd ✓", clickCopy: "Klik om te kopiëren", sent: "Verzonden ✓ Bedankt.", sending: "Versturen…", submit: "Laten we praten →", errGeneral: "Er ging iets mis. Probeer opnieuw.", errNetwork: "Netwerkfout. Controleer je verbinding en probeer opnieuw." },
+    contact: { eyebrow: "Contact · 04", heading: "Laten we iets maken dat de moeite waard is om naar te kijken.", formEyebrow: "Vertel me over je project.", nameLabel: "Jouw naam", emailLabel: "E-mail", projectLabel: "Type project", messageLabel: "Vertel me erover", messagePlaceholder: "Project, tijdlijn, budget, referenties — alles wat helpt.", replyTime: "Typische reactie · binnen 48u", channels: "Andere kanalen", studioHours: "Studiouren", studioTime: "Ma — Vr · 11:00 — 22:00 CET", studioLocation: "Bornem · Antwerpen · België. Weekenden gereserveerd voor films en veldopnames.", shortestRoute: "De kortste route ↓", copied: "Gekopieerd ✓", clickCopy: "Klik om te kopiëren", sent: "Verzonden ✓ Bedankt.", sending: "Versturen…", submit: "Laten we praten →", errGeneral: "Er ging iets mis. Probeer opnieuw.", errNetwork: "Netwerkfout. Controleer je verbinding en probeer opnieuw." },
     card: { viewProject: "Bekijk Project ↗", previewSoon: "Binnenkort beschikbaar", featured: "★ Uitgelicht", soon: "Binnenkort" },
   },
 };
@@ -1495,12 +1496,13 @@ function Nav({ route }) {
 }
 
 function Marquee() {
+  const isMobile = useIsMobile();
   const items = ["DESIGN", "✺", "UX/UI", "✺", "BRAND", "✺", "MOTION", "✺", "FILM", "✺", "MUSIC", "✺"];
   return (
-    <div style={{ position: "relative", padding: "32px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)", overflow: "hidden" }}>
+    <div style={{ position: "relative", zIndex: 6, padding: isMobile ? "18px 0" : "32px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)", overflow: "hidden", marginTop: isMobile ? "-80px" : 0 }}>
       <div style={{ display: "flex", whiteSpace: "nowrap", animation: "marquee 38s linear infinite", willChange: "transform" }}>
         {[...items, ...items].map((it, i) => (
-          <span key={i} className="marquee-item" style={{ fontFamily: "var(--serif)", fontStyle: it === "✺" ? "normal" : "italic", fontSize: 64, letterSpacing: "-0.01em", paddingRight: 64 }}>{it}</span>
+          <span key={i} className="marquee-item" style={{ fontFamily: "var(--serif)", fontStyle: it === "✺" ? "normal" : "italic", fontSize: isMobile ? 22 : 64, letterSpacing: "-0.01em", paddingRight: isMobile ? 20 : 64 }}>{it}</span>
         ))}
       </div>
       <style>{`
@@ -1641,14 +1643,34 @@ function HeroCanvas() {
   );
 }
 
-function HeroSpline() {
+function HeroSpline({ mobile }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    const hide = () => {
+      const viewer = ref.current;
+      if (!viewer) return;
+      const tryHide = () => {
+        const shadow = viewer.shadowRoot;
+        if (shadow) {
+          const logo = shadow.querySelector("#logo");
+          if (logo) { logo.style.display = "none"; return; }
+        }
+        setTimeout(tryHide, 500);
+      };
+      tryHide();
+    };
+    hide();
+  }, []);
   return (
     <spline-viewer
+      ref={ref}
       url="https://prod.spline.design/B8sUHgb6KLFsLvIZ/scene.splinecode"
       events-target="none"
       style={{
         position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 3,
         pointerEvents: "none",
+        transform: mobile ? "scale(0.6)" : "none",
+        transformOrigin: mobile ? "center 35%" : "center center",
       }}
     ></spline-viewer>
   );
@@ -1678,12 +1700,12 @@ function HomePage() {
   }, []);
   return (
     <div className="page" style={{ paddingTop: 0 }}>
-      <section ref={heroRef} className="vignette" style={{ position: "relative", height: "100vh", minHeight: 600, overflow: "hidden" }}>
+      <section ref={heroRef} className="vignette" style={{ position: "relative", height: isMobile ? "80vh" : "100vh", minHeight: 600, overflow: "hidden" }}>
         <div className="hero-stage" aria-hidden="true" style={{ background: "#000" }}>
-          {splineActive && <HeroSpline />}
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0.45) 50%, rgba(8,12,20,0.2) 100%)", zIndex: 4, pointerEvents: "none" }}></div>
+          {splineActive && <HeroSpline mobile={isMobile} />}
+          <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(to bottom, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.4) 40%, transparent 55%), linear-gradient(to top, rgba(8,12,20,1) 0%, rgba(8,12,20,1) 20%, rgba(8,12,20,0.85) 40%, transparent 65%)" : "linear-gradient(to top, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0.45) 50%, rgba(8,12,20,0.2) 100%)", zIndex: 4, pointerEvents: "none" }}></div>
         </div>
-        <div className="container" style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: 96, zIndex: 5 }}>
+        <div className="container" style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: isMobile ? 110 : 96, paddingTop: 0, zIndex: 5 }}>
           <div ref={subRef} className="fade-up" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
             <span className="accent-dot"></span>
             <span className="eyebrow">{t.hero.eyebrow}</span>
@@ -1703,7 +1725,7 @@ function HomePage() {
             </div>
           </div>
         </div>
-        <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", zIndex: 5, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, color: "var(--ink-dim)", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase" }}>
+        <div style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", zIndex: 5, display: isMobile ? "none" : "flex", flexDirection: "column", alignItems: "center", gap: 10, color: "var(--ink-dim)", fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase" }}>
           <span>{t.hero.scroll}</span>
           <div style={{ width: 1, height: 40, background: "var(--rule)", position: "relative", overflow: "hidden" }}>
             <div className="scroll-cue-line" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 16, background: "var(--accent)" }}></div>
@@ -1764,12 +1786,14 @@ function AboutTeaser() {
     <section style={{ padding: "100px 0" }}>
       <div className="container">
         <div ref={ref} className="fade-up" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "5fr 7fr", gap: isMobile ? 40 : 80, alignItems: "center" }}>
-          <div style={{ position: "relative", aspectRatio: "4/5" }}>
-            <img src="assets/Me/Home/foto ik piano.png" alt="Brent Demulder at piano" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
-            <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2 }}>
-              <span className="chip">Portrait · 01</span>
+          {!isMobile && (
+            <div style={{ position: "relative", aspectRatio: "4/5" }}>
+              <img src="assets/Me/Home/foto ik piano.png" alt="Brent Demulder at piano" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
+              <div style={{ position: "absolute", top: 14, left: 14, zIndex: 2 }}>
+                <span className="chip">Portrait · 01</span>
+              </div>
             </div>
-          </div>
+          )}
           <div>
             <div className="eyebrow" style={{ marginBottom: 24 }}>
               <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.aboutTeaser.eyebrow}
@@ -1847,28 +1871,25 @@ function AboutPage() {
             </div>
           )}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "5fr 7fr", gap: isMobile ? 40 : 80, paddingTop: 80 }}>
-          <div ref={portraitRef} className="fade-up" style={{ position: isMobile ? "relative" : "sticky", top: 120, alignSelf: "start" }}>
-            <div style={{ position: "relative", aspectRatio: "4/5", maxWidth: isMobile ? 320 : "none" }}>
-              <img src="assets/Me/About/Foto 1.png" alt="Brent Demulder" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "90% center", display: "block" }} />
-              <div style={{ position: "absolute", top: 14, left: 14 }}>
-                <span className="chip">Portrait · 02</span>
+        {isMobile ? (
+          <div style={{ paddingTop: 32 }}>
+            <div ref={portraitRef} className="fade-up" style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+              <div style={{ flexShrink: 0, width: "38%" }}>
+                <div style={{ position: "relative", aspectRatio: "4/5" }}>
+                  <img src="assets/Me/About/Foto 1.png" alt="Brent Demulder" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "90% center", display: "block" }} />
+                </div>
+                <div style={{ marginTop: 6, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ink-faint)" }}>Portrait · 02</div>
               </div>
+              <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(22px, 6vw, 32px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
+                {t.about.quote} <span className="ag" style={{ fontStyle: "italic" }}>{t.about.quoteItalic}</span>
+              </p>
             </div>
-            <div style={{ marginTop: 18, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", display: "flex", justifyContent: "space-between" }}>
-              <span>Brent · 21</span><span>Belgium</span>
-            </div>
-          </div>
-          <div ref={bioRef} className="fade-up">
-            <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(24px, 3vw, 44px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
-              {t.about.quote} <span className="ag" style={{ fontStyle: "italic" }}>{t.about.quoteItalic}</span>
-            </p>
-            <div style={{ marginTop: 40, display: "grid", gap: 22, fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-dim)" }}>
+            <div ref={bioRef} className="fade-up" style={{ marginTop: 32, display: "grid", gap: 22, fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-dim)" }}>
               <p style={{ margin: 0 }}>{t.about.bio1}</p>
               <p style={{ margin: 0 }}>{t.about.bio2}</p>
               <p style={{ margin: 0 }}>{t.about.bio3}</p>
             </div>
-            <div style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap" }}>
+            <div style={{ marginTop: 32, display: "flex", gap: 14, flexWrap: "wrap" }}>
               <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn btn-primary">
                 <span>{t.about.downloadCV}</span>
                 <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
@@ -1876,7 +1897,38 @@ function AboutPage() {
               <a href="#/contact" className="btn">{t.about.getInTouch}</a>
             </div>
           </div>
-        </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: 80, paddingTop: 80, alignItems: "start" }}>
+            <div ref={portraitRef} className="fade-up" style={{ position: "sticky", top: 120, alignSelf: "start" }}>
+              <div style={{ position: "relative", aspectRatio: "4/5" }}>
+                <img src="assets/Me/About/Foto 1.png" alt="Brent Demulder" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "90% center", display: "block" }} />
+                <div style={{ position: "absolute", top: 14, left: 14 }}>
+                  <span className="chip">Portrait · 02</span>
+                </div>
+              </div>
+              <div style={{ marginTop: 18, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-faint)", display: "flex", justifyContent: "space-between" }}>
+                <span>Brent · 21</span><span>Belgium</span>
+              </div>
+            </div>
+            <div ref={bioRef} className="fade-up" style={{ alignSelf: "start" }}>
+              <p style={{ fontFamily: "var(--serif)", fontSize: "clamp(24px, 3vw, 44px)", lineHeight: 1.2, margin: 0, letterSpacing: "-0.01em" }}>
+                {t.about.quote} <span className="ag" style={{ fontStyle: "italic" }}>{t.about.quoteItalic}</span>
+              </p>
+              <div style={{ marginTop: 40, display: "grid", gap: 22, fontSize: 16.5, lineHeight: 1.75, color: "var(--ink-dim)" }}>
+                <p style={{ margin: 0 }}>{t.about.bio1}</p>
+                <p style={{ margin: 0 }}>{t.about.bio2}</p>
+                <p style={{ margin: 0 }}>{t.about.bio3}</p>
+              </div>
+              <div style={{ marginTop: 40, display: "flex", gap: 14, flexWrap: "wrap" }}>
+                <a href="assets/CV/Brent Demulder - cv.pdf" download className="btn btn-primary">
+                  <span>{t.about.downloadCV}</span>
+                  <span style={{ fontFamily: "var(--serif)", fontStyle: "italic", textTransform: "none", letterSpacing: 0 }}>↓</span>
+                </a>
+                <a href="#/contact" className="btn">{t.about.getInTouch}</a>
+              </div>
+            </div>
+          </div>
+        )}
         <div ref={factsRef} className="fade-up" style={{ marginTop: 80 }}>
           <div className="eyebrow" style={{ marginBottom: 24 }}>
             <span className="accent-dot" style={{ marginRight: 12 }}></span>{t.about.factsheet}
