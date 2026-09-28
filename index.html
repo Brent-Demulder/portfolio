@@ -107,7 +107,7 @@
     content: "";
     position: absolute; inset: 0;
     pointer-events: none;
-    background: radial-gradient(120% 80% at 50% 40%, transparent 40%, rgba(0,0,0,0.40) 80%, rgba(0,0,0,0.7) 100%);
+    background: radial-gradient(120% 80% at 50% 40%, transparent 10%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,1) 65%);
   }
 
   .hairline { height: 1px; background: var(--rule); }
@@ -1369,7 +1369,7 @@ const COPY = {
     hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Your Friendly Neighborhood designer.", tagline2: "Interested in film, music, and the craft", tagline3: "that lives somewhere between both.", scroll: "Scroll" },
     featured: { eyebrow: "Featured Work · 03", heading: "Some", headingItalic: "recent", heading2: "pieces.", viewAll: "View all work" },
     aboutTeaser: { eyebrow: "About · 02", body: "I'm a graphic and web designer based in Belgium, currently finishing my studies. I spend most of my time building websites and brands, but the stuff that really gets me going is film, music, and the kind of design that feels like it belongs in both. As a graphic and UX/UI designer, I try to translate that mix into work you feel, not just see.", readMore: "Read more", downloadCV: "Download CV" },
-    contactTeaser: { eyebrow: "Let's talk · 04", heading: "Have a project in mind?", body: "Open for collaborations, commissions, and curious conversations.", getInTouch: "Get in touch", seeWork: "See the work" },
+    contactTeaser: { eyebrow: "Let's talk · 04", heading: "Have a ", headingAccent: "project", headingSuffix: " in mind?", body: "Open for collaborations, commissions, and curious conversations.", getInTouch: "Get in touch", seeWork: "See the work" },
     about: {
       eyebrow: "About · 02", headingWord: "designer", heading2: "behind the work.",
       quote: "I’m a graphic designer drawn to everything —", quoteItalic: "film, music, and the craft between.",
@@ -1378,7 +1378,7 @@ const COPY = {
       bio3: "When I’m not chasing a deadline or a melody, you’ll find me on a football pitch, a basketball court, or in the gym. Sport is how I switch my brain off. Even designers need to touch grass.",
       downloadCV: "Download CV", getInTouch: "Get in touch",
       factsheet: "Factsheet · 03",
-      facts: [["Currently","Launching UPTX — my first studio"],["Studying","Graduaat Digitale Vormgeving"],["Internship","JUNE20 — digital creative agency"],["Based In","Bornem · Antwerp · BE — available remote"],["Languages","EN · NL"],["Open To","Freelance, collaborations"]],
+      facts: [["Currently","Writing my first book, working on various web projects"],["Degree","Graduaat Digitale Vormgeving"],["Based In","Bornem · Antwerp · BE — available remote"],["Languages","EN · NL"],["Open To","Freelance, collaborations"]],
       stack: "Stack · 04", stackHeading: "What’s in", stackItalic: "the bag.",
       stackGroups: [
         { title: "Design",      items: ["Figma","Photoshop","Illustrator","InDesign"] },
@@ -1399,7 +1399,7 @@ const COPY = {
     hero:  { eyebrow: "Portfolio · 2025 — 2026", tagline1: "Jouw lokale ontwerper uit de buurt.", tagline2: "Geobsedeerd door film, muziek en het vakmanschap", tagline3: "dat ergens tussen beide leeft.", scroll: "Scroll" },
     featured: { eyebrow: "Uitgelicht Werk · 03", heading: "Enkele", headingItalic: "recente", heading2: "werken.", viewAll: "Bekijk alles" },
     aboutTeaser: { eyebrow: "Over mij · 02", body: "Ik ben een grafisch en webdesigner uit België, momenteel bezig met mijn studies. Ik breng het grootste deel van mijn tijd door met het bouwen van websites en merken, maar wat me echt enthousiast maakt is film, muziek en het soort design dat aanvoelt alsof het bij beide hoort. Als grafisch en UX/UI designer probeer ik die mix te vertalen naar werk dat je voelt, niet alleen ziet.", readMore: "Lees meer", downloadCV: "CV downloaden" },
-    contactTeaser: { eyebrow: "Laten we praten · 04", heading: "Heb je een project in gedachten?", body: "Open voor samenwerkingen, opdrachten en nieuwsgierige gesprekken.", getInTouch: "Neem contact op", seeWork: "Bekijk het werk" },
+    contactTeaser: { eyebrow: "Laten we praten · 04", heading: "Heb je een ", headingAccent: "project", headingSuffix: " in gedachten?", body: "Open voor samenwerkingen, opdrachten en nieuwsgierige gesprekken.", getInTouch: "Neem contact op", seeWork: "Bekijk het werk" },
     about: {
       eyebrow: "Over mij · 02", headingWord: "ontwerper", heading2: "achter het werk.",
       quote: "Ik ben een grafisch ontwerper aangetrokken tot alles —", quoteItalic: "film, muziek, en het vakmanschap daartussen.",
@@ -1408,7 +1408,7 @@ const COPY = {
       bio3: "Als ik niet achter een deadline of een melodie aan jaag, vind je me op een voetbalveld, een basketbalveld of in de gym. Sport is hoe ik mijn hoofd leegmaak. Zelfs designers moeten af en toe buiten komen.",
       downloadCV: "CV downloaden", getInTouch: "Neem contact op",
       factsheet: "Factsheet · 03",
-      facts: [["Momenteel","UPTX opstarten — mijn eerste studio"],["Studie","Graduaat Digitale Vormgeving"],["Stage","JUNE20 — digitaal creatief bureau"],["Gebaseerd In","Bornem · Antwerpen · BE — ook remote beschikbaar"],["Talen","EN · NL"],["Open Voor","Freelance, samenwerkingen"]],
+      facts: [["Momenteel","Eerste boek schrijven, werken aan diverse webprojecten"],["Diploma","Graduaat Digitale Vormgeving"],["Gebaseerd In","Bornem · Antwerpen · BE — ook remote beschikbaar"],["Talen","EN · NL"],["Open Voor","Freelance, samenwerkingen"]],
       stack: "Stack · 04", stackHeading: "Wat zit er", stackItalic: "in de tas.",
       stackGroups: [
         { title: "Design",            items: ["Figma","Photoshop","Illustrator","InDesign"] },
@@ -1662,17 +1662,20 @@ function HeroSpline({ mobile }) {
     hide();
   }, []);
   return (
-    <spline-viewer
-      ref={ref}
-      url="https://prod.spline.design/B8sUHgb6KLFsLvIZ/scene.splinecode"
-      events-target="none"
-      style={{
-        position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 3,
-        pointerEvents: "none",
-        transform: mobile ? "scale(0.6)" : "none",
-        transformOrigin: mobile ? "center 35%" : "center center",
-      }}
-    ></spline-viewer>
+    <>
+      <spline-viewer
+        ref={ref}
+        url="https://prod.spline.design/B8sUHgb6KLFsLvIZ/scene.splinecode"
+        events-target="none"
+        style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 3,
+          pointerEvents: "none",
+          transform: mobile ? "scale(0.6)" : "none",
+          transformOrigin: mobile ? "center 35%" : "center center",
+        }}
+      ></spline-viewer>
+      <div style={{ position: "absolute", bottom: 0, right: 0, width: 160, height: 48, background: "var(--bg)", zIndex: 4, pointerEvents: "none" }} />
+    </>
   );
 }
 
@@ -1706,10 +1709,6 @@ function HomePage() {
           <div style={{ position: "absolute", inset: 0, background: isMobile ? "linear-gradient(to bottom, rgba(8,12,20,0.95) 0%, rgba(8,12,20,0.4) 40%, transparent 55%), linear-gradient(to top, rgba(8,12,20,1) 0%, rgba(8,12,20,1) 20%, rgba(8,12,20,0.85) 40%, transparent 65%)" : "linear-gradient(to top, rgba(8,12,20,0.85) 0%, rgba(8,12,20,0.45) 50%, rgba(8,12,20,0.2) 100%)", zIndex: 4, pointerEvents: "none" }}></div>
         </div>
         <div className="container" style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: isMobile ? 110 : 96, paddingTop: 0, zIndex: 5 }}>
-          <div ref={subRef} className="fade-up" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
-            <span className="accent-dot"></span>
-            <span className="eyebrow">{t.hero.eyebrow}</span>
-          </div>
           <h1 ref={titleRef} className="fade-up hero-title" style={{ fontSize: "clamp(64px, 13vw, 220px)", margin: 0, transitionDelay: "120ms" }}>
             Brent <span style={{ fontStyle: "italic", color: "var(--accent)" }}>Demulder</span>
           </h1>
@@ -1721,7 +1720,7 @@ function HomePage() {
               <span>Design</span><span style={{ color: "var(--ink-faint)" }}>·</span>
               <span>Film</span><span style={{ color: "var(--ink-faint)" }}>·</span>
               <span>Music</span><span style={{ color: "var(--ink-faint)" }}>·</span>
-              <span className="ag">AI</span>
+              <span>AI</span>
             </div>
           </div>
         </div>
@@ -1830,7 +1829,7 @@ function ContactTeaser() {
         <div ref={ref} className="fade-up" style={{ textAlign: "center" }}>
           <div className="eyebrow" style={{ marginBottom: 24 }}>{t.contactTeaser.eyebrow}</div>
           <h2 style={{ fontSize: "clamp(48px, 8vw, 120px)", margin: 0, lineHeight: 0.95 }}>
-            {t.contactTeaser.heading}
+            {t.contactTeaser.heading}<span style={{ color: "var(--accent)", fontStyle: "italic" }}>{t.contactTeaser.headingAccent}</span>{t.contactTeaser.headingSuffix}
           </h2>
           <p style={{ marginTop: 24, color: "var(--ink-dim)", fontSize: 18, maxWidth: 540, marginLeft: "auto", marginRight: "auto" }}>
             {t.contactTeaser.body}
